@@ -22,7 +22,7 @@
         <h1>Login</h1>
 
         <label for="username"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="username" required>
+        <input id = "uname" type="text" placeholder="Enter Username" name="username" required>
 
         <label for="psw"><b>Password</b></label>
         <input type="password" placeholder="Enter Password" name="password" required>
@@ -56,6 +56,10 @@
 
         <button type="submit">Sign Up</button>   
     </form>
+</div>
+
+<div class="popup" id="e_pop">
+  <span class="popuptext">Username already exists!</span>
 </div>
 
 <script src="user-form.js"> </script>

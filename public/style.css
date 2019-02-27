@@ -24,11 +24,7 @@ background: rgb(230, 164, 224)
 
 background: rgb(230, 164, 224)
 }
-.log_popup{
+.popup{
 display:none;
 background: rgb(212, 152, 209)
-}
-.sign_popup{
-    display: none;
-    background: rgb(212, 152, 209)
 }
