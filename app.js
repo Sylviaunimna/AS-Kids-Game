@@ -86,6 +86,7 @@ app.put('/check-username/:user', jsonParser, function(req,res){
         }
     })
 })
+})
 
 // REST API 
 // get returns a user

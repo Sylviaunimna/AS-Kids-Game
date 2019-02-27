@@ -36,11 +36,11 @@ function check_uname() {
                 console.log('err', req );
             }
         };
-<<<<<<< HEAD
-    req.send()
-=======
+
+   
+
         req.send();
->>>>>>> e15afed699fc4e7317bfc07adeda593ba8efa174
+
     } );
 
 }
