@@ -11,17 +11,18 @@ h2{
 
 }
 h3{
-    
+  color: rgb(255, 192, 227)  
 }
 p{
-
+position: relative;
+align-content: center;
 }
 #sign-in{
-
+background: rgb(230, 164, 224)
 }
 #log-in{
 
-background: rgb(223, 113, 223)
+background: rgb(230, 164, 224)
 }
 .log_popup{
 display:none;
