@@ -65,10 +65,10 @@ app.get('/', function(req, res) {
     generate_welcome_page( res );
 });
 app.post('/check-username/:user',function(req,res){
-    let user = req.params(user);
-    db.get("SELECT COUNT(1) as user_exists FROM users where username=?",[user],function(err,exist){
+    let user = req.params.user;
+    db.get('SELECT COUNT(1) as user_exists FROM users WHERE username=?',[user],function(err,exist){
         if(!err){
-            if(exist == 1){
+            if(exist.user_exists == 1){
                 res.send({status:"exists"});
             }
             else{
