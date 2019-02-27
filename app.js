@@ -83,7 +83,11 @@ app.put('/check-username/:user', jsonParser, function(req,res){
             res.send({error:err})
         }
     })
+
 })
+
+
+
 
 
 // REST API 
