@@ -17,10 +17,11 @@ function check_uname() {
         let user = document.getElementById( 'uname').value;
         // get inputs 
         let req = new XMLHttpRequest();
-        req.open('POST', `/check-username/${user}`);
+        req.open('PUT', `/check-username/${user}`);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json'; 
         req.onload = function(evt) {
+            console.log(req.status)
             if ( req.status == 200 ) { // check for ok response
                 const resp = req.response;
                 console.log(resp.status)
@@ -33,6 +34,7 @@ function check_uname() {
                 console.log('err', req );
             }
         };
+    req.send()
     } );
 
 }

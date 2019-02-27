@@ -64,12 +64,13 @@ app.get('/', function(req, res) {
     //we could check to see if user was previously signed in 
     generate_welcome_page( res );
 });
-app.post('/check-username/:user',function(req,res){
+app.put('/check-username/:user',function(req,res){
     console.log("Hi! i'm sylvia");
     let user = req.params.user;
-    db.get('SELECT COUNT(1) as user_exists FROM users WHERE username=?',[user],function(err,exist){
+    console.log(user);
+    db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[user],function(err,exist){
         if(!err){
-            if(exist.user_exists == 1){
+            if(exist.user_exists > 0){
                 res.send({status:"exists"});
             }
             else{
