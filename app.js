@@ -56,7 +56,7 @@ function generate_welcome_page( res ) {
     res.render('welcome', {
         title : 'Welcome to AS Social'
     });
-    db.run('INSERT into users username=?, password=?,email=?',["sylvia","1234","sunimna@mun.ca"]);
+    db.run('INSERT into users (username, password,email,follow,follow_) VALUES(?,?,?,null,null)',["sylvia","1234","sunimna@mun.ca"]);
     
 }
 
