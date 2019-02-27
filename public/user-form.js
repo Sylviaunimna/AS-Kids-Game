@@ -16,12 +16,9 @@ function check_uname() {
         console.log('change', evt);
         let user = document.getElementById( 'uname').value;
         console.log(user);
-        // get inputs 
         let req = new XMLHttpRequest();
         req.open('PUT', `/check-username/${user}`);
-
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        //req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json'; 
         req.onload = function(evt) {
             console.log(req.status)
@@ -30,6 +27,11 @@ function check_uname() {
                 console.log(resp.status);
                 if ( resp.status === 'exists' ) {
                     document.getElementById('e_pop').style.display = "block";
+                    let button = document.getElementById( 'e_pop-close');
+                    
+                    button.addEventListener( 'click', (evt) => {
+                        document.getElementById('e_pop').style.display = "none";
+                    } );
                 }
                 console.log( resp );
             }
@@ -37,11 +39,7 @@ function check_uname() {
                 console.log('err', req );
             }
         };
-<<<<<<< HEAD
-    req.send()
-=======
         req.send();
->>>>>>> e15afed699fc4e7317bfc07adeda593ba8efa174
     } );
 
 }

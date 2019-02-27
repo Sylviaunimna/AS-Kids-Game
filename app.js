@@ -65,9 +65,6 @@ app.get('/', function(req, res) {
     generate_welcome_page( res );
 });
 
-app.put('/check-username/:user',function(req,res){
-    console.log("Hi! i'm sylvia");
-
 app.put('/check-username/:user', jsonParser, function(req,res){
 
     let user = req.params.user;
@@ -85,7 +82,7 @@ app.put('/check-username/:user', jsonParser, function(req,res){
             res.send({error:err})
         }
     })
-})
+});
 
 // REST API 
 // get returns a user
