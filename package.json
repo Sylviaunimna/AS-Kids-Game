@@ -21,6 +21,7 @@
     "body-parser": "^1.18.3",
     "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
-    "express-hbs": "^2.0.2"
+    "express-hbs": "^2.0.2",
+    "sqlite3": "^4.0.6"
   }
 }
