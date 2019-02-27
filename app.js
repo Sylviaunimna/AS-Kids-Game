@@ -65,6 +65,7 @@ app.get('/', function(req, res) {
     generate_welcome_page( res );
 });
 app.post('/check-username/:user',function(req,res){
+    console.log("Hi! i'm sylvia");
     let user = req.params.user;
     db.get('SELECT COUNT(1) as user_exists FROM users WHERE username=?',[user],function(err,exist){
         if(!err){

@@ -9,6 +9,34 @@ class UserForm extends HTMLElement {
     }
 }
 
+//This function checks to see if the username already exists 
+function check_uname() {
+    let uname = document.getElementById('uname');
+    uname.addEventListener( 'change', (evt) => {
+        console.log('change', evt);
+        let user = document.getElementById( 'uname').value;
+        // get inputs 
+        let req = new XMLHttpRequest();
+        req.open('POST', `/check-username/${user}`);
+        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        req.responseType = 'json'; 
+        req.onload = function(evt) {
+            if ( req.status == 200 ) { // check for ok response
+                const resp = req.response;
+                console.log(resp.status)
+                if ( resp.status === 'exists' ) {
+                    document.getElementById('e_pop').style.display = "block";
+                }
+                console.log( resp );
+            }
+            else {
+                console.log('err', req );
+            }
+        };
+    } );
+
+}
+
 function init_sign_in() {
     let button = document.getElementById( 'log-in');
     if ( !button ) {
@@ -54,3 +82,4 @@ init_sign_in();
 init_sign_in_close();
 init_sign_up();
 init_sign_up_close();
+check_uname();
