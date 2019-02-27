@@ -69,5 +69,4 @@ app.get('/', function(req, res) {
 // put updates a user
 // delete removes a user
 
-
 app.listen(port, () => console.log(`Listening on port ${port}!`));
