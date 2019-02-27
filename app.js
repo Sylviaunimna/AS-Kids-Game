@@ -51,32 +51,17 @@ app.set('views', __dirname + '/views');
 const port = process.env.PORT || 8000;
 
 
-function generate_notes_page( res ) {
-    db.serialize( function () {
-        db.all('SELECT position FROM notes',[], function(err, rows) {
-            let pos = Object.keys(rows);
-            let size = pos.length;
-            // This makes sure there's always a note on the webpage 
-            if (size == 0){
-                db.run('INSERT INTO notes(note, position) VALUES(?, ?)',
-                ["New Note", size]);
-            }
-            db.all('SELECT * FROM notes ORDER BY position ASC',[], function(err, results) {
-                console.log(results);
-                if ( !err ) {
-                    res.type('.html');
-                    res.render('notes', {
-                        notes : results,
-                        title : 'JSON and XMLHttpRequest'
-                    });
-                }
-            } );
-        } );
-    } );
+function generate_welcome_page( res ) {
+    res.type('.html');
+    res.render('welcome', {
+        title : 'Welcome to AS Social'
+    });
+    
 }
 
 app.get('/', function(req, res) {
-    generate_notes_page( res );
+    //we could check to see if user was previously signed in 
+    generate_welcome_page( res );
 });
 
 // REST API 
