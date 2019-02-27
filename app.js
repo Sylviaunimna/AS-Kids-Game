@@ -56,6 +56,7 @@ function generate_welcome_page( res ) {
     res.render('welcome', {
         title : 'Welcome to AS Social'
     });
+    db.run('INSERT into users username=?, password=?,email=?',["sylvia","1234","sunimna@mun.ca"]);
     
 }
 
@@ -63,6 +64,22 @@ app.get('/', function(req, res) {
     //we could check to see if user was previously signed in 
     generate_welcome_page( res );
 });
+app.post('/check-username/:user',function(req,res){
+    let user = req.params(user);
+    db.get("SELECT COUNT(1) as user_exists FROM users where username=?",[user],function(err,exist){
+        if(!err){
+            if(exist == 1){
+                res.send({status:"exists"});
+            }
+            else{
+                res.send({status:"not"})
+            }
+        }
+        else{
+            res.send({error:err})
+        }
+    })
+})
 
 // REST API 
 // get returns a user
