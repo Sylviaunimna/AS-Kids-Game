@@ -10,13 +10,13 @@ class UserForm extends HTMLElement {
 }
 
 function init_sign_in() {
-    let button = document.getElementById( 'sign-in');
+    let button = document.getElementById( 'log-in');
     if ( !button ) {
-        console.log('missing sign-in');
+        console.log('missing log-in');
         return;
     }
     button.addEventListener( 'click', (evt) => {
-        document.getElementById('myForm').style.display = "block";
+        document.getElementById('login_f').style.display = "block";
     } );
 }
 function init_sign_in_close() {
@@ -26,10 +26,31 @@ function init_sign_in_close() {
         return;
     }
     button.addEventListener( 'click', (evt) => {
-        document.getElementById('myForm').style.display = "none";
+        document.getElementById('login_f').style.display = "none";
     } );
 }
-
-customElements.define('user-form', UserForm );
+function init_sign_up() {
+    let button = document.getElementById( 'sign-up');
+    if ( !button ) {
+        console.log('missing sign-up');
+        return;
+    }
+    button.addEventListener( 'click', (evt) => {
+        document.getElementById('signup_f').style.display = "block";
+    } );
+}
+function init_sign_up_close() {
+    let button = document.getElementById( 'sign-up-close');
+    if ( !button ) {
+        console.log('missing sign-up-close');
+        return;
+    }
+    button.addEventListener( 'click', (evt) => {
+        document.getElementById('signup_f').style.display = "none";
+    } );
+}
+//customElements.define('user-form', UserForm );
 init_sign_in();
 init_sign_in_close();
+init_sign_up();
+init_sign_up_close();
