@@ -16,18 +16,18 @@ h3{
 p{
 
 }
-#signin{
+#sign-in{
 
 }
-#login{
+#log-in{
 
 background: rgb(223, 113, 223)
 }
-.log_pop{
+.log_popup{
 display:none;
 background: rgb(212, 152, 209)
 }
-.sign_up{
+.sign_popup{
     display: none;
     background: rgb(212, 152, 209)
 }
