@@ -15,6 +15,7 @@ function check_uname() {
     uname.addEventListener( 'change', (evt) => {
         console.log('change', evt);
         let user = document.getElementById( 'uname').value;
+        console.log(user);
         // get inputs 
         let req = new XMLHttpRequest();
         req.open('PUT', `/check-username/${user}`);
