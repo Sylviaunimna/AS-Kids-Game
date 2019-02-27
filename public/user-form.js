@@ -15,7 +15,7 @@ function check_uname() {
     uname.addEventListener( 'change', (evt) => {
         console.log('change', evt);
         let user = document.getElementById( 'uname').value;
-        console.log(user);
+       // console.log(user);
         // get inputs 
         let req = new XMLHttpRequest();
         req.open('PUT', `/check-username/${user}`);
@@ -27,8 +27,9 @@ function check_uname() {
             console.log(req.status)
             if ( req.status == 200 ) { // check for ok response
                 const resp = req.response;
-                console.log(resp.status);
+                
                 if ( resp.status === 'exists' ) {
+                   
                     document.getElementById('e_pop').style.display = "block";
                 }
                 console.log( resp );

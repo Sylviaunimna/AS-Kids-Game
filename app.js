@@ -65,15 +65,13 @@ app.get('/', function(req, res) {
     generate_welcome_page( res );
 });
 
-app.put('/check-username/:user',function(req,res){
-    console.log("Hi! i'm sylvia");
-
 app.put('/check-username/:user', jsonParser, function(req,res){
 
     let user = req.params.user;
-    console.log(user);
+    
     db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[user],function(err,exist){
         if(!err){
+           
             if(exist.user_exists > 0){
                 res.send({status:"exists"});
             }
@@ -86,7 +84,7 @@ app.put('/check-username/:user', jsonParser, function(req,res){
         }
     })
 })
-})
+
 
 // REST API 
 // get returns a user
