@@ -10,6 +10,27 @@ class UserForm extends HTMLElement {
 }
 
 //This function checks to see if the username already exists 
+
+function init_sign_up(){
+    let button = document.getElementById('signup');
+    button.addEventListener( 'click', (evt) => {
+        //get the paremeters from the form
+        let fname = document.getElementById( 'first').value;
+        let uname = document.getElementById( 'uname').value;
+        let pword = document.getElementById( 'password').value;
+        let email = document.getElementById( 'email').value;
+        
+        let req = new XMLHttpRequest();
+        req.open('POST',`/add-new-user/${fname}${uname}${pword}${email}`);
+        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        req.responseType = 'json'; 
+        req.onload = function(evt) {
+            //this page should redirect the user to a popup that asks to select an avatar
+        };
+
+    } );
+
+}
 function check_uname() {
     let uname = document.getElementById('uname');
     uname.addEventListener( 'change', (evt) => {
@@ -50,7 +71,7 @@ function check_uname() {
 
 }
 
-function init_sign_in() {
+function popup_sign_in() {
     let button = document.getElementById( 'log-in');
     if ( !button ) {
         console.log('missing log-in');
@@ -69,7 +90,7 @@ function init_sign_in() {
     } );
 }
 
-function init_sign_up() {
+function popup_sign_up() {
     let button = document.getElementById( 'sign-up');
     if ( !button ) {
         console.log('missing sign-up');
@@ -89,6 +110,6 @@ function init_sign_up() {
 }
 
 //customElements.define('user-form', UserForm );
-init_sign_in();
-init_sign_up();
+popup_sign_in();
+popup_sign_up();
 check_uname();
