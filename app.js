@@ -6,6 +6,7 @@ function(err) {
         db.run(`
             CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
+            fname TEXT,
             username TEXT,
             password TEXT,
             email TEXT,
@@ -56,8 +57,6 @@ function generate_welcome_page( res ) {
     res.render('welcome', {
         title : 'Welcome to AS Social'
     });
-    db.run('INSERT into users (username, password,email,follow,follow_) VALUES(?,?,?,null,null)',["sylvia","1234","sunimna@mun.ca"]);
-    
 }
 
 app.get('/', function(req, res) {
@@ -84,7 +83,19 @@ app.put('/check-username/:user', jsonParser, function(req,res){
         }
     })
 
-})
+});
+
+app.post('/add-new-user/:fname/:uname/:pword/:email', function(req, res) {
+    let fname = req.params.fname;
+    let uname = req.params.uname;
+    let pword = req.params.pword;
+    let email = req.params.email;
+    db.run('INSERT INTO users(fname, username, password, email, follow, follow_) VALUES(?, ?, ?, ?, null, null)',
+    [fname, uname, pword, email]);
+    res.send( {fname : fname, uname : uname, email : email} );    
+
+    //call homepage, still not sure what happens after
+});
 
 
 
