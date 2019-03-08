@@ -35,14 +35,14 @@ const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const cookieSession = require('cookie-session');
+// const cookieSession = require('cookie-session');
 const app = express();
 // the static file middleware
 app.use(express.static( __dirname + '/public'))
-app.use(cookieSession({
-    name:'session',
-    secret:'foo'
-}));
+// app.use(cookieSession({
+//     name:'session',
+//     secret:'foo'
+// }));
 // the template middleware
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
@@ -118,8 +118,8 @@ app.post('/add-new-user/:fname/:uname/:pword/:email', function(req, res) {
     let pword = req.params.pword;
     let email = req.params.email;
     console.log("New User: ", uname);
-    db.run('INSERT INTO users(fname, username, password, email, follow, follow_) VALUES(?, ?, ?, ?, null, null)',
-    [fname, uname, pword, email]);
+    db.run('INSERT INTO users(fname, username, password, email, follow, follow_) VALUES(?, ?, ?, ?, ?, ?)',
+    [fname, uname, pword, email, null, null]);
     res.send( {fname : fname, uname : uname, email : email} ); 
 });
 

@@ -86,43 +86,41 @@ function popup_sign_in() {
     }
     button.addEventListener( 'click', (evt) => {
         document.getElementById('login_f').style.display = "block";
-        let button = document.getElementById( 'sign-in-close');
-        let login_button = document.getElementById("signin");
-
-        if ( !button ) {
-            console.log('missing sign-in-close');
-            return;
-        }
+        let closeb = document.getElementById( 'sign-in-close');
+        let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
+        closeb.addEventListener('click', function(evt){
+            document.getElementById('login_f').style.display = "none";
+        });
+        login_button.addEventListener('click', function(evt){
+            authenticateUser()
+        });
         
-})
+    })
 }
 
 function authenticateUser(){
     let button = document.getElementById( 'signin')
     button.addEventListener( 'click', (evt) => {
-        let uname = document.getElementById('uname1')
-        let passwd = document.getElementById('passwrd1')
-        let username = uname.value;
-        let password = passwd.value;
-        let obj = {username:username,password:password}
-        console.log(obj,"This is a user")
+        let user_name = document.getElementById('uname1').value;
+        let passwrd = document.getElementById("passwrd1").value;
+        let obj = {username : user_name, password : passwrd}
         req = new XMLHttpRequest();
-        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.open("POST", `/login`);
+        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = "json";
         req.onload = function(evt){
             if ( req.status == 200 ) {
-                console.log(req.status);
                 if(resp.status === "login"){
+                    document.getElementById('login_f').style.display = "none";
                     console.log( resp );
                     }
-                }
-                else {
-                    console.log('err', req );
-                }
-            };
-            console.log('sending', obj );
-            req.send(JSON.stringify( obj ) );   
+            }
+            else {
+                console.log('err', req );
+            }
+        };
+        console.log('sending', obj );
+        req.send(JSON.stringify( obj ) );   
     } );
 };
 
