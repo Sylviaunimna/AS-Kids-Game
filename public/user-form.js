@@ -77,7 +77,6 @@ function check_uname() {
     } );
 
 }
-
 function popup_sign_in() {
     let button = document.getElementById( 'log-in');
     if ( !button ) {
@@ -123,8 +122,6 @@ function authenticateUser(){
         req.send(JSON.stringify( obj ) );   
     } );
 };
-
-
 function popup_sign_up() {
     let button = document.getElementById( 'sign-up');
     if ( !button ) {
@@ -144,7 +141,14 @@ function popup_sign_up() {
         } );
     } );
 }
-
+function show_tips(){
+    //call app.js on the user to deterine if the user wants to be shown tips 
+    let button = document.getElementById('next1');
+    button.addEventListener('click', function(evt){
+        document.getElementById(tips_1).style.display = "none";
+        
+    });
+}
 //customElements.define('user-form', UserForm );
 
 popup_sign_in();
