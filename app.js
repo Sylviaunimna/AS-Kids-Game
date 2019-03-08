@@ -69,23 +69,18 @@ app.post('/login',function(req,res){
     if(req.body.password){
         req.session.password = req.body.password
     }
-    console.log(req.body.username)
-})
-function check_password(req,res,next){
+
     db.serialize(function(){
-    db.get('SELECT password FROM users WHERE username=?',[req.session.username],function(err,psswd){
-        console.log(psswd.password)
-        if(psswd.password == req.session.password){
-            next()
-        }
-        else(
-            res.end('not a user')
-        )
+        db.get('SELECT password FROM users WHERE username=?',[req.session.username],function(err,psswd){
+            console.log("HIIIIII")
+            console.log(psswd.password)
+            if(psswd.password == req.session.password){
+               res.type('.html')
+               res.render('homepage')
+            }
+        })
     })
-})
-}
-app.get('/:user',check_password,function(req,res){
-    res.end("Hello user")
+    
 })
 
 app.get('/', function(req, res) {

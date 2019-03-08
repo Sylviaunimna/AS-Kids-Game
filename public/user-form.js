@@ -93,19 +93,19 @@ function popup_sign_in() {
         });
         login_button.addEventListener('click', function(evt){
             authenticateUser()
+            
         });
         
     })
 }
 
 function authenticateUser(){
-    let button = document.getElementById( 'signin')
-    button.addEventListener( 'click', (evt) => {
         let user_name = document.getElementById('uname1').value;
         let passwrd = document.getElementById("passwrd1").value;
         let obj = {username : user_name, password : passwrd}
+        console.log(obj.username)
         req = new XMLHttpRequest();
-        req.open("POST", `/login`);
+        req.open("POST", '/login');
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = "json";
         req.onload = function(evt){
@@ -121,7 +121,7 @@ function authenticateUser(){
         };
         console.log('sending', obj );
         req.send(JSON.stringify( obj ) );   
-    } );
+    
 };
 
 
