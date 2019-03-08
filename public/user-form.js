@@ -98,16 +98,17 @@ function popup_sign_in() {
 }
 
 function authenticateUser(){
+    let button = document.getElementById( 'signin')
     button.addEventListener( 'click', (evt) => {
-        document.getElementById('login_f').style.display = "none";
-        let user_name = document.getElementById('uname1');
-        let passwrd = document.getElementById("passwrd1");
-        let obj = {username:user_name,password:passwrd}
         let uname = document.getElementById('uname1')
         let passwd = document.getElementById('passwrd1')
-        
+        let username = uname.value;
+        let password = passwd.value;
+        let obj = {username:username,password:password}
+        console.log(obj,"This is a user")
         req = new XMLHttpRequest();
-        req.open("POST", `/login/${user_name}`);
+        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        req.open("POST", `/login`);
         req.responseType = "json";
         req.onload = function(evt){
             if ( req.status == 200 ) {
@@ -123,28 +124,6 @@ function authenticateUser(){
             console.log('sending', obj );
             req.send(JSON.stringify( obj ) );   
     } );
-    login_button.addEventListener( 'click', (evt) => {
-        let user_name = document.getElementById('uname1');
-        let passwrd = document.getElementById("passwrd1");
-        let obj = {username:user_name,password:passwrd}
-        req = new XMLHttpRequest();
-        req.open("GET", `/${user_name}`);
-        req.responseType = "json";
-        req.onload = function(evt){
-            if ( req.status == 200 ) {
-                console.log(req.status);
-                if(resp.status === "login"){
-                    console.log( resp );
-                    }
-                }
-                else {
-                    console.log('err', req );
-                }
-            };
-            console.log('sending', obj );
-            req.send(JSON.stringify( obj ) );   
-
-    })
 };
 
 
@@ -170,12 +149,9 @@ function popup_sign_up() {
 
 //customElements.define('user-form', UserForm );
 
-init_sign_in();
-init_sign_up();
-check_uname();
-
 popup_sign_in();
 popup_sign_up();
 check_uname();
 init_sign_up();
+
 

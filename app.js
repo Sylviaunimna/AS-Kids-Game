@@ -69,8 +69,7 @@ app.post('/login',function(req,res){
     if(req.body.password){
         req.session.password = req.body.password
     }
-    console.log(req.session.password)
-
+    console.log(req.body.username)
 })
 function check_password(req,res,next){
     db.serialize(function(){
