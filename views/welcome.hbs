@@ -22,12 +22,12 @@
         <h1>Login</h1>
 
         <label for="username"><b>Username</b></label>
-        <input id = "uname1" type="text" placeholder="Enter Username" name="username" required>
+        <input id = "uname1" type="text" placeholder="Enter Username" name="username" required value="{{sess.username}}">
 
         <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="password" required>
+        <input id="passwrd1"type="password" placeholder="Enter Password" name="password" required value="{{sess.password}}">
 
-        <button type="submit">Login</button>   
+        <button id="signin" type="submit">Login</button>   
     </form>
 </div>
 

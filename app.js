@@ -34,11 +34,14 @@ const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-
+const cookieSession = require('cookie-session');
 const app = express();
 // the static file middleware
 app.use(express.static( __dirname + '/public'))
-
+app.use(cookieSession({
+    name:'session',
+    secret:'foo'
+}));
 // the template middleware
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
@@ -51,24 +54,49 @@ app.set('views', __dirname + '/views');
 const port = process.env.PORT || 8000;
 
 
-function generate_welcome_page( res ) {
+function generate_welcome_page( res,req ) {
     res.type('.html');
     res.render('welcome', {
-        title : 'Welcome to AS Social'
+        title : 'Welcome to AS Social',
+        sess : req.session
     });
     db.run('INSERT into users (username, password,email,follow,follow_) VALUES(?,?,?,null,null)',["sylvia","1234","sunimna@mun.ca"]);
     
 }
+app.post('/login',function(req,res){
+    if (req.body.username){
+        req.session.username = req.body.username
+    }
+    if(req.body.password){
+        req.session.password = req.body.password
+    }
+    console.log(req.session.password)
+
+})
+function check_password(req,res,next){
+    db.serialize(function(){
+    db.get('SELECT password FROM users WHERE username=?',[req.session.username],function(err,psswd){
+        console.log(psswd.password)
+        if(psswd.password == req.session.password){
+            next()
+        }
+        else(
+            res.end('not a user')
+        )
+    })
+})
+}
+app.get('/:user',check_password,function(req,res){
+    res.end("Hello user")
+})
 
 app.get('/', function(req, res) {
     //we could check to see if user was previously signed in 
-    generate_welcome_page( res );
+    generate_welcome_page( res,req );
 });
 
 app.put('/check-username/:user', jsonParser, function(req,res){
-
     let user = req.params.user;
-    
     db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[user],function(err,exist){
         if(!err){
            
@@ -85,6 +113,8 @@ app.put('/check-username/:user', jsonParser, function(req,res){
     })
 
 })
+
+
 
 
 

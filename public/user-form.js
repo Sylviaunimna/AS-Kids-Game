@@ -59,15 +59,65 @@ function init_sign_in() {
     button.addEventListener( 'click', (evt) => {
         document.getElementById('login_f').style.display = "block";
         let button = document.getElementById( 'sign-in-close');
+        let login_button = document.getElementById("signin");
+
         if ( !button ) {
             console.log('missing sign-in-close');
             return;
         }
-        button.addEventListener( 'click', (evt) => {
-            document.getElementById('login_f').style.display = "none";
-        } );
-    } );
+        
 }
+}
+function authenticateUser(){
+    button.addEventListener( 'click', (evt) => {
+        document.getElementById('login_f').style.display = "none";
+        let user_name = document.getElementById('uname1');
+        let passwrd = document.getElementById("passwrd1");
+        let obj = {username:user_name,password:passwrd}
+        let uname = document.getElementById('uname1')
+        let passwd = document.getElementById('passwrd1')
+        
+        req = new XMLHttpRequest();
+        req.open("POST", `/login/${user_name}`);
+        req.responseType = "json";
+        req.onload = function(evt){
+            if ( req.status == 200 ) {
+                console.log(req.status);
+                if(resp.status === "login"){
+                    console.log( resp );
+                    }
+                }
+                else {
+                    console.log('err', req );
+                }
+            };
+            console.log('sending', obj );
+            req.send(JSON.stringify( obj ) );   
+    } );
+    login_button.addEventListener( 'click', (evt) => {
+        let user_name = document.getElementById('uname1');
+        let passwrd = document.getElementById("passwrd1");
+        let obj = {username:user_name,password:passwrd}
+        req = new XMLHttpRequest();
+        req.open("GET", `/${user_name}`);
+        req.responseType = "json";
+        req.onload = function(evt){
+            if ( req.status == 200 ) {
+                console.log(req.status);
+                if(resp.status === "login"){
+                    console.log( resp );
+                    }
+                }
+                else {
+                    console.log('err', req );
+                }
+            };
+            console.log('sending', obj );
+            req.send(JSON.stringify( obj ) );   
+
+    })
+};
+
 
 function init_sign_up() {
     let button = document.getElementById( 'sign-up');
@@ -84,6 +134,7 @@ function init_sign_up() {
         }
         button.addEventListener( 'click', (evt) => {
             document.getElementById('signup_f').style.display = "none";
+           
         } );
     } );
 }
