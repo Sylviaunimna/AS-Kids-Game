@@ -6,6 +6,7 @@ function(err) {
         db.run(`
             CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
+            fname TEXT,
             username TEXT,
             password TEXT,
             email TEXT,
@@ -60,8 +61,6 @@ function generate_welcome_page( res,req ) {
         title : 'Welcome to AS Social',
         sess : req.session
     });
-    db.run('INSERT into users (username, password,email,follow,follow_) VALUES(?,?,?,null,null)',["sylvia","1234","sunimna@mun.ca"]);
-    
 }
 app.post('/login',function(req,res){
     if (req.body.username){
@@ -112,7 +111,18 @@ app.put('/check-username/:user', jsonParser, function(req,res){
         }
     })
 
-})
+});
+
+app.post('/add-new-user/:fname/:uname/:pword/:email', function(req, res) {
+    let fname = req.params.fname;
+    let uname = req.params.uname;
+    let pword = req.params.pword;
+    let email = req.params.email;
+    console.log("New User: ", uname);
+    db.run('INSERT INTO users(fname, username, password, email, follow, follow_) VALUES(?, ?, ?, ?, null, null)',
+    [fname, uname, pword, email]);
+    res.send( {fname : fname, uname : uname, email : email} ); 
+});
 
 
 
