@@ -12,7 +12,7 @@ class UserForm extends HTMLElement {
 //This function checks to see if the username already exists 
 
 function init_sign_up(){
-    let button = document.getElementById('signup');
+    let button = document.getElementById( 'signup');
     button.addEventListener( 'click', (evt) => {
         //get the paremeters from the form
         let fname = document.getElementById( 'first').value;
@@ -21,13 +21,20 @@ function init_sign_up(){
         let email = document.getElementById( 'email').value;
         
         let req = new XMLHttpRequest();
-        req.open('POST',`/add-new-user/${fname}${uname}${pword}${email}`);
+        req.open('POST',`/add-new-user/${fname}/${uname}/${pword}/${email}`);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json'; 
         req.onload = function(evt) {
-            //this page should redirect the user to a popup that asks to select an avatar
+            if ( req.status == 200 ) { // check for ok response
+                const user = req.response;
+                console.log( user );
+            }
+            else {
+                console.log('err', req );
+            }
+            //still don;t know if we will tell user to sign in
         };
-
+        req.send();
     } );
 
 }
@@ -113,3 +120,4 @@ function popup_sign_up() {
 popup_sign_in();
 popup_sign_up();
 check_uname();
+init_sign_up();

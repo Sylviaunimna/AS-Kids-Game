@@ -90,11 +90,10 @@ app.post('/add-new-user/:fname/:uname/:pword/:email', function(req, res) {
     let uname = req.params.uname;
     let pword = req.params.pword;
     let email = req.params.email;
+    console.log("New User: ", uname);
     db.run('INSERT INTO users(fname, username, password, email, follow, follow_) VALUES(?, ?, ?, ?, null, null)',
     [fname, uname, pword, email]);
-    res.send( {fname : fname, uname : uname, email : email} );    
-
-    //call homepage, still not sure what happens after
+    res.send( {fname : fname, uname : uname, email : email} ); 
 });
 
 
