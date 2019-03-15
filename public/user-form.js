@@ -92,8 +92,7 @@ function popup_sign_in() {
             document.getElementById('login_f').style.display = "none";
         });
         login_button.addEventListener('click', function(evt){
-            authenticateUser()
-            
+            authenticateUser()  
         });
         
     })
