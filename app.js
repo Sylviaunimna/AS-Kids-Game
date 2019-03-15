@@ -35,14 +35,14 @@ const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-// const cookieSession = require('cookie-session');
+const cookieSession = require('cookie-session');
 const app = express();
 // the static file middleware
 app.use(express.static( __dirname + '/public'))
-// app.use(cookieSession({
-//     name:'session',
-//     secret:'foo'
-// }));
+app.use(cookieSession({
+    name:'session',
+    secret:'foo'
+}));
 // the template middleware
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
@@ -58,33 +58,37 @@ const port = process.env.PORT || 8000;
 function generate_welcome_page( res,req ) {
     res.type('.html');
     res.render('welcome', {
-        title : 'Welcome to AS Social',
-        sess : req.session
+        title : 'Welcome to AS Social'
     });
 }
-app.post('/login',function(req,res){
-    if (req.body.username){
-        req.session.username = req.body.username
-    }
-    if(req.body.password){
-        req.session.password = req.body.password
-    }
+app.get('/login', function(req, res){
+    console.log("login homepage");
+    res.type('.html')
+    res.render('homepage', {
+        title : 'AS Social'
+    });
+    // console.log(req.body);
+    // if (req.body.username){
+    //     req.session.username = "momo"//req.body.username
+    // }
+    // if(req.body.password){
+    //     req.session.password = "momo"//req.body.password
+    // }
 
-    db.serialize(function(){
-        db.get('SELECT password FROM users WHERE username=?',[req.session.username],function(err,psswd){
-            console.log("HIIIIII")
-            console.log(psswd.password)
-            if(psswd.password == req.session.password){
-               res.type('.html')
-               res.render('homepage')
-            }
-        })
-    })
+    // db.serialize(function(){
+    //     db.get('SELECT password FROM users WHERE username=?',[req.session.username],function(err,psswd){
+    //         console.log("HIIIIII")
+    //         console.log(psswd.password)
+    //         if(psswd.password == req.session.password){
+    //         //    res.type('.html')
+    //         //    res.render('homepage')
+    //         }
+    //     })
+    // })
     
 })
 
 app.get('/', function(req, res) {
-    //we could check to see if user was previously signed in 
     generate_welcome_page( res,req );
 });
 
