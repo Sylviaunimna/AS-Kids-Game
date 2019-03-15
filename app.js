@@ -8,26 +8,9 @@ function(err) {
             id INTEGER PRIMARY KEY,
             fname TEXT,
             username TEXT,
-            password TEXT,
-            email TEXT,
-            follow TEXT,
-            follow_  TEXT
+            password TEXT
         )`);
         console.log('opened users.db');
-    }
-});
-//Database for posts from users
-const p_db = new sqlite3.Database( __dirname + '/posts.db',
-function(err) {
-    if ( !err ) {
-        p_db.run(`
-            CREATE TABLE IF NOT EXISTS posts (
-            id INTEGER PRIMARY KEY,
-            time INTEGER,
-            post TEXT,
-            userid INTEGER
-        )`);
-        console.log('opened posts.db');
     }
 });
 
