@@ -1,54 +1,36 @@
-<div class="logo">
-
-    <h2>
-        {{logo}}
-    </h2>
-    <h3>Lets talk</h3>
-</div>
-<div class="user">
-<p>Share your expriences with A & S </p>
-<p>
-<button id="sign-up">Sign Up</button>
-</p>
-<p>
-    <button id="log-in">Login</button>
-</p>
-
-</div>
-
-<div class="popup" id="login_f">
-    <form>
-        <button id="sign-in-close" >&times</button>
-        <h1>Login</h1>
-
-        <label for="username"><b>Username</b></label>
+<button class = "top" id="sign-up">Sign Up</button>
+<button class = "top" id="log-in">Login</button>
+<div class="container">
+    <div class="logo">
+        <img id = "logo" src="newlog.png" alt="broken">
+        <p id="dev">&copy Developed by Afrah and Sylvia</p>
+    </div>
+    <div class="user">
+        <img src="mjy.png" alt="broken">
+    </div>
+    <div class="popup" id="login_f">
+    <form class="modal">
+        <span id="sign-in-close" >&times</span>
+        <br>
+        <label for="username"><b>Username: </b></label>
         <input id = "uname1" type="text" placeholder="Enter Username" name="username" required>
 
-        <label for="psw"><b>Password</b></label>
+        <label for="psw"><b>Password: </b></label>
         <input id="passwrd1"type="password" placeholder="Enter Password" name="password" required>
-        <ul>
-            <li><a href= "/login" id="signin">Login</a></li>
-        </ul>
-        {{!-- <button id="signin" type="submit" href="/login">Login</button>    --}}
+
+        <button><a href= "/login" id="signin">Login</a></button>
     </form>
-</div>
+    </div>
 
 <div class="popup" id="signup_f">
-    <form>
+    <form class ="modal">
         <span id="sign-up-close" >&times</span>
-        <h1>Sign Up</h1>
-
-        <label for="fname"><b>First Name: </b></label>
+        <br>
+        <label for="fname"><b>First Name:</b></label>
         <input type="text" placeholder="Enter First Name" id="first" required>
 
         <label for="uname"><b>Username:</b></label>
         <input type="text" placeholder="Enter Username" id="uname" required>
-
-        <label for="dob"><b>DOB:</b></label>
-        <input type="date" id="start" name="dob" value="2000-07-22" max="2006-01-01"required>
-
-        <label for="email"><b>Email:</b></label>
-        <input type="email" placeholder="Enter Email" id="email" required>
 
         <label for="psw"><b>Password:</b></label>
         <input type="password" placeholder="Enter Password" id="password" required>
@@ -65,5 +47,7 @@
   <span class="popuptext">Username already exists!</span>
   
 </div>
+</div>
+
 
 <script src="user-form.js"> </script>

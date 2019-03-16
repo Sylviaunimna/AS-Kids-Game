@@ -8,26 +8,10 @@ function(err) {
             id INTEGER PRIMARY KEY,
             fname TEXT,
             username TEXT,
-            password TEXT,
-            email TEXT,
-            follow TEXT,
-            follow_  TEXT
+            password TEXT, 
+            score INTEGER
         )`);
         console.log('opened users.db');
-    }
-});
-//Database for posts from users
-const p_db = new sqlite3.Database( __dirname + '/posts.db',
-function(err) {
-    if ( !err ) {
-        p_db.run(`
-            CREATE TABLE IF NOT EXISTS posts (
-            id INTEGER PRIMARY KEY,
-            time INTEGER,
-            post TEXT,
-            userid INTEGER
-        )`);
-        console.log('opened posts.db');
     }
 });
 
@@ -60,10 +44,15 @@ const port = process.env.PORT || 8000;
 
 
 function generate_welcome_page( res,req ) {
-    res.type('.html');
-    res.render('welcome', {
-        title : 'Welcome to AS Social'
-    });
+    db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
+        if ( !err ) {
+            res.type('.html');
+            res.render('welcome', {
+                users : results,
+                title : 'Welcome to AS Social'
+            });
+        }
+    } );
 }
 <<<<<<< HEAD
 app.get('/', function(req, res) {
@@ -144,15 +133,14 @@ app.put('/check-username/:user', jsonParser, function(req,res){
 
 });
 
-app.post('/add-new-user/:fname/:uname/:pword/:email', function(req, res) {
+app.post('/add-new-user/:fname/:uname/:pword', function(req, res) {
     let fname = req.params.fname;
     let uname = req.params.uname;
     let pword = req.params.pword;
-    let email = req.params.email;
     console.log("New User: ", uname);
-    db.run('INSERT INTO users(fname, username, password, email, follow, follow_) VALUES(?, ?, ?, ?, ?, ?)',
-    [fname, uname, pword, email, null, null]);
-    res.send( {fname : fname, uname : uname, email : email} ); 
+    db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
+    [fname, uname, pword, null]);
+    res.send( {fname : fname, uname : uname} ); 
 });
 
 

@@ -6,10 +6,9 @@ function init_sign_up(){
         let fname = document.getElementById( 'first').value;
         let uname = document.getElementById( 'uname').value;
         let pword = document.getElementById( 'password').value;
-        let email = document.getElementById( 'email').value;
         
         let req = new XMLHttpRequest();
-        req.open('POST',`/add-new-user/${fname}/${uname}/${pword}/${email}`);
+        req.open('POST',`/add-new-user/${fname}/${uname}/${pword}`);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json'; 
         req.onload = function(evt) {
