@@ -6,22 +6,23 @@ function init_sign_up(){
         let fname = document.getElementById( 'first').value;
         let uname = document.getElementById( 'uname').value;
         let pword = document.getElementById( 'password').value;
-        
+        let obj = {firstname: fname, username: uname, password:pword};
         let req = new XMLHttpRequest();
-        req.open('POST',`/add-new-user/${fname}/${uname}/${pword}`);
+        req.open('POST',`/add-new-user`);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json'; 
         req.onload = function(evt) {
             if ( req.status == 200 ) { // check for ok response
                 const user = req.response;
                 console.log( user );
+                console.log("made user")
             }
             else {
                 console.log('err', req );
             }
             //still don;t know if we will tell user to sign in
         };
-        req.send();
+        req.send(JSON.stringify( obj ));
     } );
 
 }
@@ -31,13 +32,13 @@ function check_uname() {
         console.log('change', evt);
         let user = document.getElementById( 'uname').value;
 
-       // console.log(user);
+        // console.log(user);
         // get inputs 
 
         console.log(user);
-
+        let obj = {username:user}
         let req = new XMLHttpRequest();
-        req.open('PUT', `/check-username/${user}`);
+        req.open('PUT', `/check-username`);
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json'; 
         req.onload = function(evt) {
@@ -60,10 +61,20 @@ function check_uname() {
                 console.log('err', req );
             }
         };
-        req.send();
+        req.send(JSON.stringify( obj ));
     } );
 
 }
+function authenticateUser(user,password,callback){
+    let req = new XMLHttpRequest();
+    let obj = {username : user, password : password}
+    req.open('POST','/login');
+    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+    req.responseType = 'json';
+    req.onload = function(evt) { callback( req ); };
+    req.send( JSON.stringify( obj ));  
+};
+
 function popup_sign_in() {
     let button = document.getElementById( 'log-in');
     button.addEventListener( 'click', function(evt){
@@ -74,61 +85,25 @@ function popup_sign_in() {
             document.getElementById('login_f').style.display = "none";
         });
         login_button.addEventListener('click', function(evt){
+            let user_name = document.getElementById('uname1').value;
+            let passwrd = document.getElementById("passwrd1").value;
+            authenticateUser(user_name,passwrd,( req ) => {
 
-            authenticateUser()  
-
-            console.log("hey");
-            //authenticateUser();
-            req = new XMLHttpRequest();
-            req.open("GET", `/login`);
-            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            req.responseType = "json";
-            req.onload = function(evt){
-                if ( req.status == 200 ) {
-                    //login_button.addAttribute('href', '/login');
-                    //req.redirect('/login');
-                    // if(resp.status === "login"){
-                    //     // document.getElementById('login_f').style.display = "none";
-                    //     console.log( resp );
-                    // }
+                if ( req.status == 200 ) { 
+                    let res = req.response;
+                    console.log(res.ok)
+                    if ( res.ok ) {
+                        console.log("hi")
+                        document.getElementById('login_f').style.display = "none" 
+                    }
                 }
-                else {
-                    console.log('err', req );
-                }
-            };
-            req.send();   
-
+                    }) 
         });
         
     })
 }
 
-function authenticateUser(){
-    let user_name = document.getElementById('uname1').value;
-    let passwrd = document.getElementById("passwrd1").value;
 
-    let obj = {username : user_name, password : passwrd}
-    console.log("bye");
-    
-    // req = new XMLHttpRequest();
-    // req.open("PUT", `/login`);
-    // req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    // req.responseType = "json";
-    // req.onload = function(evt){
-    //     if ( req.status == 200 ) {
-    //         if(resp.status === "login"){
-    //             // document.getElementById('login_f').style.display = "none";
-    //             console.log( resp );
-    //         }
-    //     }
-    //     else {
-    //         console.log('err', req );
-    //     }
-    // };
-    // console.log('sending', obj );
-    // req.send(JSON.stringify( obj ) );   
-    
-};
 function popup_sign_up() {
     let button = document.getElementById( 'sign-up');
     if ( !button ) {
