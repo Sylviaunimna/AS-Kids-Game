@@ -1,149 +1,133 @@
+class GamePage extends HTMLElement {
+    constructor() {
+        super();  // is always required
+        const thisForm = this;
 
-function init_sign_up(){
-    let button = document.getElementById( 'signup');
-    button.addEventListener( 'click', (evt) => {
-        //get the paremeters from the form
-        let fname = document.getElementById( 'first').value;
-        let uname = document.getElementById( 'uname').value;
-        let pword = document.getElementById( 'password').value;
-        
-        let req = new XMLHttpRequest();
-        req.open('POST',`/add-new-user/${fname}/${uname}/${pword}`);
-        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        req.responseType = 'json'; 
-        req.onload = function(evt) {
-            if ( req.status == 200 ) { // check for ok response
-                const user = req.response;
-                console.log( user );
+        const gameArea = document.getElementById('anim');
+        gameArea.addEventListener('click', function(evt){
+            let target = evt.target;
+            let noden = target.nodeName;
+            if (noden == "DIV" || noden == "IMG"){
+                console.log(target.getAttribute('wid'));
             }
-            else {
-                console.log('err', req );
-            }
-            //still don;t know if we will tell user to sign in
-        };
-        req.send();
-    } );
-
+        })
+    }
 }
-function check_uname() {
-    let uname = document.getElementById('uname');
-    uname.addEventListener( 'change', (evt) => {
-        console.log('change', evt);
-        let user = document.getElementById( 'uname').value;
+class InitialPage extends HTMLElement {
+    constructor() {
+        super();  // is always required
+        const thisForm = this;
 
-       // console.log(user);
-        // get inputs 
-
-        console.log(user);
-
-        let req = new XMLHttpRequest();
-        req.open('PUT', `/check-username/${user}`);
-        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-        req.responseType = 'json'; 
-        req.onload = function(evt) {
-            console.log(req.status)
-            if ( req.status == 200 ) { // check for ok response
-                const resp = req.response;
-                
-                if ( resp.status === 'exists' ) {
-                   
-                    document.getElementById('e_pop').style.display = "block";
-                    let button = document.getElementById( 'e_pop-close');
-                    
-                    button.addEventListener( 'click', (evt) => {
-                        document.getElementById('e_pop').style.display = "none";
-                    } );
-                }
-                console.log( resp );
-            }
-            else {
-                console.log('err', req );
-            }
-        };
-        req.send();
-    } );
-
-}
-function popup_sign_in() {
-    let button = document.getElementById( 'log-in');
-    button.addEventListener( 'click', function(evt){
-        document.getElementById('login_f').style.display = "block"; //popup form
-        let closeb = document.getElementById('sign-in-close');
-        let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
-        closeb.addEventListener('click', function(evt){
-            document.getElementById('login_f').style.display = "none";
-        });
-        login_button.addEventListener('click', function(evt){
-            console.log("hey");
-            //authenticateUser();
-            req = new XMLHttpRequest();
-            req.open("GET", `/login`);
+        let button = document.getElementById( 'signup');
+        button.addEventListener( 'click', (evt) => {
+            //get the paremeters from the form
+            let fname = document.getElementById( 'first').value;
+            let uname = document.getElementById( 'uname').value;
+            let pword = document.getElementById( 'password').value;
+            
+            let req = new XMLHttpRequest();
+            req.open('POST',`/add-new-user/${fname}/${uname}/${pword}`);
             req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            req.responseType = "json";
-            req.onload = function(evt){
-                if ( req.status == 200 ) {
-                    //login_button.addAttribute('href', '/login');
-                    //req.redirect('/login');
-                    // if(resp.status === "login"){
-                    //     // document.getElementById('login_f').style.display = "none";
-                    //     console.log( resp );
-                    // }
+            req.responseType = 'json'; 
+            req.onload = function(evt) {
+                if ( req.status == 200 ) { // check for ok response
+                    const user = req.response;
+                    console.log( user );
+                }
+                else {
+                    console.log('err', req );
+                }
+                //still don;t know if we will tell user to sign in
+            };
+            req.send();
+        } );
+        
+        let uname = document.getElementById('uname');
+        uname.addEventListener( 'change', (evt) => {
+            console.log('change', evt);
+            let user = document.getElementById( 'uname').value;
+
+            console.log(user);
+
+            let req = new XMLHttpRequest();
+            req.open('PUT', `/check-username/${user}`);
+            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            req.responseType = 'json'; 
+            req.onload = function(evt) {
+                console.log(req.status)
+                if ( req.status == 200 ) { // check for ok response
+                    const resp = req.response;
+                    
+                    if ( resp.status === 'exists' ) {
+                    
+                        document.getElementById('e_pop').style.display = "block";
+                        let button = document.getElementById( 'e_pop-close');
+                        
+                        button.addEventListener( 'click', (evt) => {
+                            document.getElementById('e_pop').style.display = "none";
+                        } );
+                    }
+                    console.log( resp );
                 }
                 else {
                     console.log('err', req );
                 }
             };
-            req.send();   
+            req.send();
+        } );
+
+        let button1 = document.getElementById( 'log-in');
+        button1.addEventListener( 'click', function(evt){
+            document.getElementById('login_f').style.display = "block"; //popup form
+            let closeb = document.getElementById('sign-in-close');
+            let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
+            closeb.addEventListener('click', function(evt){
+                document.getElementById('login_f').style.display = "none";
+            });
+            login_button.addEventListener('click', function(evt){
+                console.log("hey");
+                //authenticateUser();
+                req = new XMLHttpRequest();
+                req.open("GET", `/login`);
+                req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                req.responseType = "json";
+                req.onload = function(evt){
+                    if ( req.status == 200 ) {
+                        //login_button.addAttribute('href', '/login');
+                        //req.redirect('/login');
+                        // if(resp.status === "login"){
+                        //     // document.getElementById('login_f').style.display = "none";
+                        //     console.log( resp );
+                        // }
+                    }
+                    else {
+                        console.log('err', req );
+                    }
+                };
+                req.send();   
+            });
+            
         });
         
-    })
-}
-
-function authenticateUser(){
-    let user_name = document.getElementById('uname1').value;
-    let passwrd = document.getElementById("passwrd1").value;
-
-    let obj = {username : user_name, password : passwrd}
-    console.log("bye");
-    
-    // req = new XMLHttpRequest();
-    // req.open("PUT", `/login`);
-    // req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    // req.responseType = "json";
-    // req.onload = function(evt){
-    //     if ( req.status == 200 ) {
-    //         if(resp.status === "login"){
-    //             // document.getElementById('login_f').style.display = "none";
-    //             console.log( resp );
-    //         }
-    //     }
-    //     else {
-    //         console.log('err', req );
-    //     }
-    // };
-    // console.log('sending', obj );
-    // req.send(JSON.stringify( obj ) );   
-    
-};
-function popup_sign_up() {
-    let button = document.getElementById( 'sign-up');
-    if ( !button ) {
-        console.log('missing sign-up');
-        return;
-    }
-    button.addEventListener( 'click', (evt) => {
-        document.getElementById('signup_f').style.display = "block";
-        let button = document.getElementById( 'sign-up-close');
-        if ( !button ) {
-            console.log('missing sign-up-close');
-            return;
-        }
-        button.addEventListener( 'click', (evt) => {
-            document.getElementById('signup_f').style.display = "none";
-           
+        let button2 = document.getElementById( 'sign-up');
+        button2.addEventListener( 'click', (evt) => {
+            document.getElementById('signup_f').style.display = "block";
+            let button = document.getElementById( 'sign-up-close');
+            if ( !button ) {
+                console.log('missing sign-up-close');
+                return;
+            }
+            button.addEventListener( 'click', (evt) => {
+                document.getElementById('signup_f').style.display = "none";
+            
+            } );
         } );
-    } );
+
+
+    }
 }
+
+
 function show_tips(){
     //call app.js on the user to deterine if the user wants to be shown tips 
     let button = document.getElementById('next1');
@@ -152,11 +136,8 @@ function show_tips(){
 
     });
 }
-//customElements.define('user-form', UserForm );
-
-popup_sign_in();
-popup_sign_up();
-check_uname();
-init_sign_up();
+customElements.define('initial-page', InitialPage)
 
 
+
+customElements.define('game-page', GamePage);

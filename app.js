@@ -3,6 +3,17 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database( __dirname + '/users.db',
 function(err) {
     if ( !err ) {
+        console.log('opened users.db');
+        initDB();
+    }
+});
+test_users = [
+    [ 'sylvia', 'sylviax', 'byebye', 19 ],
+    [ 'afrah', 'afrahx', 'byebye', 10 ],
+];
+
+function initDB() {
+    db.serialize( function() {
         db.run(`
             CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
@@ -11,10 +22,18 @@ function(err) {
             password TEXT, 
             score INTEGER
         )`);
-        console.log('opened users.db');
-    }
-});
-
+        // for( let row of test_users ) { 
+        //     db.run('INSERT INTO users(fname, username, password, score) VALUES(?,?,?,?)', row,
+        //        (err) => {
+        //            if ( err ) {
+        //                console.log( err );
+        //            } else {
+        //                console.log('insert', row );
+        //            }
+        //        } );
+        // }
+    } );
+}
 const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
@@ -40,7 +59,7 @@ const port = process.env.PORT || 8000;
 
 
 function generate_welcome_page( res,req ) {
-    db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
+    db.all('SELECT * FROM users ORDER BY score DESC',[], function(err, results) {
         if ( !err ) {
             res.type('.html');
             res.render('welcome', {
@@ -76,7 +95,13 @@ app.get('/login', function(req, res){
     // })
     
 })
-
+app.get('/animal', function(req, res){
+    res.type('.html')
+    res.render('animals', {
+        title : 'AS Social'
+    });
+    
+})
 app.get('/', function(req, res) {
     generate_welcome_page( res,req );
 });
