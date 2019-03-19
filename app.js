@@ -103,7 +103,15 @@ function generate_welcome_page( res,req ) {
 app.get('/login', function(req, res){
     console.log("login homepage");
     res.type('.html')
+    if(!req.session.username){
+        req.session.username = "None";
+
+    }
+    if(!req.session.password){
+        req.session.password = "None";
+    }
     res.render('homepage', {
+        sess: req.session,
         title : 'AS Social'
     });
    
@@ -162,6 +170,7 @@ app.post('/login',jsonParser, function(req, res){
                 if( (authInfo.password) == row.password ) {
                     req.session.auth = true;
                     req.session.user = authInfo.username;
+                    req.session.password = authInfo.password
                     console.log("correct pass")
                     //res.redirect('/login');
                     res.send( { ok: true } );
