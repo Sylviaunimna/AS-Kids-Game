@@ -65,7 +65,6 @@ function check_auth(req, res, next){
         next();
     }
     else if ( allowed_pages.indexOf(req.url) !== -1 ) {
-        console.log( req.url );
         next();
     }  
 }
@@ -118,7 +117,8 @@ app.get('/animal', function(req, res){
     
 })
 app.get('/', function(req, res) {
-    console.log("/ is called")
+    //console.log(req)
+    console.log("i was called");
     generate_welcome_page( res,req );
 });
 
@@ -163,8 +163,8 @@ app.post('/login',jsonParser, function(req, res){
                     req.session.auth = true;
                     req.session.user = authInfo.username;
                     console.log("correct pass")
+                    //res.redirect('/login');
                     res.send( { ok: true } );
-                   // res.redirect('/loggedin')
                        
                 }
                 else {

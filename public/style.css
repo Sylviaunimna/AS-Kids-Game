@@ -1,94 +1,54 @@
-.container {
-  position: relative;
-  justify-content: center
-}
 .container > div{
   position: fixed;
 }
-
 .logo{
   top: 2em;
 }
-.user{
+#user{
   border: none;
   top: 5em;
   right: -1%;
 }
 #sign-up{
-  position: absolute;
-  border: none;
   top: 2em;
   right: -4%;
-  background: rgb(230, 164, 224);
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  color: black;
-  font-size: 16px;
-  padding: 16px 30px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
 }
-#log-in{
-  position: absolute;
-  border: none;
+#log-in{ 
   top: 2em;
   right: 9%;
+}
+.button1{
+  position: absolute;
+  border: none;
   background: rgb(230, 164, 224);
   transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
+  /* -ms-transform: translate(-50%, -50%); */
   color: black;
   font-size: 16px;
   padding: 16px 30px;
-  border: none;
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
 }
-/* button{
-  position: absolute;
-  border: none;
-  top: 2em;
-  background: rgb(230, 164, 224);
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  color: black;
-  font-size: 16px;
-  padding: 16px 30px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
-} */
 body{
   background-color:  black;
   color: white;
-  font-size: 20px;
+  font-size: 13px;
 }
 h3{
   color: rgb(255, 192, 227)  
 }
-
-#sign-in{
-background: rgb(230, 164, 224)
-}
-.popup{
-display: none; /* Hidden by default */
-}
 .modal{
+  display: none;
   color: black;
   position: fixed;
+  z-index: 1;
   top: 0;
-  right: 0;
-  
   left: 0;
-  font-size: 15px;
   opacity: 0.9;
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 3px solid pink;
-  width: 50%; /* Could be more or less, depending on screen size */
+  background-color: black;
+  height: 100%;
+  width: 100%; /* Could be more or less, depending on screen size */
   padding: 16px;
 }
 input[type=text], input[type=password] {
@@ -99,7 +59,6 @@ input[type=text], input[type=password] {
   border: none;
   background: #f1f1f1;
 }
-
 /* Add a background color when the inputs get focus */
 input[type=text]:focus, input[type=password]:focus {
   background-color: #ddd;
@@ -110,56 +69,74 @@ span{
 }
 * {box-sizing: border-box;}
 
-.flex-container1{
-  height: 135px;
-  width: 150px;
+.flexcont{
   display: flex;
   flex-direction: row;
-  background-color: black;
-  margin-bottom: 30px;
+  text-align: center;
 }
-
-#container div{
-  margin-left: 50px;
-  margin-right: 50px;
-  width: 150px;
-  font-size: 30px;
+.flexcont1{
+  display: flex;
+  flex-direction: column
 }
-
-#container img{
-  width: 150px;
-  height: 150px;
-}
-.picnames{
+.text {
+	width:150px;
+	overflow:hidden;
+	background-color:#FFF;
+	color:#222;
+	font-family:Courier, monospace;
+	font-weight:normal;
+	font-size:12px;
+	resize:none;
+  line-height:10px;
   background-color: green;
-  /* border: 2px solid green; */
-  padding: 40px;
+	background-repeat:repeat-y, repeat;
+	-webkit-border-radius:12px;
+	border-radius:12px;
 }
-#anim{
-  width: 50%;
-  float: right;
-  position: absolute;
+#wrongpop{
+  background-color: black;
+  width: 100%; /* Could be more or less, depending on screen size */
+  height: 100%;
+  padding: 16px;
+  text-align: center;
+  font-size: 30px;
+  color:black;
 }
-p{
+.modal-content{
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  width: 20%;
+  height: 19%;
+  -webkit-border-radius:12px;
+	border-radius:12px;
+}
+.modal-c{
+  font-size: 15px;
+  color: black;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  font-size: 15px;
+  opacity: 0.9;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 3px solid pink;
+  width: 50%; /* Could be more or less, depending on screen size */
+  padding: 16px;
+}
+.mybuttn{
   position: relative;
-  float: right;
-  top: -25em;
-  left: 28em;
-  background: green;
-}
-#animale button{
-  position: relative;
-  float: right;
-  top: -38em;
-  left: 33em;
-  background: green;
+  border: none;
+  background: rgb(230, 164, 224);
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   color: black;
-  font-size: 16px;
-  padding: 16px 30px;
-  border: none;
+  font-size: 7px;
+  padding: 6px 3px;
   cursor: pointer;
   border-radius: 5px;
   text-align: center;
+  top: 6em;
+  right: -28%;
 }

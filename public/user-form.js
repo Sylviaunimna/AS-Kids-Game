@@ -4,11 +4,39 @@ class GamePage extends HTMLElement {
         const thisForm = this;
 
         const gameArea = document.getElementById('anim');
+        let prevtarget = null;
+        let score = 0;
         gameArea.addEventListener('click', function(evt){
-            let target = evt.target;
-            let noden = target.nodeName;
-            if (noden == "DIV" || noden == "IMG"){
-                console.log(target.getAttribute('wid'));
+            if (prevtarget == null){
+                prevtarget = evt.target;  
+                if (prevtarget.hasAttribute('wid')){
+                    prevtarget.setAttribute('style', 'outline: 1px solid white' )
+                }
+            }
+            else{
+                let target = evt.target;
+                if (target.hasAttribute('wid')){
+                    prevtarget.removeAttribute('style');
+                    if (target.getAttribute('wid') == prevtarget.getAttribute('wid') && target.getAttribute('id') != prevtarget.getAttribute('id')){
+                        prevtarget.parentNode.removeChild(prevtarget);
+                        target.parentNode.removeChild(target);
+                        score ++;
+                        let texta = document.getElementById('score');
+                        texta.value = "Score: " + score;
+                        prevtarget = null;
+                        if (score == 6){
+                            document.getElementById('donepop').style.display = "block";
+                        }
+                    }
+                    else{
+                        document.getElementById('wrongpop').style.display = "block";
+                        prevtarget = null;
+                        let wrong = document.getElementById( 'wrong-close');
+                        wrong.addEventListener( 'click', (evt) => {
+                            document.getElementById('wrongpop').style.display = "none";
+                        } );
+                    }
+                }
             }
         })
     }
@@ -81,7 +109,7 @@ class InitialPage extends HTMLElement {
             let closeb = document.getElementById('sign-in-close');
             let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
             closeb.addEventListener('click', function(evt){
-                document.getElementById('login_f').style.display = "none";
+                //document.getElementById('login_f').style.display = "none";
             });
             login_button.addEventListener('click', function(evt){
                 let user = document.getElementById( 'uname1').value;
@@ -90,19 +118,29 @@ class InitialPage extends HTMLElement {
                     if ( req.status == 200 ) { 
                         let res = req.response;
                         if ( res.ok ) {
+<<<<<<< HEAD
                             login_button.setAttribute('href','/login')
                             console.log(res.ok)
                             
+=======
+                            login_button.setAttribute('href', "/login")
+                            //login_button.href = "/login";
+>>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
                         }
                         else {
                             login_button.setAttribute('href','/')
                             notloggedIn();
                         }
+<<<<<<< HEAD
                     }
                            
+=======
+                        
+                    }     
+>>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
                 })   
+            });
         });
-    })
         
         let button2 = document.getElementById( 'sign-up');
         button2.addEventListener( 'click', (evt) => {
@@ -121,9 +159,12 @@ class InitialPage extends HTMLElement {
     }
 }
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
 function authenticateUser(user,password,callback){
     let req = new XMLHttpRequest();
     console.log(user)
@@ -136,10 +177,14 @@ function authenticateUser(user,password,callback){
     req.send( JSON.stringify( obj ));  
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
 function notloggedIn(){
     let req = new XMLHttpRequest();
     req.open('GET','/');
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.onload = function(evt) {
         if ( req.status == 200 ) {
@@ -152,14 +197,14 @@ function notloggedIn(){
     req.send();
 }
 
-function show_tips(){
-    //call app.js on the user to deterine if the user wants to be shown tips 
-    let button = document.getElementById('next1');
-    button.addEventListener('click', function(evt){
-        document.getElementById(tips_1).style.display = "none";
+// function show_tips(){
+//     //call app.js on the user to deterine if the user wants to be shown tips 
+//     let button = document.getElementById('next1');
+//     button.addEventListener('click', function(evt){
+//         document.getElementById(tips_1).style.display = "none";
 
-    });
-}
+//     });
+// }
 
 customElements.define('initial-page', InitialPage)
 
