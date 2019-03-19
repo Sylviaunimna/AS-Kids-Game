@@ -87,7 +87,6 @@ class InitialPage extends HTMLElement {
                     const resp = req.response;
                     
                     if ( resp.status === 'exists' ) {
-                    
                         document.getElementById('e_pop').style.display = "block";
                         let button = document.getElementById( 'e_pop-close');
                         
@@ -123,6 +122,7 @@ class InitialPage extends HTMLElement {
                             //login_button.href = "/login";
                         }
                         else {
+                            login_button.setAttribute('href','/')
                             notloggedIn();
                         }
                         
