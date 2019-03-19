@@ -110,7 +110,7 @@ class InitialPage extends HTMLElement {
             let closeb = document.getElementById('sign-in-close');
             let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
             closeb.addEventListener('click', function(evt){
-                //document.getElementById('login_f').style.display = "none";
+                document.getElementById('login_f').style.display = "none";
             });
             login_button.addEventListener('click', function(evt){
                 let user = document.getElementById( 'uname1').value;
