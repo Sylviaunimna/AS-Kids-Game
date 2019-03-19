@@ -46,6 +46,21 @@
   border-radius: 5px;
   text-align: center;
 }
+/* button{
+  position: absolute;
+  border: none;
+  top: 2em;
+  background: rgb(230, 164, 224);
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  color: black;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+} */
 body{
   background-color:  black;
   color: white;
@@ -97,10 +112,11 @@ span{
 
 .flex-container1{
   height: 135px;
-  width: 360px;
+  width: 150px;
   display: flex;
   flex-direction: row;
   background-color: black;
+  margin-bottom: 30px;
 }
 
 #container div{
@@ -118,4 +134,32 @@ span{
   background-color: green;
   /* border: 2px solid green; */
   padding: 40px;
+}
+#anim{
+  width: 50%;
+  float: right;
+  position: absolute;
+}
+p{
+  position: relative;
+  float: right;
+  top: -25em;
+  left: 28em;
+  background: green;
+}
+#animale button{
+  position: relative;
+  float: right;
+  top: -38em;
+  left: 33em;
+  background: green;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  color: black;
+  font-size: 16px;
+  padding: 16px 30px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
 }
