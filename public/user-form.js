@@ -4,11 +4,39 @@ class GamePage extends HTMLElement {
         const thisForm = this;
 
         const gameArea = document.getElementById('anim');
+        let prevtarget = null;
+        let score = 0;
         gameArea.addEventListener('click', function(evt){
-            let target = evt.target;
-            let noden = target.nodeName;
-            if (noden == "DIV" || noden == "IMG"){
-                console.log(target.getAttribute('wid'));
+            if (prevtarget == null){
+                prevtarget = evt.target;  
+                if (prevtarget.hasAttribute('wid')){
+                    prevtarget.setAttribute('style', 'outline: 1px solid white' )
+                }
+            }
+            else{
+                let target = evt.target;
+                if (target.hasAttribute('wid')){
+                    prevtarget.removeAttribute('style');
+                    if (target.getAttribute('wid') == prevtarget.getAttribute('wid') && target.getAttribute('id') != prevtarget.getAttribute('id')){
+                        prevtarget.parentNode.removeChild(prevtarget);
+                        target.parentNode.removeChild(target);
+                        score ++;
+                        let texta = document.getElementById('score');
+                        texta.value = "Score: " + score;
+                        prevtarget = null;
+                        if (score == 6){
+                            document.getElementById('donepop').style.display = "block";
+                        }
+                    }
+                    else{
+                        document.getElementById('wrongpop').style.display = "block";
+                        prevtarget = null;
+                        let wrong = document.getElementById( 'wrong-close');
+                        wrong.addEventListener( 'click', (evt) => {
+                            document.getElementById('wrongpop').style.display = "none";
+                        } );
+                    }
+                }
             }
         })
     }
