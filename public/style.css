@@ -51,14 +51,6 @@ body{
   color: white;
   font-size: 20px;
 }
-/* button {
-  float: right;
-} */
-/* .container .user{
-  background-color: black;
-  color: white
-} */
-
 h3{
   color: rgb(255, 192, 227)  
 }
@@ -71,12 +63,17 @@ display: none; /* Hidden by default */
 }
 .modal{
   color: black;
+  position: fixed;
+  top: 0;
+  right: 0;
+  
+  left: 0;
   font-size: 15px;
   opacity: 0.9;
   background-color: #fefefe;
   margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
   border: 3px solid pink;
-  width: 80%; /* Could be more or less, depending on screen size */
+  width: 50%; /* Could be more or less, depending on screen size */
   padding: 16px;
 }
 input[type=text], input[type=password] {
@@ -97,3 +94,28 @@ span{
   float: right;
 }
 * {box-sizing: border-box;}
+
+.flex-container1{
+  height: 135px;
+  width: 360px;
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+}
+
+#container div{
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 150px;
+  font-size: 30px;
+}
+
+#container img{
+  width: 150px;
+  height: 150px;
+}
+.picnames{
+  background-color: green;
+  /* border: 2px solid green; */
+  padding: 40px;
+}

@@ -3,6 +3,17 @@ const sqlite3 = require('sqlite3').verbose();
 const db = new sqlite3.Database( __dirname + '/users.db',
 function(err) {
     if ( !err ) {
+        console.log('opened users.db');
+        initDB();
+    }
+});
+test_users = [
+    [ 'sylvia', 'sylviax', 'byebye', 19 ],
+    [ 'afrah', 'afrahx', 'byebye', 10 ],
+];
+
+function initDB() {
+    db.serialize( function() {
         db.run(`
             CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
@@ -11,10 +22,18 @@ function(err) {
             password TEXT, 
             score INTEGER
         )`);
-        console.log('opened users.db');
-    }
-});
-
+        // for( let row of test_users ) { 
+        //     db.run('INSERT INTO users(fname, username, password, score) VALUES(?,?,?,?)', row,
+        //        (err) => {
+        //            if ( err ) {
+        //                console.log( err );
+        //            } else {
+        //                console.log('insert', row );
+        //            }
+        //        } );
+        // }
+    } );
+}
 const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
@@ -30,7 +49,17 @@ const allowed_pages = [
     '/mjy.png',
     '/user-form.js',
     '/add-new-user',
-    '/check-username'
+    '/check-username',
+    '/elephant.jpg',
+    '/giraffe.jpg',
+    '/lion.jpg',
+    '/parrot.jpg',
+    '/tiger.jpg',
+    '/zebra.jpg',
+    '/animal',
+    
+
+
 ];
 function generate_welcome_page( res,req ) {
     db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
@@ -50,7 +79,11 @@ function check_auth(req, res, next){
     else if ( allowed_pages.indexOf(req.url) !== -1 ) {
         console.log( req.url );
         next();
-    }   
+    }
+    else{
+        res.redirect('/')
+    } 
+    
 }
 app.use(cookieSession({
     name:'session',
@@ -72,8 +105,36 @@ app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
 
+
+function generate_welcome_page( res,req ) {
+    db.all('SELECT * FROM users ORDER BY score DESC',[], function(err, results) {
+        if ( !err ) {
+            res.type('.html');
+            res.render('welcome', {
+                users : results,
+                title : 'Welcome to AS Social'
+            });
+        }
+    } );
+}
+app.get('/loggedin', function(req, res){
+    console.log("login homepage");
+    res.type('.html')
+    res.render('homepage', {
+        title : 'AS Social'
+    });
+   
+    
+})
+app.get('/animal', function(req, res){
+    res.type('.html')
+    res.render('animals', {
+        title : 'AS Social'
+    });
+    
+})
 app.get('/', function(req, res) {
-    console.log(req)
+    //console.log(req)
     generate_welcome_page( res,req );
 });
 
@@ -107,26 +168,37 @@ app.post('/add-new-user',jsonParser, function(req, res) {
 });
 
 app.post('/login',jsonParser, function(req, res){
-    const authInfo = req.body;
+    let authInfo = req.body;
+    console.log("llllll")
     console.log(authInfo.username)
     db.get('SELECT * FROM users where username= ?',
     [ authInfo.username ],
     function(err, row) {
+        
         if ( !err ) {
             if( row ) {
                 if( (authInfo.password) == row.password ) {
                     req.session.auth = true;
                     req.session.user = authInfo.username;
+                    console.log("correct pass")
                     res.send( { ok: true } );
+                   // res.redirect('/loggedin')
+                       
                 }
                 else {
                     req.session.auth = false;
+                    console.log("incorrect pass")
                     res.send( { ok: false } );
+                    //res.redirect('/')
+
                 }
             }
             else {
                 req.session.auth = false;
+                console.log("not a user")
                 res.send( { ok: false, msg : 'notuser' } );
+                //res.redirect('/')
+               
             }
         }
         else {
