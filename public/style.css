@@ -1,7 +1,3 @@
-/* .container {
-  position: relative;
-  justify-content: center
-} */
 .container > div{
   position: fixed;
 }

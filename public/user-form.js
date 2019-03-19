@@ -110,7 +110,7 @@ class InitialPage extends HTMLElement {
             let closeb = document.getElementById('sign-in-close');
             let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
             closeb.addEventListener('click', function(evt){
-                document.getElementById('login_f').style.display = "none";
+                //document.getElementById('login_f').style.display = "none";
             });
             login_button.addEventListener('click', function(evt){
                 let user = document.getElementById( 'uname1').value;
@@ -118,20 +118,18 @@ class InitialPage extends HTMLElement {
                 authenticateUser(user,password,(req)=>{
                     if ( req.status == 200 ) { 
                         let res = req.response;
-                        console.log("HIIIIIIII")
-                        console.log(res.ok)
                         if ( res.ok ) {
-                            console.log(res.ok)
-                            loggedIn();
+                            login_button.setAttribute('href', "/login")
+                            //login_button.href = "/login";
                         }
                         else {
                             notloggedIn();
                         }
-                    }
-                          //document.getElementById('login_f').style.display = "none"       
+                        
+                    }     
                 })   
+            });
         });
-    })
         
         let button2 = document.getElementById( 'sign-up');
         button2.addEventListener( 'click', (evt) => {
@@ -150,18 +148,8 @@ class InitialPage extends HTMLElement {
     }
 }
 
-
-
-function popup_sign_up() {
-    let button = document.getElementById( 'sign-up');
-    if ( !button ) {
-        console.log('missing sign-up');
-        return;
-    }
-}
 function authenticateUser(user,password,callback){
     let req = new XMLHttpRequest();
-    console.log("******************")
     console.log(user)
     let obj = {username : user, password : password}
     console.log(obj)
@@ -172,23 +160,10 @@ function authenticateUser(user,password,callback){
     req.send( JSON.stringify( obj ));  
 };
 
-function loggedIn(){
-    let req = new XMLHttpRequest();
-    req.open('GET','/loggedin');
-    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    req.onload = function(evt) {
-        if ( req.status == 200 ) {
-            console.log(req.status)
-        }
-        else {
-            console.log('err', req );
-        }
-    }
-    req.send();
-}
 function notloggedIn(){
     let req = new XMLHttpRequest();
     req.open('GET','/');
+    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.onload = function(evt) {
         if ( req.status == 200 ) {
@@ -201,14 +176,14 @@ function notloggedIn(){
     req.send();
 }
 
-function show_tips(){
-    //call app.js on the user to deterine if the user wants to be shown tips 
-    let button = document.getElementById('next1');
-    button.addEventListener('click', function(evt){
-        document.getElementById(tips_1).style.display = "none";
+// function show_tips(){
+//     //call app.js on the user to deterine if the user wants to be shown tips 
+//     let button = document.getElementById('next1');
+//     button.addEventListener('click', function(evt){
+//         document.getElementById(tips_1).style.display = "none";
 
-    });
-}
+//     });
+// }
 
 customElements.define('initial-page', InitialPage)
 

@@ -57,8 +57,6 @@ const allowed_pages = [
     '/tiger.jpg',
     '/zebra.jpg',
     '/animal',
-    
-
 
 ];
 function generate_welcome_page( res,req ) {
@@ -77,7 +75,6 @@ function check_auth(req, res, next){
         next();
     }
     else if ( allowed_pages.indexOf(req.url) !== -1 ) {
-        console.log( req.url );
         next();
     }
     else{
@@ -117,7 +114,7 @@ function generate_welcome_page( res,req ) {
         }
     } );
 }
-app.get('/loggedin', function(req, res){
+app.get('/login', function(req, res){
     console.log("login homepage");
     res.type('.html')
     res.render('homepage', {
@@ -135,6 +132,7 @@ app.get('/animal', function(req, res){
 })
 app.get('/', function(req, res) {
     //console.log(req)
+    console.log("i was called");
     generate_welcome_page( res,req );
 });
 
@@ -181,8 +179,8 @@ app.post('/login',jsonParser, function(req, res){
                     req.session.auth = true;
                     req.session.user = authInfo.username;
                     console.log("correct pass")
+                    //res.redirect('/login');
                     res.send( { ok: true } );
-                   // res.redirect('/loggedin')
                        
                 }
                 else {
