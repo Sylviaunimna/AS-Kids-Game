@@ -59,7 +59,6 @@ class InitialPage extends HTMLElement {
                     const resp = req.response;
                     
                     if ( resp.status === 'exists' ) {
-                    
                         document.getElementById('e_pop').style.display = "block";
                         let button = document.getElementById( 'e_pop-close');
                         
@@ -90,17 +89,17 @@ class InitialPage extends HTMLElement {
                 authenticateUser(user,password,(req)=>{
                     if ( req.status == 200 ) { 
                         let res = req.response;
-                        console.log("HIIIIIIII")
-                        console.log(res.ok)
                         if ( res.ok ) {
+                            login_button.setAttribute('href','/login')
                             console.log(res.ok)
-                            loggedIn();
+                            
                         }
                         else {
+                            login_button.setAttribute('href','/')
                             notloggedIn();
                         }
                     }
-                          //document.getElementById('login_f').style.display = "none"       
+                           
                 })   
         });
     })
@@ -124,16 +123,9 @@ class InitialPage extends HTMLElement {
 
 
 
-function popup_sign_up() {
-    let button = document.getElementById( 'sign-up');
-    if ( !button ) {
-        console.log('missing sign-up');
-        return;
-    }
-}
+
 function authenticateUser(user,password,callback){
     let req = new XMLHttpRequest();
-    console.log("******************")
     console.log(user)
     let obj = {username : user, password : password}
     console.log(obj)
@@ -144,20 +136,7 @@ function authenticateUser(user,password,callback){
     req.send( JSON.stringify( obj ));  
 };
 
-function loggedIn(){
-    let req = new XMLHttpRequest();
-    req.open('GET','/loggedin');
-    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    req.onload = function(evt) {
-        if ( req.status == 200 ) {
-            console.log(req.status)
-        }
-        else {
-            console.log('err', req );
-        }
-    }
-    req.send();
-}
+
 function notloggedIn(){
     let req = new XMLHttpRequest();
     req.open('GET','/');

@@ -22,16 +22,7 @@ function initDB() {
             password TEXT, 
             score INTEGER
         )`);
-        // for( let row of test_users ) { 
-        //     db.run('INSERT INTO users(fname, username, password, score) VALUES(?,?,?,?)', row,
-        //        (err) => {
-        //            if ( err ) {
-        //                console.log( err );
-        //            } else {
-        //                console.log('insert', row );
-        //            }
-        //        } );
-        // }
+
     } );
 }
 const express = require('express');
@@ -57,9 +48,6 @@ const allowed_pages = [
     '/tiger.jpg',
     '/zebra.jpg',
     '/animal',
-    
-
-
 ];
 function generate_welcome_page( res,req ) {
     db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
@@ -79,11 +67,7 @@ function check_auth(req, res, next){
     else if ( allowed_pages.indexOf(req.url) !== -1 ) {
         console.log( req.url );
         next();
-    }
-    else{
-        res.redirect('/')
-    } 
-    
+    }  
 }
 app.use(cookieSession({
     name:'session',
@@ -117,7 +101,7 @@ function generate_welcome_page( res,req ) {
         }
     } );
 }
-app.get('/loggedin', function(req, res){
+app.get('/login', function(req, res){
     console.log("login homepage");
     res.type('.html')
     res.render('homepage', {
@@ -134,7 +118,7 @@ app.get('/animal', function(req, res){
     
 })
 app.get('/', function(req, res) {
-    //console.log(req)
+    console.log("/ is called")
     generate_welcome_page( res,req );
 });
 
@@ -170,11 +154,9 @@ app.post('/add-new-user',jsonParser, function(req, res) {
 app.post('/login',jsonParser, function(req, res){
     let authInfo = req.body;
     console.log("llllll")
-    console.log(authInfo.username)
     db.get('SELECT * FROM users where username= ?',
     [ authInfo.username ],
     function(err, row) {
-        
         if ( !err ) {
             if( row ) {
                 if( (authInfo.password) == row.password ) {
@@ -198,7 +180,7 @@ app.post('/login',jsonParser, function(req, res){
                 console.log("not a user")
                 res.send( { ok: false, msg : 'notuser' } );
                 //res.redirect('/')
-               
+
             }
         }
         else {
