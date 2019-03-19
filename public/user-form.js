@@ -118,26 +118,15 @@ class InitialPage extends HTMLElement {
                     if ( req.status == 200 ) { 
                         let res = req.response;
                         if ( res.ok ) {
-<<<<<<< HEAD
-                            login_button.setAttribute('href','/login')
-                            console.log(res.ok)
-                            
-=======
                             login_button.setAttribute('href', "/login")
                             //login_button.href = "/login";
->>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
                         }
                         else {
                             login_button.setAttribute('href','/')
                             notloggedIn();
                         }
-<<<<<<< HEAD
-                    }
-                           
-=======
                         
                     }     
->>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
                 })   
             });
         });
@@ -159,12 +148,6 @@ class InitialPage extends HTMLElement {
     }
 }
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
 function authenticateUser(user,password,callback){
     let req = new XMLHttpRequest();
     console.log(user)
@@ -177,10 +160,6 @@ function authenticateUser(user,password,callback){
     req.send( JSON.stringify( obj ));  
 };
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 997a3d0b3bd091ceee5dd8c651c8580a09a68bf6
 function notloggedIn(){
     let req = new XMLHttpRequest();
     req.open('GET','/');
