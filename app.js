@@ -49,17 +49,6 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
 ];
-function generate_welcome_page( res,req ) {
-    db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
-        if ( !err ) {
-            res.type('.html');
-            res.render('welcome', {
-                users : results,
-                title : 'Welcome to AS Social'
-            });
-        }
-    } );
-}
 function check_auth(req, res, next){
     if ( req.session && req.session.auth ) {
         next();
@@ -88,18 +77,6 @@ app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
 
-
-function generate_welcome_page( res,req ) {
-    db.all('SELECT * FROM users ORDER BY score DESC',[], function(err, results) {
-        if ( !err ) {
-            res.type('.html');
-            res.render('welcome', {
-                users : results,
-                title : 'Welcome to AS Social'
-            });
-        }
-    } );
-}
 app.get('/login', function(req, res){
     console.log("login homepage");
     res.type('.html')
@@ -127,6 +104,8 @@ app.get('/animal', function(req, res){
 app.get('/', function(req, res) {
     //console.log(req)
     console.log("i was called");
+    console.log("*****************")
+    console.log(req)
     generate_welcome_page( res,req );
 });
 
@@ -157,9 +136,10 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
     [fname, uname, pword, null]);
     res.send( {fname : fname, uname : uname} ); 
+
 });
 
-app.post('/login',jsonParser, function(req, res){
+app.get('/login',jsonParser, function(req, res){
     let authInfo = req.body;
     console.log("llllll")
     db.get('SELECT * FROM users where username= ?',
@@ -169,10 +149,11 @@ app.post('/login',jsonParser, function(req, res){
             if( row ) {
                 if( (authInfo.password) == row.password ) {
                     req.session.auth = true;
-                    req.session.user = authInfo.username;
+                    req.session.username = authInfo.username;
                     req.session.password = authInfo.password
                     console.log("correct pass")
                     //res.redirect('/login');
+                    console.log(res)
                     res.send( { ok: true } );
                        
                 }

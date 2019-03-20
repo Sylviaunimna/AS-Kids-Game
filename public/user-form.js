@@ -117,14 +117,14 @@ class InitialPage extends HTMLElement {
                 authenticateUser(user,password,(req)=>{
                     if ( req.status == 200 ) { 
                         let res = req.response;
-                        if ( res.ok ) {
+                        /*if ( res.ok ) {
                             login_button.setAttribute('href', "/login")
                             //login_button.href = "/login";
                         }
                         else {
                             login_button.setAttribute('href','/')
                             notloggedIn();
-                        }
+                        }*/
                         
                     }     
                 })   
@@ -153,7 +153,7 @@ function authenticateUser(user,password,callback){
     console.log(user)
     let obj = {username : user, password : password}
     console.log(obj)
-    req.open('POST','/login');
+    req.open('GET','/login');
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.responseType = 'json';
     req.onload = function(evt) { callback( req ); };
@@ -163,7 +163,6 @@ function authenticateUser(user,password,callback){
 function notloggedIn(){
     let req = new XMLHttpRequest();
     req.open('GET','/');
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.onload = function(evt) {
         if ( req.status == 200 ) {
