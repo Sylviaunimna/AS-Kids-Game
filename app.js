@@ -1,4 +1,5 @@
 const sqlite3 = require('sqlite3').verbose();
+var logger = require('morgan');
 //Database for user information
 const db = new sqlite3.Database( __dirname + '/users.db',
 function(err) {
@@ -7,10 +8,6 @@ function(err) {
         initDB();
     }
 });
-test_users = [
-    [ 'sylvia', 'sylviax', 'byebye', 19 ],
-    [ 'afrah', 'afrahx', 'byebye', 10 ],
-];
 
 function initDB() {
     db.serialize( function() {
@@ -25,29 +22,41 @@ function initDB() {
 
     } );
 }
+
 const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const cookieSession = require('cookie-session');
+
 const app = express();
+app.use(logger('dev'));
 // the static file middleware
 const allowed_pages = [
     '/',
     '/login',
+    'logdin',
     '/style.css',
     '/newlog.png',
     '/mjy.png',
     '/user-form.js',
     '/add-new-user',
     '/check-username',
-    '/elephant.jpg',
-    '/giraffe.jpg',
-    '/lion.jpg',
+    '/nelephant.jpg',
+    '/elep.jpg',
+    '/ngiraffe.jpg',
+    '/gira.jpg',
+    '/nlion.jpg',
+    '/lio.jpg',
     '/parrot.jpg',
+    '/par.jpg',
     '/tiger.jpg',
+    '/tig.jpg',
+    '/zebra.jpg',
+    '/zeb.jpg',
     '/zebra.jpg',
     '/animal',
+    '/logout',
 ];
 function generate_welcome_page( res,req ) {
     db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
@@ -65,8 +74,11 @@ function check_auth(req, res, next){
         next();
     }
     else if ( allowed_pages.indexOf(req.url) !== -1 ) {
-        next();
-    }  
+        next(); 
+    } 
+    else{
+        res.status(404).send('Page Not Found');
+    }
 }
 app.use(cookieSession({
     name:'session',
@@ -88,32 +100,13 @@ app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
 
-
-function generate_welcome_page( res,req ) {
-    db.all('SELECT * FROM users ORDER BY score DESC',[], function(err, results) {
-        if ( !err ) {
-            res.type('.html');
-            res.render('welcome', {
-                users : results,
-                title : 'Welcome to AS Social'
-            });
-        }
-    } );
-}
 app.get('/login', function(req, res){
-    console.log("login homepage");
     res.type('.html')
-    if(!req.session.username){
-        req.session.username = "None";
-
-    }
-    if(!req.session.password){
-        req.session.password = "None";
-    }
     res.render('homepage', {
         sess: req.session,
         title : 'AS Social'
     });
+    // console.log(req.session, "login");
    
     
 })
@@ -125,8 +118,7 @@ app.get('/animal', function(req, res){
     
 })
 app.get('/', function(req, res) {
-    //console.log(req)
-    console.log("i was called");
+    console.log(req.session, "home page");
     generate_welcome_page( res,req );
 });
 
@@ -160,20 +152,22 @@ app.post('/add-new-user',jsonParser, function(req, res) {
 });
 
 app.post('/login',jsonParser, function(req, res){
+    console.log("we're here")
     let authInfo = req.body;
-    console.log("llllll")
     db.get('SELECT * FROM users where username= ?',
     [ authInfo.username ],
     function(err, row) {
+        console.log("in database");
         if ( !err ) {
+            console.log(row);
             if( row ) {
-                if( (authInfo.password) == row.password ) {
+                if( (authInfo.password) === row.password ) {
                     req.session.auth = true;
-                    req.session.user = authInfo.username;
-                    req.session.password = authInfo.password
-                    console.log("correct pass")
-                    //res.redirect('/login');
-                    res.send( { ok: true } );
+                    // req.session.username = authInfo.username;
+                    // req.session.password = authInfo.password
+                    console.log("correct");
+                    res.redirect('/login');
+                    // res.send( { ok: true } );
                        
                 }
                 else {
@@ -187,7 +181,9 @@ app.post('/login',jsonParser, function(req, res){
             else {
                 req.session.auth = false;
                 console.log("not a user")
-                res.send( { ok: false, msg : 'notuser' } );
+                res.send( { ok: false, msg : 'notuser' }
+                 );
+                 console.log(req.session);
                 //res.redirect('/')
 
             }
@@ -198,7 +194,15 @@ app.post('/login',jsonParser, function(req, res){
         } 
     });
     
-})
+});
+
+app.post('/logout', function(req, res){
+    console.log("hellooooo")
+    req.session.username = "None";
+    req.session.password = "None";
+    req.session.auth = false;
+    console.log(req.session, "logout");
+});
 
 
 
