@@ -65,7 +65,6 @@ class InitialPage extends HTMLElement {
                 else {
                     console.log('err', req );
                 }
-                //still don;t know if we will tell user to sign in
             };
             req.send(JSON.stringify( obj ));
         } );
@@ -109,23 +108,13 @@ class InitialPage extends HTMLElement {
             let closeb = document.getElementById('sign-in-close');
             let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
             closeb.addEventListener('click', function(evt){
-                //document.getElementById('login_f').style.display = "none";
+                document.getElementById('login_f').style.display = "none";
             });
             login_button.addEventListener('click', function(evt){
                 let user = document.getElementById( 'uname1').value;
                 let password = document.getElementById('passwrd1').value;
                 authenticateUser(user,password,(req)=>{
-                    if ( req.status == 200 ) { 
-                        let res = req.response;
-                        /*if ( res.ok ) {
-                            login_button.setAttribute('href', "/login")
-                            //login_button.href = "/login";
-                        }
-                        else {
-                            login_button.setAttribute('href','/')
-                            notloggedIn();
-                        }*/
-                        
+                    if ( req.status == 200 ) {     
                     }     
                 })   
             });
@@ -143,6 +132,25 @@ class InitialPage extends HTMLElement {
                 document.getElementById('signup_f').style.display = "none";
             
             } );
+        } );
+
+        let logb = document.getElementById( 'logoutb');
+        logb.addEventListener( 'click', (evt) => {
+            let req = new XMLHttpRequest();
+            console.log("hello");
+            req.open('POST','/logout');
+            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+            req.responseType = 'json'; 
+            req.onload = function(evt) {
+                if ( req.status == 200 ) { // check for ok response
+                    // const user = req.response;
+                    // console.log( user );
+                }
+                else {
+                    console.log('err', req );
+                }
+            };
+            req.send();
         } );
     
     }
