@@ -63,17 +63,6 @@ const allowed_pages = [
     '/levelselect.png',
     '/smiley.jpg',
 ];
-function generate_welcome_page( res,req ) {
-    db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
-        if ( !err ) {
-            res.type('.html');
-            res.render('welcome', {
-                users : results,
-                title : 'Welcome to AS Social'
-            });
-        }
-    } );
-}
 function check_auth(req, res, next){
     if ( req.session && req.session.auth ) {
         next();
@@ -172,6 +161,7 @@ app.post('/add-new-user',jsonParser, function(req, res) {
             }
         })
     })
+
 });
 
 app.post('/login',jsonParser, function(req, res){

@@ -122,7 +122,7 @@ function authenticateUser(user,password,callback){
     console.log(user)
     let obj = {username : user, password : password}
     console.log(obj)
-    req.open('POST','/login');
+    req.open('GET','/login');
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.responseType = 'json';
     req.onload = function(evt) { callback( req ); };
@@ -132,7 +132,6 @@ function authenticateUser(user,password,callback){
 function notloggedIn(){
     let req = new XMLHttpRequest();
     req.open('GET','/');
-    console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.onload = function(evt) {
         if ( req.status == 200 ) {
