@@ -1,5 +1,5 @@
 <game-page>
-<div class="flexcont">
+<div class="flexcont" id="animalcont">
 <div>
 <svg width="715" height="750" id="anim"
   xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">       
@@ -17,35 +17,16 @@
   <image id="a12" wid = "zebra" href="zeb.jpg" height="150" width="200" x="500" y="490"/>
 </svg>
 </div>
-<div class = "flexcont1">
-    <br>
-    <br>
-    <div>
+<div>
        <textarea  id="score"class="text"readonly disabled> Score: </textarea>
-    </div>
-    <br>
-    <div>
-       <textarea class="text" readonly disabled> Matches Done: </textarea>
-    </div>
-    <div>
-        <textarea class="text" readonly disabled> Matches Left: </textarea>
-    </div>
-</div>
-</div>
-
-<div class="modal" id="wrongpop">
-    <div class="modal-content">
-    <span id="wrong-close" >&times</span>
-    <br>
-    WRONG MATCH</div>
 </div>
 <div class="modal" id="donepop">
-    <div class="modal-content">
+    <div class="modal-c" id="animaldone">
     You Scored Perfect!
-    What do you want to do?
+    
     <button class = "mybuttn button1" id="play-a"><a href="/animal">Play Again</a></button>
-    <br>
     <button class = "mybuttn button1" id="back-home"><a href="/login">Back to Home Page</a></button>
+    <button class = "mybuttn button1" id="next-level"><a href="/login">Next Level</a></button>
     </div>
 </div>
 </game-page>

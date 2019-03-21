@@ -29,12 +29,7 @@ class GamePage extends HTMLElement {
                         }
                     }
                     else{
-                        document.getElementById('wrongpop').style.display = "block";
                         prevtarget = null;
-                        let wrong = document.getElementById( 'wrong-close');
-                        wrong.addEventListener( 'click', (evt) => {
-                            document.getElementById('wrongpop').style.display = "none";
-                        } );
                     }
                 }
             }
@@ -59,8 +54,24 @@ class InitialPage extends HTMLElement {
             req.responseType = 'json'; 
             req.onload = function(evt) {
                 if ( req.status == 200 ) { // check for ok response
-                    const user = req.response;
-                    console.log( user );
+                    const res = req.response;
+                    document.getElementById('signup_f').style.display = "none";
+                    if(res.status == "ok"){
+                        document.getElementById('success_f').style.display = "block";
+                        let sclose = document.getElementById('s-close');
+                        sclose.addEventListener( 'click', (evt) => {
+                            document.getElementById('success_f').style.display = "none";
+                        
+                        } );
+                    }
+                    else{
+                        document.getElementById('error_f').style.display = "block";
+                        let eclose = document.getElementById('e-close');
+                        eclose.addEventListener( 'click', (evt) => {
+                            document.getElementById('error_f').style.display = "none";
+                        
+                        } );
+                    }
                 }
                 else {
                     console.log('err', req );
@@ -69,43 +80,11 @@ class InitialPage extends HTMLElement {
             req.send(JSON.stringify( obj ));
         } );
         
-        let uname = document.getElementById('uname');
-        uname.addEventListener( 'change', (evt) => {
-            console.log('change', evt);
-            let user = document.getElementById( 'uname').value;
-            let obj = {username:user}
-            console.log(user);
-
-            let req = new XMLHttpRequest();
-            req.open('PUT', `/check-username`);
-            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            req.responseType = 'json'; 
-            req.onload = function(evt) {
-                console.log(req.status)
-                if ( req.status == 200 ) { // check for ok response
-                    const resp = req.response;
-                    
-                    if ( resp.status === 'exists' ) {
-                        document.getElementById('e_pop').style.display = "block";
-                        let button = document.getElementById( 'e_pop-close');
-                        
-                        button.addEventListener( 'click', (evt) => {
-                            document.getElementById('e_pop').style.display = "none";
-                        } );
-                    }
-                    console.log( resp );
-                }
-                else {
-                    console.log('err', req );
-                }
-            };
-            req.send(JSON.stringify( obj ));
-        } );
 
         let button1 = document.getElementById( 'log-in');
         button1.addEventListener( 'click', function(evt){
             document.getElementById('login_f').style.display = "block"; //popup form
-            let closeb = document.getElementById('sign-in-close');
+            let closeb = document.getElementById('close');
             let login_button = document.getElementById("signin"); //the main sign in button to call the app.js
             closeb.addEventListener('click', function(evt){
                 document.getElementById('login_f').style.display = "none";
@@ -114,7 +93,8 @@ class InitialPage extends HTMLElement {
                 let user = document.getElementById( 'uname1').value;
                 let password = document.getElementById('passwrd1').value;
                 authenticateUser(user,password,(req)=>{
-                    if ( req.status == 200 ) {     
+                    if ( req.status == 200 ) { 
+                        //need to check if it's legit     
                     }     
                 })   
             });
@@ -123,7 +103,7 @@ class InitialPage extends HTMLElement {
         let button2 = document.getElementById( 'sign-up');
         button2.addEventListener( 'click', (evt) => {
             document.getElementById('signup_f').style.display = "block";
-            let button = document.getElementById( 'sign-up-close');
+            let button = document.getElementById('up-close');
             if ( !button ) {
                 console.log('missing sign-up-close');
                 return;
@@ -132,25 +112,6 @@ class InitialPage extends HTMLElement {
                 document.getElementById('signup_f').style.display = "none";
             
             } );
-        } );
-
-        let logb = document.getElementById( 'logoutb');
-        logb.addEventListener( 'click', (evt) => {
-            let req = new XMLHttpRequest();
-            console.log("hello");
-            req.open('POST','/logout');
-            req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-            req.responseType = 'json'; 
-            req.onload = function(evt) {
-                if ( req.status == 200 ) { // check for ok response
-                    // const user = req.response;
-                    // console.log( user );
-                }
-                else {
-                    console.log('err', req );
-                }
-            };
-            req.send();
         } );
     
     }
@@ -183,18 +144,78 @@ function notloggedIn(){
     }
     req.send();
 }
+class HomePage extends HTMLElement {
+    constructor() {
+        super();  // is always required
+        const thisForm = this;
+        // we would call a function to check if user selected do not show again.
+        document.getElementById('first').style.display = "block"
+        let button1 = document.getElementById('next1');
+        var checked;
+        button1.addEventListener('click', function(evt){
+            document.getElementById('first').style.display = "none";
+            document.getElementById('tips_2').style.display = "block";
+            let tipsb = document.getElementById('tips-close');
+            tipsb.addEventListener('click', function(evt){
+                checked = document.getElementById("donots").checked;
+                // let obj = {bool:checked}
+                // let req = new XMLHttpRequest();
+                // req.open('PUT','/update-checked');
+                // req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+                // req.responseType = 'json'; 
+                // req.onload = function(evt) {
+                //     if ( req.status != 200 ) { // check for ok response
+                //         console.log('err', req );
+                //     }
+                // };
+                // req.send(JSON.stringify( obj ));
+                document.getElementById('tips_2').style.display = "none";
+            });
+        });
 
-// function show_tips(){
-//     //call app.js on the user to deterine if the user wants to be shown tips 
-//     let button = document.getElementById('next1');
-//     button.addEventListener('click', function(evt){
-//         document.getElementById(tips_1).style.display = "none";
+        let button2 = document.getElementById('editp')
+        button2.addEventListener('click', function(evt){
+            document.getElementById('edit_p').style.display = "block";
+            let closeb = document.getElementById('sign-in-close');
+            closeb.addEventListener('click', function(evt){
+                document.getElementById('edit_p').style.display = "none";
+            });
+        })
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
 
-//     });
-// }
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.maxHeight){
+                content.style.maxHeight = null;
+                } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+            }
 
-customElements.define('initial-page', InitialPage)
-
-
-
+        //     let logb = document.getElementById( 'logoutb');
+        // logb.addEventListener( 'click', (evt) => {
+        //     let req = new XMLHttpRequest();
+        //     console.log("hello");
+        //     req.open('POST','/logout');
+        //     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        //     req.responseType = 'json'; 
+        //     req.onload = function(evt) {
+        //         if ( req.status == 200 ) { // check for ok response
+        //             // const user = req.response;
+        //             // console.log( user );
+        //         }
+        //         else {
+        //             console.log('err', req );
+        //         }
+        //     };
+        //     req.send();
+        // } );
+    }
+}
+customElements.define('home-page', HomePage);
+customElements.define('initial-page', InitialPage);
 customElements.define('game-page', GamePage);

@@ -1,35 +1,102 @@
-<div class="mpopup" id="tips_1">
-    <h1>Welcome to AS Social</h1>
-    <h2>We appreciate you.</h2>
-    <h3>Here are a couple tips to help you</h3>
-    <h4>1 of 4</h4>
+<home-page>
+<div class="flexcont" id="flexx">
+    <div class = "mini">
+        <img width="50" id = "logo" src="newlog.png" alt="broken">
+
+        <h2>Hi <div>{{sess.username}}</div>, welcome back!</h2>
+        <h3>Best Score: </h3> 
+        <h3>You last logged in: </h3>
+        <table>
+            <caption>Leaderboard</caption>
+        <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Score</th>
+            <th>Games Played</th>
+        </tr>
+        {{#each users}}
+        <tr>
+            <td>{{i}}</td>
+            <td>{{fname}}</td>
+            <td>{{score}}</td>
+            <td></td>
+        </tr>
+        {{/each}}
+        </table>
+        <h3>You are number 1 in the Leaderboard.</h3>
+    </div>
+    <div class ="mini">
+        <svg viewBox="0,0 100,12" id = "hith"
+        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> 
+        <circle cx="90" cy="5" r="5" fill="pink"/>    
+        <text fill="white" x="90" y="6" font-size="9" text-anchor="middle"
+                    alignment-baseline="middle">S</text>
+        </svg>
+        <button id = "editp" class="button1 topbutton">Edit Profile</button>
+        <button id="logoutb" class="button1 topbutton" ><a ></a>Logout</a></button>
+        <div class="anchors">
+            <a class="levels" href="/animal">Level 1 - Animals (Mix and Match) - Passed or not Passed</a>
+            <br>
+            <br>
+            <a class="levels" href="">Level 2 - Shapes (Drag and Drop)</a>
+            <br>
+            <br>
+            <a class="levels" href="">Level 3 - Flags of the World (Puzzle)</a>
+            <br>
+            <button  id="htp" class="collapsible accordion">How to Play</button>
+            <div class="content">
+               To play a game, select among the three available above.
+                To advance to level 3, you need to have sucessfully completed level 
+                1 and 2.
+                An administrator will send a notification when you have been
+                approved to move forward.
+                <br>
+                Happy Gaming! 
+            </div>
+    </div>
+        </div>
+    </div>
+    
+</div>
+
+<div class="modal" id="first">
+    <div class="modal-c" id="tips_1">
+    <img style="float:right" width="20" id = "logo" src="newlog.png" alt="broken">
+    <h1 style="display:inline">Hey {{sess.username}}!</h1>
+    <br>
+    <img style="display:inline; float: right"width="150" id = "logo" src="smiley.jpg" alt="broken">
+    <h3 >Afrah and Sylvia here!</h3>
     <button id = "next1">Next</button>
 </div>
-<div class="popup" id="tips_2">
-    <h1>To share a post:</h1>
-    {{!-- include screenshots --}}
-    <button id = "next2">Next</button>
 </div>
-<div class="popup" id="tips_3">
-    <h1>To make a post:</h1>
+<div class="modal" id="tips_2">
+    <div class= "modal-c">
+        <span id="tips-close" class="close" >&times</span>
+    <h1 style="display:inline">Remember to Enjoy the Game</h1>
+    <h3>Play well and you could land at the top of the leaderboard.</h3>
     {{!-- include screenshots --}}
-    <button id = "next3">Next</button>
-</div>
-<div class="popup" id="tips_4">
-    <button id="tips-close" >&times</button>
-    <h1>To flag a post:</h1>
-    {{!-- include screenshots --}}
-    <h3>You're all set! Close this to enjoy the rest of the application.</h3>
+    <h4>You're all set! Close this to enjoy the rest of the application.</h4>
     <input type="checkbox" id="donots" name="donots">
     <label for="donots">Do Not Show Again</label>
+    </div>
 </div>
-<div>
-    <ul>
-        <li> E-mail: {{sess.user}}</li>
-    </ul>
+<div class="modal" id="edit_p">
+    <div class="modal-c">
+        <h1 style="display:inline; margin-left:200px" >Edit Profile</h1>
+        <span id="sign-in-close" class="close" >&times</span>
+        <br>
+        <br>
+        <label for="psw"><b>First Name </b></label>
+        <input type="text" placeholder="Sylvia" name="named">
+
+        <label for="psw"><b>Change Password </b></label>
+        <input id="passwrd1"type="password" placeholder="*******" name="password">
+
+        <button>Save Changes</button>
+
+    </div>
 </div>
+</home-page>
 
-<h3>Best Score: </h3>
-<h4>Leaderboard</h4>
 
-{{!-- make a table  --}}
+<script src="user-form.js"> </script>

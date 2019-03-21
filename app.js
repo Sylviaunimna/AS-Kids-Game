@@ -17,7 +17,9 @@ function initDB() {
             fname TEXT,
             username TEXT,
             password TEXT, 
-            score INTEGER
+            score INTEGER,
+            gamesP INTEGER, 
+            checked INTEGER
         )`);
 
     } );
@@ -38,7 +40,7 @@ const allowed_pages = [
     'logdin',
     '/style.css',
     '/newlog.png',
-    '/mjy.png',
+    '/brain.png',
     '/user-form.js',
     '/add-new-user',
     '/check-username',
@@ -57,6 +59,9 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
     '/logout',
+    '/update-checked',
+    '/levelselect.png',
+    '/smiley.jpg',
 ];
 function generate_welcome_page( res,req ) {
     db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
@@ -101,11 +106,22 @@ app.set('views', __dirname + '/views');
 const port = process.env.PORT || 8000;
 
 app.get('/login', function(req, res){
-    res.type('.html')
-    res.render('homepage', {
-        sess: req.session,
-        title : 'AS Social'
-    });
+    db.all('SELECT fname, score FROM users ORDER BY score ASC LIMIT 5',[], function(err, results) {
+        if ( !err ) {
+            let size = Object.keys(results).length;
+            for(var i=0; i < size; i++){
+                results[i].i = i+1;
+                console.log(results[i]);
+            }
+            res.type('.html');
+            res.render('homepage', {
+                users: results,
+                sess: req.session,
+                title : 'AS Social'
+            });
+        }
+    } );
+    
     // console.log(req.session, "login");
    
     
@@ -122,33 +138,40 @@ app.get('/', function(req, res) {
     generate_welcome_page( res,req );
 });
 
-app.put('/check-username/', jsonParser, function(req,res){
-    let user = req.body.username;
-    db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[user],function(err,exist){
-        if(!err){
-           
-            if(exist.user_exists > 0){
-                res.send({status:"exists"});
-            }
-            else{
-                res.send({status:"not"})
-            }
-        }
-        else{
-            res.send({error:err})
-        }
-    })
-
-});
-
+// app.put('/update-checked',jsonParser, function(req, res){
+//     let bool = req.body.bool;
+//     db.run('UPDATE users SET checked=? WHERE user=?',
+//         [bool, req.session.user], function(err) {
+//         if (!err) {
+//             res.send( {id : id, status : 'updated'} );
+//         }
+//         else {
+//             res.send( {id : id, error : err} );
+//         }
+//     });
+// });
 app.post('/add-new-user',jsonParser, function(req, res) {
     let fname = req.body.firstname;
     let uname = req.body.username;
     let pword = req.body.password;
     console.log("New User: ", uname);
-    db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
-    [fname, uname, pword, null]);
-    res.send( {fname : fname, uname : uname} ); 
+    db.serialize( function(){
+        db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
+            if(!err){
+                if(exist.user_exists > 0){
+                    res.send({status:"notok"});
+                }
+                else{
+                    db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
+                    [fname, uname, pword, 16]);
+                    res.send( {status: "ok"} ); 
+                }
+            }
+            else{
+                res.send({error:err})
+            }
+        })
+    })
 });
 
 app.post('/login',jsonParser, function(req, res){
