@@ -8,7 +8,6 @@ function(err) {
         initDB();
     }
 });
-
 function initDB() {
     db.serialize( function() {
         db.run(`
@@ -17,21 +16,30 @@ function initDB() {
             fname TEXT,
             username TEXT,
             password TEXT, 
-<<<<<<< HEAD
+            admin INTEGER,
+            gamesW INTEGER, 
+            checked INTEGER,
+            note TEXT
             level1score INTEGER,
             level2score INTEGER,
             level3score INTEGER,
             approved INTEGER
-=======
-            score INTEGER,
-            gamesP INTEGER, 
-            checked INTEGER
->>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
         )`);
 
     } );
 }
-
+test_users = [
+    [ 'Sylvia', 'sylviax', '1234', 1, 14, ""],
+    [ 'Afrah', 'afrahx', '1234', 1, 15, ""],
+    [ 'Mary', 'maryx', '1234', 0, 16, ""],
+    [ 'Gillian', 'gillianx', '1234', 0, 10, ""],
+    [ 'Bolu', 'bolux', '1234', 0, 0, ""],
+    [ 'Oyin', 'oyinx', '1234', 0, 0, ""],
+    [ 'Dani', 'danix', '1234', 0,  12, ""],
+    [ 'Dadi', 'dadix', '1234', 0, 14, ""],
+    [ 'Nafsa', 'nafsax', '1234', 0, 5, ""],
+    [ 'Khalid', 'khalidx', '1234', 0, 8, ""],
+];
 const express = require('express');
 const hbs = require('express-hbs');
 const bodyParser = require('body-parser');
@@ -60,26 +68,51 @@ const allowed_pages = [
     '/parrot.jpg',
     '/par.jpg',
     '/tiger.jpg',
+    '/update-not',
     '/tig.jpg',
     '/zebra.jpg',
     '/zeb.jpg',
+    '/get-leaderboard',
     '/zebra.jpg',
     '/animal',
     '/logout',
+<<<<<<< HEAD
+=======
+    '/admin',
+>>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
     '/update-checked',
+    'is-checked',
     '/levelselect.png',
     '/smiley.jpg',
+<<<<<<< HEAD
+=======
+    '/update-p',
+    '/insert',
+    '/update-won',
+    '/vendor/bootstrap/css/bootstrap.min.css',
+    '/images/icons/favicon.ico',
+    '/fonts/font-awesome-4.7.0/css/font-awesome.min.css',
+    '/fonts/Linearicons-Free-v1.0.0/icon-font.min.css',
+    '/vendor/animate/animate.css',
+    '/vendor/css-hamburgers/hamburgers.min.css',
+    '/vendor/animsition/css/animsition.min.css',
+    '/vendor/select2/select2.min.css',
+    '/vendor/daterangepicker/daterangepicker.css',
+    '/css/util.css',
+    '/css/main.css',
+    '/fonts/ubuntu/Ubuntu-Regular.ttf',
+>>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
 ];
 function generate_welcome_page( res,req ) {
-    db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
-    if ( !err ) {
+    if(req.session.auth){
+       forLogin(req, res);
+    }
+    else{
         res.type('.html');
         res.render('welcome', {
-            users : results,
-            title : 'Welcome to AS Social'
+            title : 'AS'
         });
     }
-    } );
 }
 function check_auth(req, res, next){
     if ( req.session && req.session.auth ) {
@@ -103,9 +136,10 @@ function generate_welcome_page(res,req){
 app.use(cookieSession({
     name:'session',
     secret:'foo'
- }));
+}));
  
 app.use( check_auth );
+app.use(express.static(__dirname + '/images'));
 app.use(express.static( __dirname + '/public'))
 
 // the template middleware
@@ -126,6 +160,7 @@ app.get('/draganddrop',function(req,res){
 
 })
 app.get('/login', function(req, res){
+<<<<<<< HEAD
     db.all('SELECT fname, score FROM users ORDER BY score ASC LIMIT 5',[], function(err, results) {
         if ( !err ) {
             let size = Object.keys(results).length;
@@ -146,6 +181,65 @@ app.get('/login', function(req, res){
    
     
 })
+=======
+    if(req.session.auth){
+        forLogin(req, res);
+    }
+    else{
+        res.type('.html');
+        return res.render('welcome', {
+            sess: req.session,
+            title : 'AS'
+        });
+    }
+});
+function forLogin(req, res){
+    db.serialize(function(){
+        db.all('SELECT username FROM users ORDER BY gamesW DESC',[], function(err, results) {
+            if ( !err ) {
+                let size = Object.keys(results).length;
+                for(var i=0; i < size; i++){
+                    if (results[i].username === req.session.username){
+                        let index = i+1;
+                        db.all('SELECT username, gamesW FROM users ORDER BY gamesW DESC LIMIT 5',[], function(err, results) {
+                            let msize = Object.keys(results).length;
+                            if ( !err ) {
+                                for(var i=0; i < msize; i++){
+                                    results[i].i = i+1;
+                                }
+                                db.get('SELECT note FROM USERS WHERE username = ?', [req.session.username], function(err, notis) {
+                                    let note = notis.note
+                                    let rnote = note.split(',');
+                                    rnote.shift();
+                                    let sizee = rnote.length;
+                            
+                                    console.log("Logged In: ",req.session);
+                                    res.type('.html');
+                                    return res.render('homepage', {
+                                        size: sizee, 
+                                        notifs: rnote,
+                                        index: index,
+                                        users: results,
+                                        letter1: req.session.fname.charAt(0).toUpperCase(),
+                                        sess: req.session,
+                                        title : 'AS'
+                                    });
+                                });
+                            }
+                        } );
+                    }
+                }
+            }
+        } );
+    res.type('.html')
+    res.render('homepage', {
+        sess: req.session,
+        title : 'AS Social'
+    });
+    // console.log(req.session, "login");  
+    })
+}
+>>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
 app.get('/admin',function(req,res){
     db.all(`SELECT * FROM users`,[],function(err,row){
         res.type('.html');
@@ -155,34 +249,117 @@ app.get('/admin',function(req,res){
     });
 });
 app.get('/animal', function(req, res){
-    res.type('.html')
-    res.render('animals', {
-        title : 'AS Social'
-    });
+    if(req.session.auth){
+        res.type('.html')
+        res.render('animals', {
+            title : 'AS'
+        });
+    }
+    else{
+        res.type('.html');
+        return res.render('welcome', {
+            sess: req.session,
+            title : 'AS'
+        });
+    }
     
-})
+});
+//insert users into the database
+app.get('/insert',jsonParser, function(req, res){
+    for( let row of test_users ) { 
+
+        db.run('INSERT INTO users(fname,username, password, admin, gamesW, note) VALUES(?,?,?,?,?,?)', row,
+           (err) => {
+               if ( err ) {
+                   console.log( err );
+               } else {
+                   console.log('insert', row );
+               }
+        } );
+    }
+});
 app.get('/', function(req, res) {
-    console.log(req.session, "home page");
+    console.log("Current User: ", req.session.username);
     generate_welcome_page( res,req );
 });
-
-// app.put('/update-checked',jsonParser, function(req, res){
-//     let bool = req.body.bool;
-//     db.run('UPDATE users SET checked=? WHERE user=?',
-//         [bool, req.session.user], function(err) {
-//         if (!err) {
-//             res.send( {id : id, status : 'updated'} );
-//         }
-//         else {
-//             res.send( {id : id, error : err} );
-//         }
-//     });
-// });
+//This determines if the popup shows up everytime the user logs in
+app.put('/update-checked',jsonParser, function(req, res){
+    let bool = req.body.bool;
+    db.run('UPDATE users SET checked=? WHERE username=?',
+    [bool, req.session.username], function(err) {
+        if (!err) {
+            res.send( {status : 'updated'} );
+        }
+        else {
+            res.send( {error : err} );
+        }
+    });
+});
+//updates score
+app.put('/update-p',jsonParser, function(req, res){
+    let oldp = req.body.oldp;
+    let newp = req.body.newp;
+    db.serialize(function(){
+        db.get('SELECT password FROM users WHERE username=?',[req.session.username], function(err, result) {
+            if (result.password !== oldp){
+                res.send( {status : 'notupdated'} );
+            }
+            else{
+                db.run('UPDATE users SET password=? WHERE username=?',
+                [newp, req.session.username], function(err) {
+                    if (!err) {
+                        req.session.password = newp;
+                        res.send( {status : 'updated'} );
+                    }
+                    else {
+                        res.send( {error : err} );
+                    }
+                });
+            }
+        });
+        
+    });
+});
+//updates number of games won
+app.put('/update-won',jsonParser, function(req, res){
+    db.serialize(function(){
+        db.get('SELECT gamesW FROM users WHERE username=?',[req.session.username], function(err, result) {
+            db.run('UPDATE users SET gamesW=? WHERE username=?',
+            [result.gamesW+1, req.session.username], function(err) {
+                if (!err) {
+                    res.send( {status : 'updated'} );
+                }
+                else {
+                    res.send( {error : err} );
+                }
+            });
+        });
+        
+    });
+});
+//checks to see if user previously selected not to show the popup
+app.put('/is-checked',jsonParser, function(req, res){
+    db.get('SELECT checked FROM users where username= ?',
+    [ req.session.username ], function(err, checked) {
+        if (checked.checked == 1) {
+            res.send( {status : true} );
+        }
+        else {
+            res.send( {status : false} );
+        }
+    });
+});
 app.post('/add-new-user',jsonParser, function(req, res) {
     let fname = req.body.firstname;
     let uname = req.body.username;
     let pword = req.body.password;
     console.log("New User: ", uname);
+<<<<<<< HEAD
+=======
+    db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
+    [fname, uname, pword, 0,0,null,null]);
+    res.send( {fname : fname, uname : uname} ); 
+>>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
     db.serialize( function(){
         db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
             if(!err){
@@ -190,7 +367,8 @@ app.post('/add-new-user',jsonParser, function(req, res) {
                     res.send({status:"notok"});
                 }
                 else{
-                    db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
+                    console.log("New User: ", uname);
+                    db.run('INSERT INTO users(fname, username, password, gamesW) VALUES(?, ?, ?, ?)',
                     [fname, uname, pword, 16]);
                     res.send( {status: "ok"} ); 
                 }
@@ -202,68 +380,32 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     })
 
 });
-app.put('/modifyUser/:id',function(req,res){
-    let id = req.params.id;
-    console.log( 'User', id );
-    db.run('UPDATE users SET approved=? WHERE id=?',[1,id],function(err){
-        if(!err){
-            res.send( {id : id, status : 'updated'} );
-        }
-        else {
-            res.send( {id : id, error : err} );
-        }
-    })
-
-
-})
-app.delete('/deleteUser/:id',function(req,res){
-    let id = req.params.id;
-    console.log( 'User', id );
-    db.run('DELETE FROM users WHERE id=?',[id],function(err){
-        if(!err){
-            res.send( {id : id, status : 'deleted'} );
-        }
-        else {
-            res.send( {id : id, error : err} );
-        }
-    })
-
-})
-
 app.post('/login',jsonParser, function(req, res){
-    console.log("we're here")
     let authInfo = req.body;
     db.get('SELECT * FROM users where username= ?',
     [ authInfo.username ],
     function(err, row) {
-        console.log("in database");
         if ( !err ) {
-            console.log(row);
             if( row ) {
                 if( (authInfo.password) === row.password ) {
                     req.session.auth = true;
-                    // req.session.username = authInfo.username;
-                    // req.session.password = authInfo.password
-                    console.log("correct");
+                    req.session.username = authInfo.username;
+                    req.session.password = authInfo.password
+                    req.session.fname = row.fname;
                     res.redirect('/login');
-                    // res.send( { ok: true } );
-                       
                 }
                 else {
                     req.session.auth = false;
                     console.log("incorrect pass")
+                    res.status(401);
                     res.send( { ok: false } );
-                    //res.redirect('/')
-
                 }
             }
             else {
                 req.session.auth = false;
                 console.log("not a user")
-                res.send( { ok: false, msg : 'notuser' }
-                 );
-                 console.log(req.session);
-                //res.redirect('/')
+                res.status(403);
+                res.send( { ok: false, msg : 'notuser' });
 
             }
         }
@@ -274,23 +416,47 @@ app.post('/login',jsonParser, function(req, res){
     });
     
 });
-
 app.post('/logout', function(req, res){
-    console.log("hellooooo")
     req.session.username = "None";
     req.session.password = "None";
     req.session.auth = false;
-    console.log(req.session, "logout");
+    res.redirect('/');
 });
-
-
-
-
-
-
-// REST API 
-// get returns a user
-// put updates a user
-// delete removes a user
-
+app.put('/get-leaderboard', function(req, res){
+    db.all('SELECT username, gamesW FROM users ORDER BY gamesW DESC LIMIT 5',[], function(err, results) {
+    if ( !err ) {
+        res.send({result : results});
+    }
+    })
+});
+app.put('/update-not',jsonParser, function(req, res){
+    let user = req.body.user;
+    db.serialize(function(){
+        db.get('SELECT note FROM users WHERE username=?',[user], function(err, result) {
+            let string = result.note;
+            let rnote = string.split(',');
+            rnote.shift();
+            let size = rnote.length;
+            if (size >= 5){
+                res.send( {status : 'notupdated'} );
+            }
+            else if (rnote.includes(req.session.username)){
+                res.send( {status : 'alreadyexists'} ); 
+            }
+            else{
+                newn = string + "," + req.session.username;
+                db.run('UPDATE users SET note=? WHERE username=?',
+                [newn, user], function(err) {
+                    if (!err) {
+                        res.send( {status : 'updated', info: newn} );
+                    }
+                    else {
+                        res.send( {error : err} );
+                    }
+                });
+            }
+        });
+        
+    });
+});
 app.listen(port, () => console.log(`Listening on port ${port}!`));

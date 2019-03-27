@@ -1,8 +1,8 @@
-.container > div{
+.container1 > div{
   position: fixed;
 }
 #logo{
-  top: 2em;
+  top: 6em;
 }
 #user{
   top: 5em;
@@ -65,14 +65,17 @@
   text-align: center;
 }
 body{
-  background-color:  black;
-  color: white;
-  font-size: 17px;
+  background-color: #563e91;
+  background: -moz-linear-gradient(45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
+  background: -webkit-linear-gradient(45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
+  background: linear-gradient(to 45deg, rgba(213, 15, 61, 0.6), rgba(13, 17, 198, 0.69) 100%);
+  color: black !important;
+  font-size: 17px !important;
 }
 h3{
-  color: rgb(255, 192, 227)  
+  font-size: 25px;
 }
-.modal{
+.modalm{
   display: none;
   color: black;
   position: fixed;
@@ -97,7 +100,6 @@ input[type=text]:focus, input[type=password]:focus {
   background-color: #ddd;
   outline: none;
 }
-<<<<<<< HEAD
 .game2{
   border: 2px solid palevioletred;
   border-radius: 5px;
@@ -110,24 +112,23 @@ span{
 display:flex;
 flex-direction: row;
 justify-content:space-evenly;
-=======
+}
 .close{
-  float: right;
+  float: right !important;
 }
 * {box-sizing: border-box;}
 #flexx{
   height: 200px;
->>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 }
 .flexcont{
   top:5em;
   display: flex;
   flex-direction: row;
 }
-.text {
+.animal .text {
   position: fixed;
-  top: 8em;
-  right: 5em;
+  top: 12em;
+  right: 15em;
   width:150px;
   padding: 20px;
 	overflow:hidden;
@@ -136,23 +137,13 @@ justify-content:space-evenly;
 	font-size:22px;
 	resize:none;
   line-height:10px;
-  background-color: rgb(22, 12, 12);
+  background-color: black;
 }
-.modal-c{
-  font-size: 15px;
-  color: black;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  font-size: 20px;
-  opacity: 1;
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 3px solid pink;
-  width: 50%; /* Could be more or less, depending on screen size */
-  padding: 16px;
+.modalm-c{
+  top: 0em;
+  right: 2em;
 }
+
 .mybuttn{
   background: rgb(230, 164, 224);
   font-size: 15px;
@@ -164,7 +155,6 @@ justify-content:space-evenly;
 }
 #animaldone{
   text-align: center;
-<<<<<<< HEAD
   top: 6em;
   right: -28%;
 }
@@ -179,10 +169,10 @@ justify-content:space-evenly;
   
   background-color: pink;
 }
-a{
+a.navig{
   font-size: 20px;
 }
-a:hover{
+a.navig:hover{
   border-top: 2px solid rgb(253, 248, 238);
   border-bottom: 2px solid rgb(247, 240, 229);
   transition: width .5s;
@@ -207,7 +197,6 @@ tr:hover{
 }
 use:hover{
   cursor: pointer;
-=======
   padding-bottom: 30px;
   width: 40%;
   height: 15%
@@ -220,20 +209,7 @@ use:hover{
   top: 5em;
   right: -5%;
 }
-table {
-  width: 100%;
-  height: 100%;
-  border-collapse: collapse;
-  text-align: center;
-  position: relative;
-}
-table, td, th {
-  border: 1px solid white;
-}
-tr{
-  padding: 10px;
-  background-color: pink;
-}
+
 .mini{
   width: 100%
 }
@@ -247,19 +223,15 @@ a.levels:hover{
 }
 .topbutton{
   position: fixed;
-  color: white;
-  background: pink;
-  font-size: 16px;
-  padding: 5px 5px;
-  font-family: 'Times New Roman', Times, serif
+  width: 5px;
 }
 #editp{
-  right: 4em;
-  top: 2em;
+  right: -16.9em;
+  top: 0.8em;
 }
 #logoutb{
-  right: 11em;
-  top: 2em;
+  right: -26.5em;
+  top: -1.5em;
 }
 h2{
   margin-left: auto;
@@ -268,8 +240,11 @@ h2{
   font-family: 'Times New Roman', Times, serif;
 }
 h1{
-  font-size: 20px;
+  font-size: 14px !important;
   font-family: 'Times New Roman', Times, serif;
+}
+ul{
+  font-size: 14px !important;
 }
 h2 div{
   font-weight: bold;
@@ -280,17 +255,7 @@ caption{
 }
 label{
   display: inline;
-}
-.collapsible {
-  background-color: pink;
-  cursor: pointer;
-  border: none;
-  text-align: left;
-  outline: none;
-  color: white;
   font-size: 15px;
-  float: right;
-  width: 44%
 }
 
 .content {
@@ -302,15 +267,183 @@ label{
   top: 12.8em;
   right: 0em;
 }
-button.accordion:after {
+button.accordion.collapsed:after {
   content: '\002B';
+}
+
+button.accordion:after {
+  content: '\2212';
   color: white;
   font-weight: bold;
   float: right;
   margin-left: 5px;
 }
+.accordion{
+  font-size: 14px;
+}
 
-button.accordion.active:after {
-  content: "\2212";
->>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
+#newsign{
+  text-align: center;
+}
+.modal{
+  color: black;
+  padding: 100px;
+}
+
+.modal-c{
+  font-size: 15px;
+  color: black;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  font-size: 20px;
+  opacity: 1;
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 3px solid pink;
+  width: 35%; /* Could be more or less, depending on screen size */
+  padding: 16px;
+  /* text-align: center; */
+
+}
+.modal-sm {
+  max-width: 400px !important;
+}
+.modal-header {
+  display: block !important;
+}
+.popupbuttons{
+  font-size: 1rem;
+}
+.aspects{
+  padding-left: 250px;
+}
+.colorwhite{
+  color: white;
+}
+.unstyled-button {
+
+  top: 5em;
+}
+/* .box {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-80%);
+} */
+.notifications {
+  width:45px;
+  height:45px;
+  position: fixed;
+  top: 1em;
+  right: 21em;
+  background:#fff;
+  border-radius:30px;
+  box-sizing:border-box;
+  text-align:center;
+}
+.notifications:hover {
+  position: fixed;
+  top: 3em;
+  right: 20em;
+  width:200px;
+  height:40px;
+  text-align:left;
+  padding:0 15px;
+  background:#ff2c74;
+  transform:translateY(-100%);
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
+}
+.notifications:hover .fa {
+  color:#fff;
+}
+.notifications .fa {
+  color:#cecece;
+  line-height:60px;
+  font-size:20px;
+}
+.notifications .num {
+  position:absolute;
+  top:0px;
+  right:-5px;
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  background:#ff2c74;
+  color:#fff;
+  line-height:25px;
+  font-family:sans-serif;
+  text-align:center;
+}
+.notifications:hover .num {
+  position: relative;
+  background:transparent;
+  color:#fff;
+  font-size:18px;
+  top:0px;
+}
+.notifications:hover .num:after {
+  content:' Notifications';
+}
+ul.notif {
+  position:absolute;
+  left:0;
+  top:41px;
+  margin:0;
+  width:100%;
+  background:#fff;
+  padding:20px;
+  box-sizing:border-box;
+  border-bottom-left-radius:30px;
+  border-bottom-right-radius:30px;
+  display:none;
+}
+.notifications:hover ul.notif {
+  display:block;
+}
+ul.notif li {
+  list-style:none;
+  padding:6px 0;
+  display:flex;
+}
+ul.notif li:last-child {
+  border-bottom:none;
+}
+ul.notif li .icon {
+  width:20px;
+  height:20px; 
+  background:#ccc;
+  border-radius:50%;
+  text-align:center;
+  line-height:24px;
+  margin-right:15px;
+}
+ul.notif li .icon .fa {
+  color:#fff;
+  font-size:16px;
+  line-height:24px;
+}
+ul.notif li .text {
+  position:relative;
+  font-size: 12px;
+  top:0px;
+  left:3px;
+  cursor:pointer;
+}
+ul.notif li:hover .text {
+  color:#ff2c74;
+}
+.animal{
+  background-color: black;
+}
+#endgame{
+  position: fixed;
+  top: 32.5em;
+  right: 37em;
+}
+#endgame a{
+  font-size: 15px !important;
+  color: white !important;
 }
