@@ -83,20 +83,7 @@ class AdminPage extends HTMLElement{
                     theSelected = null;
                 }
             })
-            //ToDo After all the game are made
-            addLvlButton.addEventListener('click',(evt)=>{
-                if(theSelected){
-                    let row = theSelected.parentNode
-                    let useId = row.getAttribute('id')
-                    let data = row.children
-                    console.log(data[2].textContent)
-                    if(data[2].textContent == 6){
-                        console.log("isZero")
-                        modifyUser(row,useId);
-                        data[5].textContent = 1;
-                    }
-                }
-            })
+      
     })      
     }
 }
@@ -400,7 +387,6 @@ class HomePage extends HTMLElement {
     }
 }
 function noteUser(user,callback){
-
     let obj = {user:user};
     let req = new XMLHttpRequest();
     req.open('PUT','/update-not');

@@ -76,16 +76,11 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
     '/logout',
-<<<<<<< HEAD
-=======
     '/admin',
->>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
     '/update-checked',
     'is-checked',
     '/levelselect.png',
     '/smiley.jpg',
-<<<<<<< HEAD
-=======
     '/update-p',
     '/insert',
     '/update-won',
@@ -101,7 +96,6 @@ const allowed_pages = [
     '/css/util.css',
     '/css/main.css',
     '/fonts/ubuntu/Ubuntu-Regular.ttf',
->>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
 ];
 function generate_welcome_page( res,req ) {
     if(req.session.auth){
@@ -125,14 +119,7 @@ function check_auth(req, res, next){
         res.status(404).send('Page Not Found');
     }
 }
-function generate_welcome_page(res,req){
-        res.type('.html'); // set content type to html
-        res.render('welcome', {
-            title : 'AS Social'
-        
-        
-    });
-}
+
 app.use(cookieSession({
     name:'session',
     secret:'foo'
@@ -160,28 +147,6 @@ app.get('/draganddrop',function(req,res){
 
 })
 app.get('/login', function(req, res){
-<<<<<<< HEAD
-    db.all('SELECT fname, score FROM users ORDER BY score ASC LIMIT 5',[], function(err, results) {
-        if ( !err ) {
-            let size = Object.keys(results).length;
-            for(var i=0; i < size; i++){
-                results[i].i = i+1;
-                console.log(results[i]);
-            }
-            res.type('.html');
-            res.render('homepage', {
-                users: results,
-                sess: req.session,
-                title : 'AS Social'
-            });
-        }
-    } );
-    
-    // console.log(req.session, "login");
-   
-    
-})
-=======
     if(req.session.auth){
         forLogin(req, res);
     }
@@ -239,7 +204,6 @@ function forLogin(req, res){
     // console.log(req.session, "login");  
     })
 }
->>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
 app.get('/admin',function(req,res){
     db.all(`SELECT * FROM users`,[],function(err,row){
         res.type('.html');
@@ -354,12 +318,9 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let uname = req.body.username;
     let pword = req.body.password;
     console.log("New User: ", uname);
-<<<<<<< HEAD
-=======
     db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
     [fname, uname, pword, 0,0,null,null]);
     res.send( {fname : fname, uname : uname} ); 
->>>>>>> 22962800d0193205a24bd8ae91c23a4e99f0cc5c
     db.serialize( function(){
         db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
             if(!err){
