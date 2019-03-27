@@ -4,30 +4,20 @@
 #logo{
   top: 6em;
 }
-#user{
-  top: 5em;
-  right: -1%;
+.flexcont{
+  top:5em;
+  display: flex;
+  flex-direction: row;
 }
-#sign-up{
-  top: 2em;
-  right: -4%;
+.tophome{
+  display: flex;
+  flex-direction: row;
 }
 #closeTable{
   top: 5em;
   right: 14.75%;
   font-size: 12px;
   opacity: 1;
-}
-#addLevel{
-  top: 5em;
-  right: -3%;
-  font-size: 12px;
-  opacity: 1;
-}
-
-#log-in{ 
-  top: 2em;
-  right: 9%;
 }
 .btn {
   background-color: rgb(255, 30, 199);
@@ -38,7 +28,6 @@
   cursor: pointer;
   border-radius: 12px
 }
-
 /* Darker background on mouse-over */
 .btn:hover {
   background-color: rgb(168, 43, 112);
@@ -48,19 +37,6 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center
-}
-
-.button1{
-  position: absolute;
-  background: rgb(168, 62, 172);
-  border: none;
-  transform: translate(-50%, -50%);
-  color: black;
-  font-size: 16px;
-  padding: 10px 25px;
-  cursor: pointer;
-  border-radius: 5px;
-  text-align: center;
 }
 body{
   background-color: #563e91;
@@ -90,7 +66,6 @@ h3{
   border: 2px solid palevioletred;
   border-radius: 5px;
 }
-* {box-sizing: border-box;}
 .flexDiv > button{
 display:flex;
 flex-direction: row;
@@ -103,15 +78,12 @@ justify-content:space-evenly;
 #flexx{
   height: 200px;
 }
-.flexcont{
-  top:5em;
+.rowcont{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  float: right;
 }
 .animal .text {
-  position: fixed;
-  top: 12em;
-  right: 15em;
   width:150px;
   padding: 20px;
 	overflow:hidden;
@@ -126,20 +98,8 @@ justify-content:space-evenly;
   top: 0em;
   right: 2em;
 }
-
-.mybuttn{
-  background: rgb(230, 164, 224);
-  font-size: 15px;
-  padding: 2px 3px;
-}
-#play-a{
-  top: 5em;
-  left: 10%;
-}
 #animaldone{
   text-align: center;
-  top: 6em;
-  right: -28%;
 }
 .header {
   position: fixed;
@@ -160,37 +120,11 @@ a.navig:hover{
   border-bottom: 2px solid rgb(247, 240, 229);
   transition: width .5s;
 }
-
-
-/* .table{
-  border-collapse: collapse;
-  width: 75%;
-  position: fixed;
-  left: 15em;
-  top:20em;
-}
-th, td {
-  padding: 8px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
-}
-tr:hover{
-  background: pink;
-} */
 use:hover{
   cursor: pointer;
   padding-bottom: 30px;
   width: 40%;
   height: 15%
-}
-#back-home{
-  top: 5em;
-  left: 50%;
-}
-#next-level{
-  top: 5em;
-  right: -5%;
 }
 
 .mini{
@@ -205,16 +139,10 @@ a.levels:hover{
   color: pink;
 }
 .topbutton{
-  position: fixed;
+  position: absolute;
+  left: 17em;
+  top: 1em;
   width: 5px;
-}
-#editp{
-  right: -16.9em;
-  top: 0.8em;
-}
-#logoutb{
-  right: -26.5em;
-  top: -1.5em;
 }
 h2{
   margin-left: auto;
@@ -276,7 +204,7 @@ button.accordion:after {
 .modal-c{
   font-size: 15px;
   color: black;
-  position: fixed;
+  position: relative;
   top: 0;
   right: 0;
   left: 0;
@@ -309,27 +237,21 @@ button.accordion:after {
 
   top: 5em;
 }
-/* .box {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-80%);
-} */
 .notifications {
   width:45px;
   height:45px;
-  position: fixed;
+  position: relative;
+ right: 4em;
   top: 1em;
-  right: 21em;
   background:#fff;
   border-radius:30px;
   box-sizing:border-box;
   text-align:center;
 }
 .notifications:hover {
-  position: fixed;
+  position: relative;
   top: 3em;
-  right: 20em;
+  right: 13em;
   width:200px;
   height:40px;
   text-align:left;
@@ -420,11 +342,6 @@ ul.notif li:hover .text {
 }
 .animal{
   background-color: black;
-}
-#endgame{
-  position: fixed;
-  top: 32.5em;
-  right: 37em;
 }
 #endgame a{
   font-size: 15px !important;
