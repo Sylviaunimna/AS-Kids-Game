@@ -1,69 +1,119 @@
 <initial-page>
-<button class = "button1" id="sign-up">Sign Up</button>
-<button class = "button1" id="log-in">Login</button>
-<div class="container">
+<div class="container1">
     <div id = "logo">
-        <img src="newlog.png" alt="broken">
-        <p>&copy Developed by Afrah and Sylvia</p>
+        <img style="width: 70%" src="newlog.png" alt="broken">
     </div>
-    <div id="user">
-        <img src="brain.png" alt="broken">
-    </div>
-    <div class="modal" id="login_f">
-        <div class="modal-c">
-            <span class="close" id="close">&times</span>
-            <h1 style="display:inline; margin-left:200px" ><b>Sign In</b></h1>
-            <br>
-            <br>
-            <label ><b>Username</b></label>
-            <input id = "uname1" type="text" placeholder="Enter Username" required>
+	<div class="modalm-c">
+            <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-t-30 p-b-50">
+				
+				<div class="login100-form validate-form p-b-33 p-t-5">
 
-            <label for="psw"><b>Password</b></label>
-            <input id="passwrd1"type="password" placeholder="Enter Password" required>
-            <button id="signin">Login</button>
+					<div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input id="uname1" class="input100" type="text" name="username" placeholder="User name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input id="passwrd1"class="input100" type="password" name="pass" placeholder="Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-32">
+                        <div id="wrongpass"></div>
+						<button id="signin" class="login100-form-btn">
+							Login
+						</button>
+					</div>
+					<br>
+					<div id="newsign" class="colorwhite">
+						<h1>New to our app?<a id="sign-up" href="#"> Sign up now &gt;&gt;</a></h1>
+					</div>
+					<div id="passerr" ></div>
+
+				</div>
+			</div>
+		</div>
+		</div>
+
+	</div>
+    <div class="modalm" id="signup_f">
+        <div class="modalm-c">
+            <div class="limiter">
+		<div class="container-login100" >
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="close" id="up-close">&times</span>
+				<span class="login100-form-title p-b-41">
+					Sign Up
+				</span>
+				<div class="login100-form validate-form p-b-33 p-t-5">
+
+					<div class="wrap-input100 validate-input" data-validate = "Enter First Name">
+						<input id="first" class="input100" type="text" name="username" placeholder="Enter First Name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "Enter username">
+						<input id="uname" class="input100" type="text" name="username" placeholder="Enter Username">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input id="password"class="input100" type="password" name="pass" placeholder="Enter Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input id="rpassword"class="input100" type="password" name="pass" placeholder="Re-enter Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-32">
+						<button id="signup" class="login100-form-btn">
+							Sign Up
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
         </div>
     </div>
 
-<div class="modal" id="signup_f">
-    <div class ="modal-c">
-        <span class="close" id="up-close">&times</span>
-        <h1 style="display:inline; margin-left:200px" ><b>Sign Up</b></h1>
-        <br>
-        <br>
-        <label><b>First Name</b></label>
-        <input type="text" placeholder="Enter First Name" id="first" required>
-
-        <label><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" id="uname" required>
-
-        <label><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" id="password" required>
-
-        <label><b>Re-enter Password</b></label>
-        <input type="password" placeholder="Enter Password" id="rpassword" required>
-
-        <button type="submit" id="signup">Sign Up</button> 
+	<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Oops! There was an error with creating your account.</p>
+        </div>
+        <div class="modal-body">
+          <p>One of the following may have happened:</p>
+			<ul>
+				<li>The username entered already exists; maybe try a different one?</li>
+				<li>You didn't fill out the fields correctly.</li>
+				<li>Our game may just not like you! LOL <i class="fa fa-meh-o"  aria-hidden="true"></i></li>
+			</ul>
+			<p>Please try again!</p>
+        </div>
+      </div>
     </div>
-</div>
-<div class="modal" id="error_f">
-    <div class ="modal-c">
-        <span class="close" id="e-close">&times</span>
-        <h1 style="display:inline">Oops! There was an error with creating your account.</h1>
-        <h1>One of the following may have happened:</h1>
-        <ul>
-            <li>The username entered already exists; maybe try a different one?</li>
-            <li>Our game may just not like you! LOL ;)</li>
-        </ul>
-        <h1>Please try again!</h1>
+  </div>
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Success!</p>
+        </div>
+        <div class="modal-body">
+          <p>Log in now to get the full experience</p>
+        </div>
+      </div>
     </div>
-</div>
-<div class="modal" id="success_f">
-    <div class ="modal-c">
-        <span class="close" id="s-close">&times</span>
-        <h1 style="display:inline">Success!</h1>
-        <h2>Log in now to play.</h2>
-</div>
-</div>
+  </div>
 </div>
 </initial-page>
 
