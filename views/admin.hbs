@@ -1,0 +1,57 @@
+<admin-page>
+     <header class="header">
+      
+     <nav>
+      <a id="viewUsers">View Users</a>
+      <a id="modifyUser">Modify User</a>
+      <a id="deleteUser">Delete User </a>
+     </nav>
+     </header>
+    <br>
+    <table class="table" id="table">
+        <th>ID</th>
+        <th>First Name</th>
+        <th>User Name</th>
+        <th>Scores</th>
+        {{#each users}}
+                <tr id="{{this.id}}">
+                <td>
+                {{this.id}}
+                </td>
+                <td name="firstname">
+                {{this.fname}} 
+                </td>
+                <td name="user">
+                {{this.username}} 
+                </td>
+                <td>0</td>
+                </tr>
+             {{/each}}
+
+    </table>
+    
+    <div class="modal" id="users">
+            <table id="UserTable" class="modal-c" border="1">
+                <th>ID</th>
+                <th>Users</th>
+                 {{#each users}}
+                <tr id="{{this.id}}">
+                <td>
+                {{this.id}}
+                </td>
+                <td name="user">
+                {{this.username}} 
+                </td>
+                </tr>
+             {{/each}}
+            </table>
+        <div class="flexDiv">
+        <button class="button1" id="closeTable">Close table</button>
+        </div>
+    </div>
+    
+
+
+</admin-page>
+
+<script src="user-form.js"> </script>

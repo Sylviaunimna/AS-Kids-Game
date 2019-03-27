@@ -17,7 +17,10 @@ function initDB() {
             fname TEXT,
             username TEXT,
             password TEXT, 
-            score INTEGER
+            level1score INTEGER,
+            level2score INTEGER,
+            level3score INTEGER,
+            approved INTEGER
         )`);
 
     } );
@@ -57,6 +60,7 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
     '/logout',
+    '/admin'
 ];
 function check_auth(req, res, next){
     if ( req.session && req.session.auth ) {
@@ -68,6 +72,14 @@ function check_auth(req, res, next){
     else{
         res.status(404).send('Page Not Found');
     }
+}
+function generate_welcome_page(res,req){
+        res.type('.html'); // set content type to html
+        res.render('welcome', {
+            title : 'AS Social'
+        
+        
+    });
 }
 app.use(cookieSession({
     name:'session',
@@ -88,17 +100,29 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
+app.get('/draganddrop',function(req,res){
+    res.type('.html')
+    res.render('drag-drop', {
+        title : 'AS Social'
+    });
 
+})
 app.get('/login', function(req, res){
     res.type('.html')
     res.render('homepage', {
         sess: req.session,
         title : 'AS Social'
     });
-    // console.log(req.session, "login");
-   
-    
+    // console.log(req.session, "login");  
 })
+app.get('/admin',function(req,res){
+    db.all(`SELECT * FROM users`,[],function(err,row){
+        res.type('.html');
+        res.render('admin',{
+            users : row
+        });
+    });
+});
 app.get('/animal', function(req, res){
     res.type('.html')
     res.render('animals', {
@@ -135,11 +159,38 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let uname = req.body.username;
     let pword = req.body.password;
     console.log("New User: ", uname);
-    db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
-    [fname, uname, pword, null]);
+    db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
+    [fname, uname, pword, 0,0,null,null]);
     res.send( {fname : fname, uname : uname} ); 
 
 });
+app.put('/modifyUser/:id',function(req,res){
+    let id = req.params.id;
+    console.log( 'User', id );
+    db.run('UPDATE users SET approved=? WHERE id=?',[1,id],function(err){
+        if(!err){
+            res.send( {id : id, status : 'updated'} );
+        }
+        else {
+            res.send( {id : id, error : err} );
+        }
+    })
+
+
+})
+app.delete('/deleteUser/:id',function(req,res){
+    let id = req.params.id;
+    console.log( 'User', id );
+    db.run('DELETE FROM users WHERE id=?',[id],function(err){
+        if(!err){
+            res.send( {id : id, status : 'deleted'} );
+        }
+        else {
+            res.send( {id : id, error : err} );
+        }
+    })
+
+})
 
 app.post('/login',jsonParser, function(req, res){
     console.log("we're here")

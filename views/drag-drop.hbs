@@ -1,0 +1,90 @@
+<drag-drop>
+
+    <h1>Sliding Puzzle</h1>
+<br>
+<div class="container2">
+    <div class="child1">
+    <svg style="display:none" viewBox="0,0 200,100" >
+        <style>
+        .num{font: bold 15px ariel; fill: rgb(0, 0, 0);}
+    </style>
+        <defs>
+        <g id="1">
+        <rect x="0" y="0" width="36" height="32" rx="5" ry="5" fill="grey"/>
+        <text class="num" x="15" y="20">1</text>
+        </g>
+        <g id="2" >
+        <rect x="0" y="0" width="36" height="32" rx="5" ry="5" fill="pink"/>
+        <text class="num" x="15" y="20">2</text>
+        </g>
+        <g id="3" class="tile3">
+        <rect x="0" y="0" width="36" height="32" rx="5" ry="5" fill="grey" />
+        <text class="num" x="15" y="20">3</text>
+        </g>
+        <g id="4" >
+        <rect x="0" y="0" width="36" height="32" rx="5" ry="5" fill="pink"/>
+        <text class="num" x="15" y="20">4</text
+        </g>
+        <g id="5" >
+        <rect x="0" y="33" width="36" height="32" rx="5" ry="5" fill="pink" />
+        <text class="num" x="15" y="53">5</text>
+        </g>
+        <g id="6">
+        <rect x="0" y="33" width="36" height="32" rx="5" ry="5" fill="grey" />
+        <text class="num" x="15" y="53">6</text>
+        </g>
+        <g id="7" >
+        <rect x="0" y="33" width="36" height="32" rx="5" ry="5" fill="pink" />
+        <text class="num" x="15" y="53">7</text>
+        </g>
+        <g id="8" >
+        <rect x="0" y="33" width="36" height="32" rx="5" ry="5" fill="grey" />
+        <text class="num" x="15" y="53">8</text>
+        </g>
+        <g id="9">
+        <rect x="0" y="66" width="36" height="32" rx="5" ry="5" fill="grey" />
+        <text class="num" x="15" y="86">9</text>
+        </g>
+        <g id="10">
+        <rect x="0" y="66" width="36" height="32" rx="5" ry="5" fill="pink" />
+        <text class="num" x="10" y="86">10</text>
+        </g>
+        <g id="11">
+        <rect x="0" y="66" width="36" height="32" rx="5" ry="5" fill="grey" />
+        <text class="num" x="10" y="86">11</text>
+        </g>
+        <g id="12">
+            <rect x="0" y="66" width="36" height="32" fill="black" />
+        </g>
+        </defs>
+
+    </svg>
+    <svg class="game2" viewbox="0 0 100 100" width="740" height="500">
+        <use row="1" column="1" position="1" onClick="clickTile(this)" x="-23.5" y='1' href="#1"/>
+        <use row ="1"column="2" position="2" onClick="clickTile(this)" x="13.5" y='1' href="#3"/>
+        <use row="1" column="3" position="3" onClick="clickTile(this)" x="50.5" y='1' href="#4"/>
+        <use row="1" column="4" position="4" onClick="clickTile(this)" x="87.5" y='1' href="#2"/>
+        <use row="2" column="1" position="5" onClick="clickTile(this)" x="-23.5" y="1" href="#8"/>
+        <use row="2" column="2" position="6" onClick="clickTile(this)" x="13.5" y='1' href="#5"/>
+        <use row="2" column="3" position="7" onClick="clickTile(this)" x="50.5" y='1' href="#7"/>
+        <use row="2" column="4" position="8" onClick="clickTile(this)" x="87.5" y='1' href="#6"/>
+        <use row="3" column="1" position="9" onClick="clickTile(this)" x="-23.5" y='1' href="#11"/>
+        <use row="3" column="2" position="10"onClick="clickTile(this)" x="13.5" y='1' href="#9"/>
+        <use row="3" column="3" position="11"onClick="clickTile(this)" x="50.5" y='1' href="#10"/>
+        <use row="3" column="4" position="12"x="87.5" y='1' href="#12"/>
+    </svg>
+    </div>
+    
+<div class="child2">
+   <button class="btn"id="end"><i class="fa fa-home"></i>
+       End Game
+   </button>
+</div>
+
+
+</div>
+
+
+    </div>
+</drag-drop>
+<script src="game-form.js"> </script>
