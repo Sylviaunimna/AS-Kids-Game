@@ -69,16 +69,14 @@ class AdminPage extends HTMLElement{
             const nodeName = target.nodeName;
             let p =target.parentNode.nodeName;
             let name = target.getAttribute('name');
-            
+            let fname = target.getAttribute('name')
             console.log(nodeName);
-            if(nodeName == "TD" && name == "user"){
-               isSelected(target);
-               console.log(theSelected);
+            if(nodeName == "TD" && (name == "user" || fname == "firstname")){
+               isSelected(target);  
             }
             deleteButton.addEventListener('click',(evt)=>{
                 if(theSelected){
                     let useId = theSelected.parentNode.getAttribute('id')
-                    console.log(useId)
                     deleteUser(theSelected.parentNode,useId);
                     theSelected = null;
                 }
@@ -181,22 +179,29 @@ function modifyUser(userRow,id){
     };
     req.send();
 }
+function deleteNotification(id){
+let req = new XMLHttpRequest();
+req.open('DELETE',`/delete-notification/${id}`)
+}
 function deleteUser( userRow, id ) {
     let req = new XMLHttpRequest();
-    req.open('DELETE', `/deleteUser/${id}`);
+    let obj = {id: id};
+    req.open('DELETE', `/deleteUser`);
     req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
     req.responseType = 'json';
     req.onload = function(evt) {
         if ( req.status == 200 ) { // check for ok response
             const resp = req.response;
+            if(resp.status ==='deleted'){ 
             console.log( resp );
             userRow.remove();
-        }
+            }
         else {
             console.log('err', req );
-        }
-    };
-    req.send();
+            }
+        };
+    }
+    req.send(JSON.stringify(obj));
 }
 
 function authenticateUser(user,password,callback){

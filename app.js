@@ -18,7 +18,7 @@ function initDB() {
             admin INTEGER,
             gamesW INTEGER, 
             checked INTEGER,
-            note TEXT
+            note TEXT,
             level1score INTEGER,
             level2score INTEGER,
             level3score INTEGER,
@@ -117,10 +117,6 @@ function check_auth(req, res, next){
         res.status(404).send('Page Not Found');
     }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 838f3da0f8492cfa6891035161a4063b898a1009
 app.use(cookieSession({
     name:'session',
     secret:'foo'
@@ -202,7 +198,7 @@ function forLogin(req, res){
     });
 }
 app.get('/admin',function(req,res){
-    db.all(`SELECT * FROM users`,[],function(err,row){
+    db.all(`SELECT * FROM users ORDER BY gamesW DESC`,[],function(err,row){
         res.type('.html');
         res.render('admin',{
             users : row
@@ -240,7 +236,7 @@ app.get('/insert',jsonParser, function(req, res){
     }
 });
 app.get('/', function(req, res) {
-    console.log("Current User: ", req.session.username);
+    console.log("Current User: ", req.session);
     generate_welcome_page( res,req );
 });
 //This determines if the popup shows up everytime the user logs in
@@ -256,6 +252,19 @@ app.put('/update-checked',jsonParser, function(req, res){
         }
     });
 });
+app.delete('/deleteUser',jsonParser,function(req,res){
+    let id = req.body;
+    console.log(id);
+    db.run('DELETE FROM users where id=?',[id],function(err) {
+        if (!err) {
+            res.send( {status : 'deleted'} );
+        }
+        else {
+            res.send( {error : err} );
+        }
+    });
+    
+})
 //updates score
 app.put('/update-p',jsonParser, function(req, res){
     let oldp = req.body.oldp;
@@ -387,6 +396,7 @@ app.put('/get-leaderboard', function(req, res){
     }
     })
 });
+
 app.put('/update-not',jsonParser, function(req, res){
     let user = req.body.user;
     db.serialize(function(){
