@@ -105,14 +105,14 @@ justify-content:space-evenly;
   position: fixed;
   left: 0;
   right: 0;
-  height: 66px;
-  
-  line-height: 66px;
+  height: 60px;
+  background:-webkit-linear-gradient(left, #a445b2, #d41872, #fa4299);
+  line-height: 60px;
   color: #fff;
-  
-  background-color: pink;
+  align-items: center;
+   
 }
-a{
+a.navig{
   font-size: 20px;
 }
 a.navig:hover{
@@ -120,6 +120,36 @@ a.navig:hover{
   border-bottom: 2px solid rgb(247, 240, 229);
   transition: width .5s;
 }
+
+
+ .admintable{
+  border-collapse: collapse;
+  width: 75%;
+  position: fixed;
+  left: 0em;
+  top:10em;
+}
+.header{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  text-align: center;
+  align-content: stretch;
+}
+.admintable i{
+  font-size: 12px;
+}
+.admintable > th, td {
+  padding: 8px;
+  text-align: left;
+  border-top: 1px solid #ddd;
+  cursor: pointer;
+}
+.admintable tr:hover{
+  background: rgb(221, 107, 126);
+  cursor: pointer;
+} 
 use:hover{
   cursor: pointer;
   padding-bottom: 30px;

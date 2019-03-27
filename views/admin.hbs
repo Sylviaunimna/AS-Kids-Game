@@ -1,18 +1,22 @@
 <admin-page>
+    
      <header class="header">
-      
-     <nav>
-      <a id="viewUsers">View Users</a>
-      <a id="modifyUser">Modify User</a>
-      <a id="deleteUser">Delete User </a>
-     </nav>
+      <img width="50" id = "logo" src="newlog.png" alt="broken">
+      <a class="navig" id="return"><i class="fa fa-home"></i></a>
+      <a class="navig" id="viewUsers">View Users</a>
+      <a class="navig" id="modifyUser">Modify User</a>
+      <a class="navig" id="deleteUser">Delete User </a>
+      <a class="navig" id="deleteScore">Change User Score </a>
+      <a class="navig" id="deleteNotif">Delete User's Notification</a>
+    
      </header>
     <br>
-    <table class="table" id="table">
-        <th>ID</th>
-        <th>First Name</th>
-        <th>User Name</th>
-        <th>Scores</th>
+    <div>
+    <table class="admintable" id="UserTable">
+        <th>ID <i class="glyphicon glyphicon-sort"></i></th>
+        <th>First Name <span class="glyphicon glyphicon-sort"></span></th>
+        <th>User Name <span class="glyphicon glyphicon-sort"></span></th>
+        <th>Scores <span class="glyphicon glyphicon-sort"></span></th>
         {{#each users}}
                 <tr id="{{this.id}}">
                 <td>
@@ -24,14 +28,14 @@
                 <td name="user">
                 {{this.username}} 
                 </td>
-                <td>0</td>
+                <td>{{this.gamesW}}</td>
                 </tr>
              {{/each}}
 
     </table>
-    
+    </div>
     <div class="modal" id="users">
-            <table id="UserTable" class="modal-c" border="1">
+            <table id="table" class="modal-c" border="1">
                 <th>ID</th>
                 <th>Users</th>
                  {{#each users}}
@@ -50,7 +54,6 @@
         </div>
     </div>
     
-
 
 </admin-page>
 

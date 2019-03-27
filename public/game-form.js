@@ -103,21 +103,25 @@ function clickTile(tile)
     if(tile.getAttribute("href")!= emptyTile_id){
         if(tile_col < 4){
             if(etile_col == parseInt(tile_col) + 1 && etile_row == tile_row){
+                console.log("right");
                 swapTiles(tile,emptyTile,"right");
             }
         }
         if(tile_row > 1 ){
             if(etile_row == parseInt(tile_row) - 1 && etile_col == tile_col){
+                console.log('up');
                 swapTiles(tile,emptyTile,"up");
             }
         }
         if(tile_col > 1){
            if(etile_col == parseInt(tile_col) - 1 && etile_row ==tile_row){
+               console.log("left");
                swapTiles(tile,emptyTile,"left");
            }
         }
     if(tile_row < 3){
         if(etile_row == parseInt(tile_row)+1 && tile_col == etile_col){
+            console.log("down")
             swapTiles(tile,emptyTile,"down");
             }
         }

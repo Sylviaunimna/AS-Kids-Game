@@ -18,7 +18,15 @@ function initDB() {
             admin INTEGER,
             gamesW INTEGER, 
             checked INTEGER,
+<<<<<<< HEAD
             note TEXT
+=======
+            note TEXT,
+            level1score INTEGER,
+            level2score INTEGER,
+            level3score INTEGER,
+            approved INTEGER
+>>>>>>> 1c8a3ea9af1f45e4210ccb2b2f8cec49de795d7a
         )`);
 
     } );
@@ -121,7 +129,6 @@ app.use( check_auth );
 app.use(express.static(__dirname + '/images'));
 app.use(express.static( __dirname + '/public'))
 
-
 // the template middleware
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
@@ -213,7 +220,7 @@ function forLogin(req, res){
     });
 }
 app.get('/admin',function(req,res){
-    db.all(`SELECT * FROM users`,[],function(err,row){
+    db.all(`SELECT * FROM users ORDER BY gamesW DESC`,[],function(err,row){
         res.type('.html');
         res.render('admin',{
             users : row
@@ -251,7 +258,7 @@ app.get('/insert',jsonParser, function(req, res){
     }
 });
 app.get('/', function(req, res) {
-    console.log("Current User: ", req.session.username);
+    console.log("Current User: ", req.session);
     generate_welcome_page( res,req );
 });
 //This determines if the popup shows up everytime the user logs in
@@ -267,6 +274,19 @@ app.put('/update-checked',jsonParser, function(req, res){
         }
     });
 });
+app.delete('/deleteUser',jsonParser,function(req,res){
+    let id = req.body;
+    console.log(id);
+    db.run('DELETE FROM users where id=?',[id],function(err) {
+        if (!err) {
+            res.send( {status : 'deleted'} );
+        }
+        else {
+            res.send( {error : err} );
+        }
+    });
+    
+})
 //updates score
 app.put('/update-p',jsonParser, function(req, res){
     let oldp = req.body.oldp;
@@ -394,6 +414,7 @@ app.put('/get-leaderboard', function(req, res){
     }
     })
 });
+
 app.put('/update-not',jsonParser, function(req, res){
     let user = req.body.user;
     db.serialize(function(){
