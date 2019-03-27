@@ -1,5 +1,4 @@
 const sqlite3 = require('sqlite3').verbose();
-var logger = require('morgan');
 //Database for user information
 const db = new sqlite3.Database( __dirname + '/users.db',
 function(err) {
@@ -47,7 +46,6 @@ const jsonParser = bodyParser.json();
 const cookieSession = require('cookie-session');
 
 const app = express();
-app.use(logger('dev'));
 // the static file middleware
 const allowed_pages = [
     '/',
@@ -119,14 +117,6 @@ function check_auth(req, res, next){
         res.status(404).send('Page Not Found');
     }
 }
-function generate_welcome_page(res,req){
-        res.type('.html'); // set content type to html
-        res.render('welcome', {
-            title : 'AS Social'
-        
-        
-    });
-}
 app.use(cookieSession({
     name:'session',
     secret:'foo'
@@ -167,50 +157,46 @@ app.get('/login', function(req, res){
     }
 });
 function forLogin(req, res){
+    var index;
     db.serialize(function(){
         db.all('SELECT username FROM users ORDER BY gamesW DESC',[], function(err, results) {
             if ( !err ) {
                 let size = Object.keys(results).length;
                 for(var i=0; i < size; i++){
                     if (results[i].username === req.session.username){
-                        let index = i+1;
-                        db.all('SELECT username, gamesW FROM users ORDER BY gamesW DESC LIMIT 5',[], function(err, results) {
-                            let msize = Object.keys(results).length;
-                            if ( !err ) {
-                                for(var i=0; i < msize; i++){
-                                    results[i].i = i+1;
-                                }
-                                db.get('SELECT note FROM USERS WHERE username = ?', [req.session.username], function(err, notis) {
-                                    let note = notis.note
-                                    let rnote = note.split(',');
-                                    rnote.shift();
-                                    let sizee = rnote.length;
-                            
-                                    console.log("Logged In: ",req.session);
-                                    res.type('.html');
-                                    return res.render('homepage', {
-                                        size: sizee, 
-                                        notifs: rnote,
-                                        index: index,
-                                        users: results,
-                                        letter1: req.session.fname.charAt(0).toUpperCase(),
-                                        sess: req.session,
-                                        title : 'AS'
-                                    });
-                                });
-                            }
-                        } );
+                       index = i+1;
                     }
                 }
+                db.all('SELECT username, gamesW FROM users ORDER BY gamesW DESC LIMIT 5',[], function(err, results) {
+                    let msize = Object.keys(results).length;
+                    if ( !err ) {
+                        for(var i=0; i < msize; i++){
+                            results[i].i = i+1;
+                        }
+                        db.get('SELECT note FROM USERS WHERE username = ?', [req.session.username], function(err, notis) {
+                            let note = notis.note
+                            let rnote = note.split(',');
+                            rnote.shift();
+                            let sizee = rnote.length;
+                    
+                            console.log("Logged In: ",req.session);
+                            res.type('.html');
+                            return res.render('homepage', {
+                                size: sizee, 
+                                notifs: rnote,
+                                index: index,
+                                users: results,
+                                letter1: req.session.fname.charAt(0).toUpperCase(),
+                                sess: req.session,
+                                title : 'AS'
+                            });
+                        });
+                    }
+                } );
             }
+                
         } );
-    res.type('.html')
-    res.render('homepage', {
-        sess: req.session,
-        title : 'AS Social'
     });
-    // console.log(req.session, "login");  
-    })
 }
 app.get('/admin',function(req,res){
     db.all(`SELECT * FROM users`,[],function(err,row){

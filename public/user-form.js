@@ -430,3 +430,4 @@ function noteUser(user,callback){
 customElements.define('home-page', HomePage);
 customElements.define('initial-page', InitialPage);
 customElements.define('game-page', GamePage);
+customElements.define('admin-page', AdminPage);

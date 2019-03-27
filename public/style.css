@@ -18,8 +18,6 @@
   font-size: 12px;
   opacity: 1;
 }
-
-
 #addLevel{
   top: 5em;
   right: -3%;
@@ -88,24 +86,9 @@ h3{
   width: 100%; /* Could be more or less, depending on screen size */
   padding: 16px;
 }
-input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
-}
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
-}
 .game2{
   border: 2px solid palevioletred;
   border-radius: 5px;
-}
-span{
-  float: right;
 }
 * {box-sizing: border-box;}
 .flexDiv > button{
@@ -172,14 +155,14 @@ justify-content:space-evenly;
 a{
   font-size: 20px;
 }
-a:hover{
+a.navig:hover{
   border-top: 2px solid rgb(253, 248, 238);
   border-bottom: 2px solid rgb(247, 240, 229);
   transition: width .5s;
 }
 
 
-.table{
+/* .table{
   border-collapse: collapse;
   width: 75%;
   position: fixed;
@@ -194,7 +177,7 @@ th, td {
 }
 tr:hover{
   background: pink;
-}
+} */
 use:hover{
   cursor: pointer;
   padding-bottom: 30px;
