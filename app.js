@@ -17,10 +17,16 @@ function initDB() {
             fname TEXT,
             username TEXT,
             password TEXT, 
+<<<<<<< HEAD
             level1score INTEGER,
             level2score INTEGER,
             level3score INTEGER,
             approved INTEGER
+=======
+            score INTEGER,
+            gamesP INTEGER, 
+            checked INTEGER
+>>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
         )`);
 
     } );
@@ -41,7 +47,7 @@ const allowed_pages = [
     'logdin',
     '/style.css',
     '/newlog.png',
-    '/mjy.png',
+    '/brain.png',
     '/user-form.js',
     '/add-new-user',
     '/check-username',
@@ -60,8 +66,25 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
     '/logout',
+<<<<<<< HEAD
     '/admin'
+=======
+    '/update-checked',
+    '/levelselect.png',
+    '/smiley.jpg',
+>>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 ];
+function generate_welcome_page( res,req ) {
+    db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
+    if ( !err ) {
+        res.type('.html');
+        res.render('welcome', {
+            users : results,
+            title : 'Welcome to AS Social'
+        });
+    }
+    } );
+}
 function check_auth(req, res, next){
     if ( req.session && req.session.auth ) {
         next();
@@ -108,12 +131,34 @@ app.get('/draganddrop',function(req,res){
 
 })
 app.get('/login', function(req, res){
+<<<<<<< HEAD
     res.type('.html')
     res.render('homepage', {
         sess: req.session,
         title : 'AS Social'
     });
     // console.log(req.session, "login");  
+=======
+    db.all('SELECT fname, score FROM users ORDER BY score ASC LIMIT 5',[], function(err, results) {
+        if ( !err ) {
+            let size = Object.keys(results).length;
+            for(var i=0; i < size; i++){
+                results[i].i = i+1;
+                console.log(results[i]);
+            }
+            res.type('.html');
+            res.render('homepage', {
+                users: results,
+                sess: req.session,
+                title : 'AS Social'
+            });
+        }
+    } );
+    
+    // console.log(req.session, "login");
+   
+    
+>>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 })
 app.get('/admin',function(req,res){
     db.all(`SELECT * FROM users`,[],function(err,row){
@@ -135,33 +180,46 @@ app.get('/', function(req, res) {
     generate_welcome_page( res,req );
 });
 
-app.put('/check-username/', jsonParser, function(req,res){
-    let user = req.body.username;
-    db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[user],function(err,exist){
-        if(!err){
-           
-            if(exist.user_exists > 0){
-                res.send({status:"exists"});
-            }
-            else{
-                res.send({status:"not"})
-            }
-        }
-        else{
-            res.send({error:err})
-        }
-    })
-
-});
-
+// app.put('/update-checked',jsonParser, function(req, res){
+//     let bool = req.body.bool;
+//     db.run('UPDATE users SET checked=? WHERE user=?',
+//         [bool, req.session.user], function(err) {
+//         if (!err) {
+//             res.send( {id : id, status : 'updated'} );
+//         }
+//         else {
+//             res.send( {id : id, error : err} );
+//         }
+//     });
+// });
 app.post('/add-new-user',jsonParser, function(req, res) {
     let fname = req.body.firstname;
     let uname = req.body.username;
     let pword = req.body.password;
     console.log("New User: ", uname);
+<<<<<<< HEAD
     db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
     [fname, uname, pword, 0,0,null,null]);
     res.send( {fname : fname, uname : uname} ); 
+=======
+    db.serialize( function(){
+        db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
+            if(!err){
+                if(exist.user_exists > 0){
+                    res.send({status:"notok"});
+                }
+                else{
+                    db.run('INSERT INTO users(fname, username, password, score) VALUES(?, ?, ?, ?)',
+                    [fname, uname, pword, 16]);
+                    res.send( {status: "ok"} ); 
+                }
+            }
+            else{
+                res.send({error:err})
+            }
+        })
+    })
+>>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 
 });
 app.put('/modifyUser/:id',function(req,res){
