@@ -66,13 +66,9 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
     '/logout',
-<<<<<<< HEAD
-    '/admin'
-=======
     '/update-checked',
     '/levelselect.png',
     '/smiley.jpg',
->>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 ];
 function generate_welcome_page( res,req ) {
     db.all('SELECT * FROM users ORDER BY score ASC',[], function(err, results) {
@@ -112,7 +108,6 @@ app.use(cookieSession({
 app.use( check_auth );
 app.use(express.static( __dirname + '/public'))
 
-
 // the template middleware
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
@@ -131,14 +126,6 @@ app.get('/draganddrop',function(req,res){
 
 })
 app.get('/login', function(req, res){
-<<<<<<< HEAD
-    res.type('.html')
-    res.render('homepage', {
-        sess: req.session,
-        title : 'AS Social'
-    });
-    // console.log(req.session, "login");  
-=======
     db.all('SELECT fname, score FROM users ORDER BY score ASC LIMIT 5',[], function(err, results) {
         if ( !err ) {
             let size = Object.keys(results).length;
@@ -158,7 +145,6 @@ app.get('/login', function(req, res){
     // console.log(req.session, "login");
    
     
->>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 })
 app.get('/admin',function(req,res){
     db.all(`SELECT * FROM users`,[],function(err,row){
@@ -197,11 +183,6 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let uname = req.body.username;
     let pword = req.body.password;
     console.log("New User: ", uname);
-<<<<<<< HEAD
-    db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
-    [fname, uname, pword, 0,0,null,null]);
-    res.send( {fname : fname, uname : uname} ); 
-=======
     db.serialize( function(){
         db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
             if(!err){
@@ -219,7 +200,6 @@ app.post('/add-new-user',jsonParser, function(req, res) {
             }
         })
     })
->>>>>>> 8a856f246482e0cf1ccc2b0787892b9d01e1f0fd
 
 });
 app.put('/modifyUser/:id',function(req,res){
