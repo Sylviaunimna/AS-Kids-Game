@@ -20,6 +20,10 @@ function initDB() {
             gamesW INTEGER, 
             checked INTEGER,
             note TEXT
+            level1score INTEGER,
+            level2score INTEGER,
+            level3score INTEGER,
+            approved INTEGER
         )`);
 
     } );
@@ -72,6 +76,7 @@ const allowed_pages = [
     '/zebra.jpg',
     '/animal',
     '/logout',
+    '/admin',
     '/update-checked',
     'is-checked',
     '/levelselect.png',
@@ -114,6 +119,14 @@ function check_auth(req, res, next){
         res.status(404).send('Page Not Found');
     }
 }
+function generate_welcome_page(res,req){
+        res.type('.html'); // set content type to html
+        res.render('welcome', {
+            title : 'AS Social'
+        
+        
+    });
+}
 app.use(cookieSession({
     name:'session',
     secret:'foo'
@@ -134,7 +147,13 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
+app.get('/draganddrop',function(req,res){
+    res.type('.html')
+    res.render('drag-drop', {
+        title : 'AS Social'
+    });
 
+})
 app.get('/login', function(req, res){
     if(req.session.auth){
         forLogin(req, res);
@@ -185,8 +204,22 @@ function forLogin(req, res){
                 }
             }
         } );
+    res.type('.html')
+    res.render('homepage', {
+        sess: req.session,
+        title : 'AS Social'
     });
+    // console.log(req.session, "login");  
+    })
 }
+app.get('/admin',function(req,res){
+    db.all(`SELECT * FROM users`,[],function(err,row){
+        res.type('.html');
+        res.render('admin',{
+            users : row
+        });
+    });
+});
 app.get('/animal', function(req, res){
     if(req.session.auth){
         res.type('.html')
@@ -292,6 +325,10 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let fname = req.body.firstname;
     let uname = req.body.username;
     let pword = req.body.password;
+    console.log("New User: ", uname);
+    db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
+    [fname, uname, pword, 0,0,null,null]);
+    res.send( {fname : fname, uname : uname} ); 
     db.serialize( function(){
         db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
             if(!err){
