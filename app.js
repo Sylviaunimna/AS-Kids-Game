@@ -18,15 +18,7 @@ function initDB() {
             admin INTEGER,
             gamesW INTEGER, 
             checked INTEGER,
-<<<<<<< HEAD
             note TEXT
-=======
-            note TEXT,
-            level1score INTEGER,
-            level2score INTEGER,
-            level3score INTEGER,
-            approved INTEGER
->>>>>>> 1c8a3ea9af1f45e4210ccb2b2f8cec49de795d7a
         )`);
 
     } );
