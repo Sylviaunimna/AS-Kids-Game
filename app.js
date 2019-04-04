@@ -28,7 +28,7 @@ function initDB() {
     } );
 }
 test_users = [
-    [ 'Sylvia', 'sylviax', '1234', 1, 14, ""],
+    [ 'Sylvia', 'sylviax', '1234', 1, 14,""],
     [ 'Afrah', 'afrahx', '1234', 1, 15, ""],
     [ 'Mary', 'maryx', '1234', 0, 16, ""],
     [ 'Gillian', 'gillianx', '1234', 0, 10, ""],
@@ -94,6 +94,8 @@ const allowed_pages = [
     '/css/util.css',
     '/css/main.css',
     '/fonts/ubuntu/Ubuntu-Regular.ttf',
+    '/modifyUser',
+    '/slidepuzzle'
 ];
 function generate_welcome_page( res,req ) {
     if(req.session.auth){
@@ -136,9 +138,9 @@ app.set('view engine', 'hbs');
 app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
-app.get('/draganddrop',function(req,res){
+app.get('/slidepuzzle',function(req,res){
     res.type('.html')
-    res.render('drag-drop', {
+    res.render('slidePuzzle', {
         title : 'AS Social'
     });
 
@@ -198,7 +200,7 @@ function forLogin(req, res){
     });
 }
 app.get('/admin',function(req,res){
-    db.all(`SELECT * FROM users ORDER BY gamesW DESC`,[],function(err,row){
+    db.all(`SELECT * FROM users WHERE admin=0 ORDER BY gamesW DESC`,[],function(err,row){
         res.type('.html');
         res.render('admin',{
             users : row
@@ -239,6 +241,36 @@ app.get('/', function(req, res) {
     console.log("Current User: ", req.session);
     generate_welcome_page( res,req );
 });
+
+app.get('/fnameSort',function(req,res){
+    db.all('SELECT id,fname,username,gamesW FROM users WHERE admin=0 ORDER BY fname',[],function(err,rows){
+        if(!err){
+            res.send(rows)
+        }
+    })
+})
+app.get('/unameSort',function(req,res){
+    db.all('SELECT id,fname,username,gamesW FROM users WHERE admin=0 ORDER BY username',[],function(err,rows){
+        if(!err){
+            console.log(rows)
+            res.send(rows)
+        }
+    })
+})
+app.get('/idSort',function(req,res){
+    db.all('SELECT id,fname,username,gamesW FROM users WHERE admin=0 ORDER BY id',[],function(err,rows){
+        if(!err){
+            res.send(rows)
+        }
+    })
+})
+app.get('/scoreSort',function(req,res){
+    db.all('SELECT id,fname,username,gamesW FROM users WHERE admin=0 ORDER BY gamesW',[],function(err,rows){
+        if(!err){
+            res.send(rows)
+        }
+    })
+})
 //This determines if the popup shows up everytime the user logs in
 app.put('/update-checked',jsonParser, function(req, res){
     let bool = req.body.bool;
@@ -253,9 +285,10 @@ app.put('/update-checked',jsonParser, function(req, res){
     });
 });
 app.delete('/deleteUser',jsonParser,function(req,res){
-    let id = req.body;
+    let id = req.body.id;
     console.log(id);
-    db.run('DELETE FROM users where id=?',[id],function(err) {
+    db.serialize(function(){
+    db.run(`DELETE FROM users WHERE id=?`,[id],function(err) {
         if (!err) {
             res.send( {status : 'deleted'} );
         }
@@ -263,7 +296,50 @@ app.delete('/deleteUser',jsonParser,function(req,res){
             res.send( {error : err} );
         }
     });
+    db.all(`SELECT id FROM users ORDER BY gamesW DESC`,[],function(err,row){
+        if (!err){
+            console.log(row);
+        }
+    })
+
     
+    })
+})
+app.put('/delete-notification',jsonParser,function(req,res){
+    let id = req.body.id;
+    db.run(`UPDATE users SET note=? WHERE id=? `,["",id],function(err){
+        if (!err) {
+            res.send( {status : 'updated'} );
+        }
+        else {
+            res.send( {error : err} );
+        }
+    });
+})
+app.put('/delete-score',jsonParser,function(req,res){
+    let id = req.body.id;
+    console.log(id)
+    db.run(`UPDATE users SET gamesW=? WHERE id=? `,[0,id],function(err){
+        if (!err) {
+            res.send( {status : 'updated'} );
+        }
+        else {
+            res.send( {error : err} );
+        }
+    });
+})
+
+app.put('/modifyUser',jsonParser,function(req,res){
+    let newUname = req.body.username;
+    let id = req.body.id;
+    db.run(`UPDATE users SET username=? WHERE id=? `,[newUname,id],function(err){
+        if (!err) {
+            res.send( {status : 'updated'} );
+        }
+        else {
+            res.send( {error : err} );
+        }
+    });
 })
 //updates score
 app.put('/update-p',jsonParser, function(req, res){

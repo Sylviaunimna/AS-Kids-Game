@@ -18,13 +18,22 @@
   font-size: 12px;
   opacity: 1;
 }
-#addLevel{
-  top: 5em;
-  right: -3%;
-  font-size: 12px;
-  opacity: 1;
+#h-Puzzle{
+  font-size: 30px !important;
+  color: black;
+  text-align: center;
+  text-decoration: #d41872 underline;
 }
 
+.confirm{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center
+}
+#dUser button{
+  position: relative
+}
 #log-in{ 
   top: 2em;
   right: 9%;
@@ -126,6 +135,18 @@ justify-content:space-evenly;
   top: 0em;
   right: 2em;
 }
+#userChange{
+  height:40%
+}
+#userChange button{
+  left:2em;
+  top: 2em;
+}
+#userChange input{
+  width: 80%;
+  text-align: center;
+  border: #d41872 1px solid;
+}
 
 .mybuttn{
   background: rgb(230, 164, 224);
@@ -177,12 +198,18 @@ a.navig:hover{
   text-align: center;
   align-content: stretch;
 }
+.highlight{
+  border: #ccc 2px solid;
+}
 .admintable i{
   font-size: 12px;
 }
-.admintable > th, td {
+.admintable th{
+  text-align: center;
+}
+.admintable > th , td {
   padding: 8px;
-  text-align: left;
+  text-align: center;
   border-top: 1px solid #ddd;
   cursor: pointer;
 }
@@ -321,12 +348,6 @@ button.accordion:after {
 
   top: 5em;
 }
-/* .box {
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-80%);
-} */
 .notifications {
   width:45px;
   height:45px;

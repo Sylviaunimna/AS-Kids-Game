@@ -1,60 +1,117 @@
-<admin-page>
-    
+
      <header class="header">
       <img width="50" id = "logo" src="newlog.png" alt="broken">
-      <a class="navig" id="return"><i class="fa fa-home"></i></a>
-      <a class="navig" id="viewUsers">View Users</a>
+      <a href="/login" class="navig" id="return"><i class="fa fa-home"></i></a>
       <a class="navig" id="modifyUser">Modify User</a>
       <a class="navig" id="deleteUser">Delete User </a>
       <a class="navig" id="deleteScore">Change User Score </a>
       <a class="navig" id="deleteNotif">Delete User's Notification</a>
-    
      </header>
     <br>
     <div>
     <table class="admintable" id="UserTable">
-        <th>ID <i class="glyphicon glyphicon-sort"></i></th>
-        <th>First Name <span class="glyphicon glyphicon-sort"></span></th>
-        <th>User Name <span class="glyphicon glyphicon-sort"></span></th>
-        <th>Scores <span class="glyphicon glyphicon-sort"></span></th>
+        <th>ID <i id="id-sort" class="glyphicon glyphicon-sort"></i></th>
+        <th>First Name <i id="fname-sort" class="glyphicon glyphicon-sort"></i></th>
+        <th>User Name <i id="uname-sort" class="glyphicon glyphicon-sort"></i></th>
+        <th>Scores <i id="score-sort" class="glyphicon glyphicon-sort"></i></span></th>
         {{#each users}}
                 <tr id="{{this.id}}">
-                <td>
-                {{this.id}}
+                <td>{{this.id}}
                 </td>
-                <td name="firstname">
-                {{this.fname}} 
-                </td>
-                <td name="user">
-                {{this.username}} 
-                </td>
-                <td>{{this.gamesW}}</td>
+                <td name="firstname">{{this.fname}} </td>
+                <td name="user">{{this.username}}</td>
+                <td name="gamesWon">{{this.gamesW}}</td>
                 </tr>
              {{/each}}
-
     </table>
     </div>
-    <div class="modal" id="users">
-            <table id="table" class="modal-c" border="1">
-                <th>ID</th>
-                <th>Users</th>
-                 {{#each users}}
-                <tr id="{{this.id}}">
-                <td>
-                {{this.id}}
-                </td>
-                <td name="user">
-                {{this.username}} 
-                </td>
-                </tr>
-             {{/each}}
-            </table>
-        <div class="flexDiv">
-        <button class="button1" id="closeTable">Close table</button>
+    <div class="modal" id="untouchable">
+        <div id="adminstrator" class="modal-c" border="1">
+            <p><span class="close" id="sign-in-close" >&times</span></p>
+            <p>This User cannot be deleted because it is a Adminstrator.</p>
+        </div>
+
+    </div>
+    <div class="modal" id="dUser">
+        <div id="user-del" class="modal-c" border='1'>
+            <p>Are you sure you would like to delete the user <b> <span id="d-user"></b></span> ? </p>
+            <br>
+            <div class="confirm"><button id="yesB-del" class="login100-form-btn">Yes</button>
+            <button id="noB-del" class="login100-form-btn">No</button>
+            </div>
         </div>
     </div>
+ 
+    <div class="modal" id="mUser">
+        <div id="mod-del" class="modal-c" border='1'>
+            <p>Are you sure you would like to Modify <b> <span id="m-user"></b></span>'s username ? </p>
+            <br>
+            <div class="confirm"><button id="yesB-modify" class="login100-form-btn">Yes</button>
+            <button id="noB-modify" class="login100-form-btn">No</button>
+            </div>
+        </div>
+    </div>
+     <div class="modal" id="sUser">
+        <div id="mod-del" class="modal-c" border='1'>
+            <p>Are you sure you would like to delete <b> <span id="s-user"></b></span>'s score ? </p>
+            <br>
+            <div class="confirm"><button id="yesB-score" class="login100-form-btn">Yes</button>
+            <button id="noB-score" class="login100-form-btn">No</button>
+            </div>
+        </div>
+     </div>
+     <div class="modal fade" id="note-del" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+            <p class="modal-title">Success!</p>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p> <b> <span id="note-u"></b></span>'s Notifications have been Deleted. </p> 
+        </div>
+      </div>
+    </div>
+     </div>
+      <div class="modal fade" id="score-del" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+            <p class="modal-title">Success!</p>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p> <b> <span id="score-u"></b></span>'s Score has been Deleted. </p> 
+        </div>
+      </div>
+    </div>
+     </div>
+     <div class="modal fade" id="changeU" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <p class="modal-title">Change user name</p>
+        </div>
+        <div class="modal-body">
+          <label>Old UserName: </label>
+            <input id="oldUser" type="text">
+            <label>New UserName: </label>
+            <input id="newUser" type="text">
+            <br>
+            <br>
+            <button id="editu" class="login100-form-btn">
+							Save Changes
+						</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
     
 
-</admin-page>
+    
 
-<script src="user-form.js"> </script>
+
+
+<script src="adminForm.js"> </script>

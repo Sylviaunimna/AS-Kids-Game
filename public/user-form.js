@@ -46,45 +46,7 @@ class GamePage extends HTMLElement {
         })
     }
 }
-class AdminPage extends HTMLElement{
-    constructor(){
-        super();
-        const thisForm = this;
-        let viewButton = document.getElementById("viewUsers");
-        let closeTableButton = document.getElementById("closeTable");
-        let deleteButton = document.getElementById("deleteUser");
-        let addLvlButton = document.getElementById("addLevel");
-        let tableArea = document.getElementById("UserTable");
-        let users = document.getElementById("users");
-        viewButton.addEventListener('click',(evt)=>{
-            console.log("button")
-            users.style.display = "block";
-    })
-    
-    closeTableButton.addEventListener('click',(evt)=>{
-        users.style.display = "none";
-    })
-    tableArea.addEventListener('click',(evt)=>{
-        const target = evt.target;
-            const nodeName = target.nodeName;
-            let p =target.parentNode.nodeName;
-            let name = target.getAttribute('name');
-            let fname = target.getAttribute('name')
-            console.log(nodeName);
-            if(nodeName == "TD" && (name == "user" || fname == "firstname")){
-               isSelected(target);  
-            }
-            deleteButton.addEventListener('click',(evt)=>{
-                if(theSelected){
-                    let useId = theSelected.parentNode.getAttribute('id')
-                    deleteUser(theSelected.parentNode,useId);
-                    theSelected = null;
-                }
-            })
-      
-    })      
-    }
-}
+
 class InitialPage extends HTMLElement {
     constructor() {
         super();  // is always required
@@ -151,57 +113,6 @@ class InitialPage extends HTMLElement {
             } );
         } );
     }
-}
-
-let theSelected = null;
-function isSelected(user){
-    if(theSelected && theSelected != null){
-        theSelected.setAttribute('class',''); 
-    }
-    theSelected = user;
-if ( user && user != null) {
-    theSelected.setAttribute('class','highlight');
-}
-}
-function modifyUser(userRow,id){
-    let req = new XMLHttpRequest();
-    req.open('PUT', `/modifyUser/${id}`); 
-    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    req.responseType = 'json'; 
-    req.onload = function(evt) {
-        if ( req.status == 200 ) { // check for ok response
-            const resp = req.response;
-            console.log( resp );
-        }
-        else {
-            console.log('err', req );
-        }
-    };
-    req.send();
-}
-function deleteNotification(id){
-let req = new XMLHttpRequest();
-req.open('DELETE',`/delete-notification/${id}`)
-}
-function deleteUser( userRow, id ) {
-    let req = new XMLHttpRequest();
-    let obj = {id: id};
-    req.open('DELETE', `/deleteUser`);
-    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    req.responseType = 'json';
-    req.onload = function(evt) {
-        if ( req.status == 200 ) { // check for ok response
-            const resp = req.response;
-            if(resp.status ==='deleted'){ 
-            console.log( resp );
-            userRow.remove();
-            }
-        else {
-            console.log('err', req );
-            }
-        };
-    }
-    req.send(JSON.stringify(obj));
 }
 
 function authenticateUser(user,password,callback){
@@ -421,4 +332,3 @@ function noteUser(user,callback){
 customElements.define('home-page', HomePage);
 customElements.define('initial-page', InitialPage);
 customElements.define('game-page', GamePage);
-customElements.define('admin-page', AdminPage);

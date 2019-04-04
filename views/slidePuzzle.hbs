@@ -1,6 +1,6 @@
-<drag-drop>
+<slide-puzzle>
 
-    <h1>Sliding Puzzle</h1>
+    <h1 id="h-Puzzle">Sliding Puzzle</h1>
 <br>
 <div class="container2">
     <div class="child1">
@@ -77,14 +77,30 @@
     
 <div class="child2">
    <button class="btn"id="end"><i class="fa fa-home"></i>
-       End Game
+      <a href="">End Game</a>
    </button>
 </div>
-
-
-</div>
-
-
+ <div class="modal fade" id="you-won" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+            <p class="modal-title">Success!</p>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+           <p>CONGRATULATIONS! You have finished this level</p> 
+        </div>
+      </div>
     </div>
-</drag-drop>
+ </div>
+ <div class="modal modalm" id="you-lost" role="dialog">
+    <div class="modal-c">
+        <p>Better Luck Next Time</p>
+        <button><a href="/slidepuzzle" >Play again</a></button>
+        <button><a href="/login" >Homepage</a></button>
+           
+    </div>
+</div>
+    
+</slide-puzzle>
 <script src="game-form.js"> </script>
