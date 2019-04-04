@@ -5,12 +5,12 @@
         <div style="padding: 25px">
             <h2>Hi <div>{{sess.fname}}</div>, welcome back!</h2>
             <br>
-            <h3>You are number {{index}} in the Leaderboard.</h3>
+            <h3>You are number {{index}} in the Leaderboard with a score of {{score.gamesW}}.</h3>
         </div>
         <table class="table ">
             <caption style="caption-side: top; text-align: center; color: black">Leaderboard</caption>
         <tr>
-            <th>Rank</th>
+            <th>#</th>
             <th>Username</th>
             <th>Games Won</th>
         </tr>
@@ -19,20 +19,43 @@
             <td>{{i}}</td>
             <td>{{username}}</td>
             <td>{{gamesW}}</td>
-            <td><button id="{{username}}"><span class="icon"><i class="fa fa-smile-o" aria-hidden="true"></i></span></button></td>
+            {{#if is}}
+              <td><button id="{{username}}"><span class="icon"><i class="fa fa-smile-o" aria-hidden="true"></i></span></button></td>
+            {{else}}
+              <td></td>
+            {{/if}}
         </tr>
         {{/each}}
         </table>
 
         <div style="padding: 25px">
-        <h3>Our leaderboard shows the top 5 players of our game.</h3>
-        <h3>If you're not listed above, keep playing. </h3>
+        <h3>Our leaderboard shows the top users of our game.</h3>
 
         </div>
     </div>
     <div class ="mini">
+      <div class="tophome">
         <button id = "editp" class="login100-form-btn topbutton">Change Password</button>
         <button id="logoutb" class="login100-form-btn topbutton" >Logout</button>
+        <div class="container">
+        <div class="row">
+          <div class="box">
+          <div class="notifications">
+              <i class="fa fa-bell"></i>
+              <span class="num">{{size}}</span>
+              <ul class="notif">
+                  {{#each notifs as |item|}}
+                  <li class="icon">
+                      <span class="icon"><i class="fa fa-user"></i></span>
+                      <span class="text">{{item}} smiled at you. </span>
+                  </li>
+                  {{/each}}
+              </ul>
+          </div>
+      </div>
+        </div>
+        </div>
+    </div>
     <div style="padding-left: 250px; padding-top: 75px;">
         <h3>Select a Category to start with</h3>
     </div>
@@ -188,24 +211,7 @@
       </div>
     </div>
   </div>
-  <div class="container">
-	<div class="row">
-		<div class="box">
-    <div class="notifications">
-        <i class="fa fa-bell"></i>
-        <span class="num">{{size}}</span>
-        <ul class="notif">
-            {{#each notifs as |item|}}
-            <li class="icon">
-                <span class="icon"><i class="fa fa-user"></i></span>
-                <span class="text">{{item}} smiled at you. </span>
-            </li>
-            {{/each}}
-        </ul>
-    </div>
-</div>
-	</div>
-</div>
+  
 
 </home-page>
 

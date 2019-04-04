@@ -18,11 +18,15 @@ function initDB() {
             admin INTEGER,
             gamesW INTEGER, 
             checked INTEGER,
+<<<<<<< HEAD
+            note TEXT
+=======
             note TEXT,
             level1score INTEGER,
             level2score INTEGER,
             level3score INTEGER,
             approved INTEGER
+>>>>>>> 1c8a3ea9af1f45e4210ccb2b2f8cec49de795d7a
         )`);
 
     } );
@@ -90,7 +94,6 @@ const allowed_pages = [
     '/vendor/css-hamburgers/hamburgers.min.css',
     '/vendor/animsition/css/animsition.min.css',
     '/vendor/select2/select2.min.css',
-    '/vendor/daterangepicker/daterangepicker.css',
     '/css/util.css',
     '/css/main.css',
     '/fonts/ubuntu/Ubuntu-Regular.ttf',
@@ -173,23 +176,34 @@ function forLogin(req, res){
                     if ( !err ) {
                         for(var i=0; i < msize; i++){
                             results[i].i = i+1;
+                            if (results[i].username == req.session.username){
+                                results[i].is = false;
+                            }
+                            else{
+                                results[i].is = true;
+                            }
                         }
+                        //To display any notifications the user may have
                         db.get('SELECT note FROM USERS WHERE username = ?', [req.session.username], function(err, notis) {
                             let note = notis.note
                             let rnote = note.split(',');
                             rnote.shift();
                             let sizee = rnote.length;
                     
-                            console.log("Logged In: ",req.session);
-                            res.type('.html');
-                            return res.render('homepage', {
-                                size: sizee, 
-                                notifs: rnote,
-                                index: index,
-                                users: results,
-                                letter1: req.session.fname.charAt(0).toUpperCase(),
-                                sess: req.session,
-                                title : 'AS'
+                            db.get('SELECT gamesW FROM USERS WHERE username = ?', [req.session.username], function(err, score) {
+                        
+                                console.log("Logged In: ",req.session);
+                                res.type('.html');
+                                return res.render('homepage', {
+                                    score: score,
+                                    size: sizee, 
+                                    notifs: rnote,
+                                    index: index,
+                                    users: results,
+                                    letter1: req.session.fname.charAt(0).toUpperCase(),
+                                    sess: req.session,
+                                    title : 'AS'
+                                });
                             });
                         });
                     }
@@ -399,10 +413,6 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let fname = req.body.firstname;
     let uname = req.body.username;
     let pword = req.body.password;
-    console.log("New User: ", uname);
-    db.run('INSERT INTO users(fname, username, password, level1score,level2score,level3score,approved) VALUES(?, ?, ?, ?, ?, ?, ?)',
-    [fname, uname, pword, 0,0,null,null]);
-    res.send( {fname : fname, uname : uname} ); 
     db.serialize( function(){
         db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
             if(!err){
@@ -411,8 +421,8 @@ app.post('/add-new-user',jsonParser, function(req, res) {
                 }
                 else{
                     console.log("New User: ", uname);
-                    db.run('INSERT INTO users(fname, username, password, gamesW) VALUES(?, ?, ?, ?)',
-                    [fname, uname, pword, 16]);
+                    db.run('INSERT INTO users(fname, username, password, gamesW, note) VALUES(?, ?, ?, ?, ?)',
+                    [fname, uname, pword, 0, ""]);
                     res.send( {status: "ok"} ); 
                 }
             }
