@@ -95,7 +95,6 @@ const allowed_pages = [
     '/usa.jpg',
     '/Zimbabwe.jpg',
     '/zim.jpg',
-    '/draganddrop',
     '/animal',
     '/logout',
     '/admin',
