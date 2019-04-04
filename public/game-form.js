@@ -1,4 +1,4 @@
-class DragAndDrop extends HTMLElement {
+class SlidePuzzle extends HTMLElement {
     constructor(){
         super();
         const thisForm = this;
@@ -11,11 +11,30 @@ let endButton = document.getElementById("end");
 
 endButton.addEventListener('click',(evt)=>{
     let score = endGame();
-
     if (score == 12){
         let req = new XMLHttpRequest();
-        
+        req.open('PUT','/update-p');
+        req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
+        req.responseType = 'json';
+        req.onload = function(evt) {
+            if ( req.status == 200 ) { // check for ok response
+                const resp = req.response;
+                if(resp.status ==='updated'){ 
+                    //Show the WON modal
+                    document.getElementById("you-lost").style.display = "block"
+   
+                }
+                else {
+                    console.log('err', req );
+                }
     }
+
+    }
+}
+else{
+    //Show the modal that they have not won, Better luck next time
+    document.getElementById("you-lost").style.display = "block"
+}
 })
 
   
@@ -58,7 +77,6 @@ if(document.querySelector("use[href='#11']") && document.querySelector("use[href
 if(document.querySelector("use[href='#12']") && document.querySelector("use[href='#12']").getAttribute("position") =="12"){
     score++;
 }
-console.log(score)
 return score
 }
 function swapTiles(tile1,tile2,direction){
@@ -103,29 +121,25 @@ function clickTile(tile)
     if(tile.getAttribute("href")!= emptyTile_id){
         if(tile_col < 4){
             if(etile_col == parseInt(tile_col) + 1 && etile_row == tile_row){
-                console.log("right");
                 swapTiles(tile,emptyTile,"right");
             }
         }
         if(tile_row > 1 ){
             if(etile_row == parseInt(tile_row) - 1 && etile_col == tile_col){
-                console.log('up');
                 swapTiles(tile,emptyTile,"up");
             }
         }
         if(tile_col > 1){
            if(etile_col == parseInt(tile_col) - 1 && etile_row ==tile_row){
-               console.log("left");
                swapTiles(tile,emptyTile,"left");
            }
         }
     if(tile_row < 3){
         if(etile_row == parseInt(tile_row)+1 && tile_col == etile_col){
-            console.log("down")
             swapTiles(tile,emptyTile,"down");
             }
         }
     }
 }
 
-customElements.define('drag-drop', DragAndDrop);
+customElements.define('slide-puzzle', SlidePuzzle);
