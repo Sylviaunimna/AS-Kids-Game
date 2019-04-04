@@ -267,33 +267,43 @@ class HomePage extends HTMLElement {
                 let size = Object.keys(results).length;
                 if (size > 0){
                     let but1 = document.getElementById(results[0].username);
-                    but1.addEventListener('click', function(evt){
-                        noteUser(results[0].username,(req)=>{ });  
-                    });
+                    if (but1){
+                        but1.addEventListener('click', function(evt){
+                            noteUser(results[0].username,(req)=>{ });  
+                        });
+                    }
                 }
                 if (size > 1){
                     let but1 = document.getElementById(results[1].username);
-                    but1.addEventListener('click', function(evt){
-                        noteUser(results[1].username,(req)=>{ });  
-                    });
+                    if (but1){
+                        but1.addEventListener('click', function(evt){
+                            noteUser(results[1].username,(req)=>{ });  
+                        });
+                    }
                 }
                 if (size > 2){
                     let but1 = document.getElementById(results[2].username);
-                    but1.addEventListener('click', function(evt){
-                        noteUser(results[2].username,(req)=>{ });  
-                    });
+                    if (but1){
+                        but1.addEventListener('click', function(evt){
+                            noteUser(results[2].username,(req)=>{ });  
+                        });
+                    }
                 }
                 if (size > 3){
                     let but1 = document.getElementById(results[3].username);
-                    but1.addEventListener('click', function(evt){
-                        noteUser(results[3].username,(req)=>{ });  
-                    });
+                    if (but1){
+                        but1.addEventListener('click', function(evt){
+                            noteUser(results[3].username,(req)=>{ });  
+                        });
+                    }
                 }
                 if (size > 4){
                     let but1 = document.getElementById(results[4].username);
-                    but1.addEventListener('click', function(evt){
-                        noteUser(results[4].username,(req)=>{ });  
-                    });
+                    if (but1){
+                        but1.addEventListener('click', function(evt){
+                            noteUser(results[4].username,(req)=>{ });  
+                        });
+                    }
                 }
             }
         };
@@ -328,7 +338,7 @@ function noteUser(user,callback){
     };
     req.send(JSON.stringify( obj )); 
 };
-
+// custom element for user form
 customElements.define('home-page', HomePage);
 customElements.define('initial-page', InitialPage);
 customElements.define('game-page', GamePage);

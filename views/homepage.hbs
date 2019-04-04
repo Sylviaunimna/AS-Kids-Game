@@ -1,9 +1,13 @@
 <home-page>
-<div class="flexcont" id="flexx">
+<div class="flexcont">
     <div class = "mini">
         <img width="50" id = "logo" src="newlog.png" alt="broken">
         <div style="padding: 25px">
-            <h2>Hi <div>{{sess.fname}}</div>, welcome back!</h2>
+            <h2>Hi <div>{{sess.fname}}</div>, welcome back! 
+            {{#if sess.admin}}
+            <a  href="/admin"><i class="fa fa-users" aria-hidden="true"></i></a>
+            {{/if}}
+            </h2>
             <br>
             <h3>You are number {{index}} in the Leaderboard with a score of {{score.gamesW}}.</h3>
         </div>
@@ -33,10 +37,10 @@
 
         </div>
     </div>
-    <div class ="mini">
+    <div class ="mini" id="flexx">
       <div class="tophome">
-        <button id = "editp" class="login100-form-btn topbutton">Change Password</button>
-        <button id="logoutb" class="login100-form-btn topbutton" >Logout</button>
+        <div><button id = "editp" class="login100-form-btn topbutton">Change Password</button></div>
+        <div><button id="logoutb" class="login100-form-btn topbutton" >Logout</button></div>
         <div class="container">
         <div class="row">
           <div class="box">
@@ -59,14 +63,15 @@
     <div style="padding-left: 250px; padding-top: 75px;">
         <h3>Select a Category to start with</h3>
     </div>
+    <br>
   <div class="aspects">
       <div id="accordion">
   <button type="button" class="accordion " data-parent="#accordion" data-toggle="collapse" data-target="#demo">Class Demo</button>
   <div id="demo" class="collapse in">
       <ul>
         <li><a href="/animal">Easy - Animals (Mix and Match)</a></li>
-        <li><a href="#">Moderate - Flags (Drag and Drop)</a></li>
-        <li><a href="#">Hard - Numbers (Slide)</a></li>
+        <li><a href="/dragndrop">Medium - Flags (Drag and Drop)</a></li>
+        <li><a href="/slidePuzzle">Hard - Numbers (Slide)</a></li>
     </ul>
   </div>
 <br>
@@ -125,46 +130,6 @@
     </div>
 </div>
 </div>
-
-<div class="modalm" id="edit_p">
-        <div class="modalm-c">
-            <div class="limiter">
-		<div class="container-login100" >
-			<div class="wrap-login100 p-t-30 p-b-50">
-				<span class="close" id="sign-in-close" >&times</span>
-				<span class="login100-form-title p-b-41">
-					Change Password
-				</span>
-				<div class="login100-form validate-form p-b-33 p-t-5">
-
-                    <div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input id="opass"class="input100" type="password" name="pass" placeholder="Old Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
-					
-					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input id="npass"class="input100" type="password" name="pass" placeholder="New Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
-
-                    <div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input id="npass1"class="input100" type="password" name="pass" placeholder="Confirm New Password">
-						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
-					</div>
-                    <div id="errorpass"></div>
-					<div class="container-login100-form-btn m-t-32">
-						<button id="editp_" class="login100-form-btn">
-							Save Changes
-						</button>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-        </div>
-    </div>
-
 <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
@@ -211,8 +176,45 @@
       </div>
     </div>
   </div>
-  
+<div class="modalm" id="edit_p">
+        <div class="modalm-c">
+            <div class="limiter">
+		<div class="container-login100" >
+			<div class="wrap-login100 p-t-30 p-b-50">
+				<span class="close" id="sign-in-close" >&times</span>
+				<span class="login100-form-title p-b-41">
+					Change Password
+				</span>
+				<div class="login100-form validate-form p-b-33 p-t-5">
 
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input id="opass"class="input100" type="password" name="pass" placeholder="Old Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+					
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input id="npass"class="input100" type="password" name="pass" placeholder="New Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate="Enter password">
+						<input id="npass1"class="input100" type="password" name="pass" placeholder="Confirm New Password">
+						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+					</div>
+                    <div id="errorpass"></div>
+					<div class="container-login100-form-btn m-t-32">
+						<button id="editp_" class="login100-form-btn">
+							Save Changes
+						</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+        </div>
+    </div>
+  
 </home-page>
 
 <script src="user-form.js"> </script>

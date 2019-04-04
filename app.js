@@ -20,6 +20,22 @@ function initDB() {
             checked INTEGER,
             note TEXT
         )`);
+        db.get('SELECT COUNT(*) as user FROM users',function(err, result) {
+            if (result.user == 0){
+                for( let row of test_users ) { 
+
+                    db.run('INSERT INTO users(fname,username, password, admin, gamesW, note) VALUES(?,?,?,?,?,?)', row,
+                    (err) => {
+                        if ( err ) {
+                            console.log( err );
+                        } else {
+                            console.log('insert', row );
+                        }
+                    } );
+                }
+            }
+            
+        });
 
     } );
 }
@@ -27,13 +43,11 @@ test_users = [
     [ 'Sylvia', 'sylviax', '1234', 1, 14,""],
     [ 'Afrah', 'afrahx', '1234', 1, 15, ""],
     [ 'Mary', 'maryx', '1234', 0, 16, ""],
-    [ 'Gillian', 'gillianx', '1234', 0, 10, ""],
     [ 'Bolu', 'bolux', '1234', 0, 0, ""],
     [ 'Oyin', 'oyinx', '1234', 0, 0, ""],
     [ 'Dani', 'danix', '1234', 0,  12, ""],
     [ 'Dadi', 'dadix', '1234', 0, 14, ""],
     [ 'Nafsa', 'nafsax', '1234', 0, 5, ""],
-    [ 'Khalid', 'khalidx', '1234', 0, 8, ""],
 ];
 const express = require('express');
 const hbs = require('express-hbs');
@@ -46,11 +60,11 @@ const app = express();
 const allowed_pages = [
     '/',
     '/login',
-    'logdin',
     '/style.css',
     '/newlog.png',
     '/brain.png',
     '/user-form.js',
+    '/drag-drop.js',
     '/add-new-user',
     '/check-username',
     '/nelephant.jpg',
@@ -68,6 +82,19 @@ const allowed_pages = [
     '/zeb.jpg',
     '/get-leaderboard',
     '/zebra.jpg',
+    '/dragndrop',
+    '/Canada.jpg',
+    '/cana.jpg',
+    '/Nigeria.jpg',
+    '/nig.jpg',
+    '/Saudi_Arabia.jpg',
+    '/sar.jpg',
+    '/Somalia.jpg',
+    '/soma.jpg',
+    '/United_States.jpg',
+    '/usa.jpg',
+    '/Zimbabwe.jpg',
+    '/zim.jpg',
     '/animal',
     '/logout',
     '/admin',
@@ -229,20 +256,22 @@ app.get('/animal', function(req, res){
     }
     
 });
-//insert users into the database
-app.get('/insert',jsonParser, function(req, res){
-    for( let row of test_users ) { 
-
-        db.run('INSERT INTO users(fname,username, password, admin, gamesW, note) VALUES(?,?,?,?,?,?)', row,
-           (err) => {
-               if ( err ) {
-                   console.log( err );
-               } else {
-                   console.log('insert', row );
-               }
-        } );
+app.get('/dragndrop', function(req, res){
+    if(req.session.auth){
+        res.type('.html')
+        res.render('dragndrop', {
+            title : 'AS'
+        });
     }
-});
+    else{
+        res.type('.html');
+        return res.render('welcome', {
+            sess: req.session,
+            title : 'AS'
+        });
+    }
+})
+//insert users into the database
 app.get('/', function(req, res) {
     console.log("Current User: ", req.session);
     generate_welcome_page( res,req );
@@ -406,7 +435,7 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let uname = req.body.username;
     let pword = req.body.password;
     db.serialize( function(){
-        db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
+        db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',function(err,exist){
             if(!err){
                 if(exist.user_exists > 0){
                     res.send({status:"notok"});
@@ -433,6 +462,12 @@ app.post('/login',jsonParser, function(req, res){
         if ( !err ) {
             if( row ) {
                 if( (authInfo.password) === row.password ) {
+                    if (row.admin == 1){
+                        req.session.admin = 1;
+                    }
+                    else{
+                        req.session.admin = 0;
+                    }
                     req.session.auth = true;
                     req.session.username = authInfo.username;
                     req.session.password = authInfo.password
@@ -464,6 +499,8 @@ app.post('/login',jsonParser, function(req, res){
 app.post('/logout', function(req, res){
     req.session.username = "None";
     req.session.password = "None";
+    req.session.fname= "None";
+    req.session.admin = 0;
     req.session.auth = false;
     res.redirect('/');
 });
@@ -474,7 +511,6 @@ app.put('/get-leaderboard', function(req, res){
     }
     })
 });
-
 app.put('/update-not',jsonParser, function(req, res){
     let user = req.body.user;
     db.serialize(function(){

@@ -1,0 +1,47 @@
+
+<div class="animal">
+<div class="container2" id="animalcont">
+<div>
+<svg width="715" height="650" id="editor"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">       
+  <image id="a1" wid = "Canada" href="Canada.jpg" height="150" width="200" y="10" x="10"/>
+  <image id="a2" wid = "Nigeria" href="Nigeria.jpg" height="150" width="200" x="250" y="10"/>
+  <image id="a3" wid = "Saudi" href="Saudi_Arabia.jpg" height="150" width="200"  x="500" y="10"/>
+  <image id="a4" wid = "Somalia" href="Somalia.jpg" height="150" width="200" y="170" x="10"/>
+  <image id="a5" wid = "USA" href="United_States.jpg" height="150" width="200" x="250" y="170"/>
+  <image id="a6" wid = "Zimbabwe" href="Zimbabwe.jpg" height="150" width="200" x="500" y="170"/>
+  <use wid = "Saudi" y="330" x="10" href="#a7"/>
+  <use  wid = "USA" x="250" y="330" href="#a8"/>
+  <use wid = "Nigeria" x="500" y="330" href="#a9"/>
+  <use wid = "Somalia" y="490" x="10" href="#a10"/>
+  <use wid = "Zimbabwe" x="250" y="490" href="#a11"/>
+  <use wid = "Canada" x="500" y="490" href="#a12"/>
+</svg>
+<svg style="display:none" viewBox="0,0 200,100" >
+    <image id="a7" wid = "giraffe" href="sar.jpg" height="150" width="200" />
+  <image id="a8" wid = "elephant" href="usa.jpg" height="150" width="200" />
+  <image id="a9" wid = "parrot" href="nig.jpg" height="150" width="200" />
+  <image id="a10" wid = "lion" href="soma.jpg" height="150" width="200" />
+  <image id="a11" wid = "tiger" href="zim.jpg" height="150" width="200" />
+  <image id="a12" wid = "zebra" href="cana.jpg" height="150" width="200" />
+</svg>
+</div>
+<div class="rowcont">
+       <textarea  id="score"class="text"readonly disabled> Score: </textarea>
+       <button class="btn"id="end"><a href="/login"><i class="fa fa-home"></i>
+       End Game</a>
+   </button>
+</div>
+
+</div>
+<div class="modal modalm" id="donepop">
+    <div class="modal-c" id="animaldone">
+    All done! Your score's been added.
+    <br>
+    <button type="button" ><a href="/dragndrop">Play Again</a></button>
+    <button type="button"><a href="/login">Back to Home Page</a></button>
+    </div>
+</div>
+</div>
+
+<script src="drag-drop.js"> </script>

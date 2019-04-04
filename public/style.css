@@ -4,6 +4,16 @@
 #logo{
   top: 6em;
 }
+.flexcont{
+  /* top:5em; */
+  display: flex;
+  flex-direction: row;
+  /* align-content: flex-start | flex-end ; */
+}
+.tophome{
+  display: flex;
+  justify-content: flex-end;
+}
 #user{
   top: 5em;
   right: -1%;
@@ -110,7 +120,7 @@ justify-content:space-evenly;
 }
 * {box-sizing: border-box;}
 #flexx{
-  height: 200px;
+  right: 0em;
 }
 .flexcont{
   top:5em;
@@ -118,18 +128,18 @@ justify-content:space-evenly;
   flex-direction: row;
 }
 .animal .text {
-  position: fixed;
-  top: 12em;
-  right: 15em;
+  position: absolute;
+  top: 11em;
+  right: 5em;
   width:150px;
   padding: 20px;
 	overflow:hidden;
-	color:white;
+	color:black;
 	font-family:'Times New Roman', Times, serif;
 	font-size:22px;
 	resize:none;
   line-height:10px;
-  background-color: black;
+  background-color: transparent !important;
 }
 .modalm-c{
   top: 0em;
@@ -159,8 +169,6 @@ justify-content:space-evenly;
 }
 #animaldone{
   text-align: center;
-  top: 6em;
-  right: -28%;
 }
 .header {
   position: fixed;
@@ -172,6 +180,13 @@ justify-content:space-evenly;
   color: #fff;
   align-items: center;
    
+}
+.mini a{
+  color: black;
+  font-size: 18px !important;
+}
+.mini h3{
+  font-size: 20px !important;
 }
 a.navig{
   font-size: 20px;
@@ -232,9 +247,6 @@ use:hover{
   right: -5%;
 }
 
-.mini{
-  width: 100%
-}
 .levels{
   color: white;
   font-family: 'Times New Roman', Times, serif;
@@ -244,16 +256,12 @@ a.levels:hover{
   color: pink;
 }
 .topbutton{
-  position: fixed;
+  position: relative;
+  left: 33em;
+  top: 1em;
   width: 5px;
-}
-#editp{
-  right: -16.9em;
-  top: 0.8em;
-}
-#logoutb{
-  right: -26.5em;
-  top: -1.5em;
+  font-size: 14px !important;
+  min-width: 120px !important;
 }
 h2{
   margin-left: auto;
@@ -301,7 +309,7 @@ button.accordion:after {
   margin-left: 5px;
 }
 .accordion{
-  font-size: 14px;
+  font-size: 20px;
 }
 
 #newsign{
@@ -316,7 +324,6 @@ button.accordion:after {
   font-size: 15px;
   color: black;
   position: fixed;
-  top: 0;
   right: 0;
   left: 0;
   font-size: 20px;
@@ -351,17 +358,20 @@ button.accordion:after {
 .notifications {
   width:45px;
   height:45px;
-  position: fixed;
+  position: relative;
+ left: 9.8em;
+  /* position: fixed; */
   top: 1em;
-  right: 21em;
+  /* right: 21em; */
   background:#fff;
   border-radius:30px;
   box-sizing:border-box;
   text-align:center;
 }
 .notifications:hover {
-  position: fixed;
+  position: relative;
   top: 3em;
+  left: 1em;
   right: 20em;
   width:200px;
   height:40px;
@@ -451,9 +461,9 @@ ul.notif li .text {
 ul.notif li:hover .text {
   color:#ff2c74;
 }
-.animal{
+/* .animal{
   background-color: black;
-}
+} */
 #endgame{
   position: fixed;
   top: 32.5em;
@@ -462,4 +472,7 @@ ul.notif li:hover .text {
 #endgame a{
   font-size: 15px !important;
   color: white !important;
+}
+#editor {
+  border : thin solid black;
 }
