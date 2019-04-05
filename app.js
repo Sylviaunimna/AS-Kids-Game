@@ -28,8 +28,6 @@ function initDB() {
                     (err) => {
                         if ( err ) {
                             console.log( err );
-                        } else {
-                            console.log('insert', row );
                         }
                     } );
                 }
@@ -43,11 +41,8 @@ test_users = [
     [ 'Sylvia', 'sylviax', '1234', 1, 14,""],
     [ 'Afrah', 'afrahx', '1234', 1, 15, ""],
     [ 'Mary', 'maryx', '1234', 0, 16, ""],
-    [ 'Bolu', 'bolux', '1234', 0, 0, ""],
-    [ 'Oyin', 'oyinx', '1234', 0, 0, ""],
-    [ 'Dani', 'danix', '1234', 0,  12, ""],
-    [ 'Dadi', 'dadix', '1234', 0, 14, ""],
-    [ 'Nafsa', 'nafsax', '1234', 0, 5, ""],
+    [ 'Nafsa', 'nafsax', '1234', 0, 0, ""],
+    [ 'Jacob', 'jacobx', '1234', 0, 0, ""],
 ];
 const express = require('express');
 const hbs = require('express-hbs');
@@ -160,11 +155,19 @@ app.set('views', __dirname + '/views');
 
 const port = process.env.PORT || 8000;
 app.get('/slidepuzzle',function(req,res){
-    res.type('.html')
-    res.render('slidePuzzle', {
-        title : 'AS Social'
-    });
-
+    if(req.session.auth){
+        res.type('.html')
+        res.render('slidePuzzle', {
+            title : 'AS Social'
+        });
+    }
+    else{
+        res.type('.html');
+        return res.render('welcome', {
+            sess: req.session,
+            title : 'AS'
+        });
+    }
 })
 app.get('/login', function(req, res){
     if(req.session.auth){
@@ -232,12 +235,24 @@ function forLogin(req, res){
     });
 }
 app.get('/admin',function(req,res){
-    db.all(`SELECT * FROM users WHERE admin=0 ORDER BY gamesW DESC`,[],function(err,row){
+    if(req.session.auth && req.session.admin == 1){
+        db.all(`SELECT * FROM users WHERE admin=0 ORDER BY gamesW DESC`,[],function(err,row){
         res.type('.html');
         res.render('admin',{
             users : row
         });
-    });
+        });
+    }
+    else if(req.session.auth){
+        forLogin(req, res);
+    }
+    else{
+        res.type('.html');
+        return res.render('welcome', {
+            sess: req.session,
+            title : 'AS'
+        });
+    }
 });
 app.get('/animal', function(req, res){
     if(req.session.auth){
@@ -272,7 +287,6 @@ app.get('/dragndrop', function(req, res){
 })
 //insert users into the database
 app.get('/', function(req, res) {
-    console.log("Current User: ", req.session);
     generate_welcome_page( res,req );
 });
 
@@ -286,7 +300,6 @@ app.get('/fnameSort',function(req,res){
 app.get('/unameSort',function(req,res){
     db.all('SELECT id,fname,username,gamesW FROM users WHERE admin=0 ORDER BY username',[],function(err,rows){
         if(!err){
-            console.log(rows)
             res.send(rows)
         }
     })
@@ -320,7 +333,6 @@ app.put('/update-checked',jsonParser, function(req, res){
 });
 app.delete('/deleteUser',jsonParser,function(req,res){
     let id = req.body.id;
-    console.log(id);
     db.serialize(function(){
     db.run(`DELETE FROM users WHERE id=?`,[id],function(err) {
         if (!err) {
@@ -332,7 +344,7 @@ app.delete('/deleteUser',jsonParser,function(req,res){
     });
     db.all(`SELECT id FROM users ORDER BY gamesW DESC`,[],function(err,row){
         if (!err){
-            console.log(row);
+            
         }
     })
 
@@ -352,7 +364,6 @@ app.put('/delete-notification',jsonParser,function(req,res){
 })
 app.put('/delete-score',jsonParser,function(req,res){
     let id = req.body.id;
-    console.log(id)
     db.run(`UPDATE users SET gamesW=? WHERE id=? `,[0,id],function(err){
         if (!err) {
             res.send( {status : 'updated'} );
@@ -423,15 +434,15 @@ app.post('/add-new-user',jsonParser, function(req, res) {
     let uname = req.body.username;
     let pword = req.body.password;
     db.serialize( function(){
-        db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',function(err,exist){
+        db.get('SELECT COUNT(*) as user_exists FROM users WHERE username=?',[uname],function(err,exist){
             if(!err){
                 if(exist.user_exists > 0){
                     res.send({status:"notok"});
                 }
                 else{
                     console.log("New User: ", uname);
-                    db.run('INSERT INTO users(fname, username, password, gamesW, note) VALUES(?, ?, ?, ?, ?)',
-                    [fname, uname, pword, 0, ""]);
+                    db.run('INSERT INTO users(fname, username, password, gamesW, note, admin) VALUES(?, ?, ?, ?, ?, ?)',
+                    [fname, uname, pword, 0, "", 0]);
                     res.send( {status: "ok"} ); 
                 }
             }

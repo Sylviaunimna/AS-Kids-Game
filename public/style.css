@@ -475,4 +475,11 @@ ul.notif li:hover .text {
 }
 #editor {
   border : thin solid black;
+  width: 100%;
+}
+.game a:hover{
+  color: black;
+}
+th{
+  text-align: center !important;
 }
