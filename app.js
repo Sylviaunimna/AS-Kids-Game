@@ -147,7 +147,6 @@ app.use(express.static( __dirname + '/public'))
 // the template middleware
 // Use `.hbs` for extensions and find partials in `views/partials`.
 app.engine('hbs', hbs.express4({
-  partialsDir: __dirname + '/views/partials',
   defaultLayout: __dirname + '/views/layout/main.hbs'
 }));
 app.set('view engine', 'hbs');
