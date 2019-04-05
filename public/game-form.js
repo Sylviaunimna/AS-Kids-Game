@@ -11,14 +11,15 @@ let endButton = document.getElementById("end");
 
 endButton.addEventListener('click',(evt)=>{
     let score = endGame();
-    if (score == 12){
+    if (score == 12 || score == 11){
         let req = new XMLHttpRequest();
-        req.open('PUT','/update-p');
+        req.open('PUT','/update-won');
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         req.responseType = 'json';
         req.onload = function(evt) {
             if ( req.status == 200 ) { // check for ok response
                 const resp = req.response;
+                console.log(resp);
                 if(resp.status ==='updated'){ 
                     //Show the WON modal
                     document.getElementById("you-won").style.display = "block"
@@ -27,14 +28,15 @@ endButton.addEventListener('click',(evt)=>{
                 else {
                     console.log('err', req );
                 }
-    }
+            }
 
+        }
+        req.send();
     }
-}
-else{
-    //Show the modal that they have not won, Better luck next time
-    document.getElementById("you-lost").style.display = "block"
-}
+    else{
+        //Show the modal that they have not won, Better luck next time
+        document.getElementById("you-lost").style.display = "block"
+    }
 })
 
   
