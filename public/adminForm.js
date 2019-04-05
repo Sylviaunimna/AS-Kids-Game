@@ -1,13 +1,11 @@
 (function()
 {
 let deleteButton = document.getElementById("deleteUser");
-        let modify = document.getElementById("modifyUser");
         let tableArea = document.getElementById("UserTable");
         let fSort = document.getElementById("fname-sort");
         let uSort = document.getElementById("uname-sort");
         let id_Sort = document.getElementById("id-sort");
         let scoreSort = document.getElementById("score-sort");
-        let editButton = document.getElementById("editu") ;
         let del_note = document.getElementById("deleteNotif");
         let del_score = document.getElementById("deleteScore");
         fSort.addEventListener('click',(evt)=>{
