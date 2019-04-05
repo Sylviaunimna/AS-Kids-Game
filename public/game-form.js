@@ -21,9 +21,7 @@ endButton.addEventListener('click',(evt)=>{
                 const resp = req.response;
                 console.log(resp);
                 if(resp.status ==='updated'){ 
-                    //Show the WON modal
                     document.getElementById("you-won").style.display = "block"
-   
                 }
                 else {
                     console.log('err', req );
