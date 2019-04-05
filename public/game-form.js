@@ -12,6 +12,7 @@ let endButton = document.getElementById("end");
 endButton.addEventListener('click',(evt)=>{
     let score = endGame();
     if (score === 12){
+        console.log("here")
         let req = new XMLHttpRequest();
         req.open('PUT','/update-won');
         req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
@@ -21,7 +22,6 @@ endButton.addEventListener('click',(evt)=>{
                 const resp = req.response;
                 if(resp.status ==='updated'){ 
                     document.getElementById("you-won").style.display = "block"
-   
                 }
                 else {
                     console.log('err', req );

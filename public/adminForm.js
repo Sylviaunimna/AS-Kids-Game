@@ -63,40 +63,7 @@ let deleteButton = document.getElementById("deleteUser");
                     })
                 }
             })
-            modify.addEventListener('click',(evt)=>{
-                if(theSelected ){
-                    let yesButton = document.getElementById("yesB-modify");
-                    let noButton = document.getElementById("noB-modify");
-                    
-                    document.getElementById("m-user").innerHTML = theSelected.innerHTML;
-                    document.getElementById("oldUser").value = theSelected.innerHTML;
-                    document.getElementById("mUser").style.display="block";
-                    yesButton.addEventListener('click',(evt)=>{
-                        if(theSelected){
-                        document.getElementById("mUser").style.display="none";
-                        $('#changeU').modal('show');
-                        editButton.addEventListener('click',(evt)=>{
-                            if(theSelected){
-                            let useId = theSelected.parentNode.getAttribute('id');
-                            let nUser = document.getElementById('newUser').value;
-                            modifyUser(nUser,useId,theSelected);
-                            theSelected.setAttribute('class','')
-                            theSelected = null;
-                            }
-                        })
-                    }
-                    })
-                    noButton.addEventListener('click',(evt)=>{
-                        if(theSelected){  
-                        document.getElementById("mUser").style.display="none"
-                        theSelected.setAttribute('class','')
-                        //isSelected(null)
-                        theSelected = null
-                        }
-                    })
-                   
-                }
-            })
+           
             del_note.addEventListener('click',(evt)=>{
                 if(theSelected){
                 let useId = theSelected.parentNode.getAttribute('id')
@@ -242,25 +209,7 @@ function isSelected(user){
     theSelected.classList.add('highlight');
     }
 }
-function modifyUser(newUsername,id, selected){
-    let req = new XMLHttpRequest();
-    req.open('PUT', `/modifyUser`);
-    let obj = {username: newUsername, id:id}
-    req.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    req.responseType = 'json'; 
-    req.onload = function(evt) {
-        if ( req.status == 200 ) { // check for ok response
-            const resp = req.response;
-            if(resp.status ==='updated'){ 
-                selected.innerHTML = newUsername
-                }  
-        }
-        else {
-            console.log('err', req );
-        }
-    };
-    req.send(JSON.stringify(obj));
-}
+
 function deleteNotification(id,userSpan,userName){
     let req = new XMLHttpRequest();
     req.open('PUT',`/delete-notification`);

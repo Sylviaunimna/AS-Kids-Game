@@ -116,7 +116,6 @@ const allowed_pages = [
     '/css/util.css',
     '/css/main.css',
     '/fonts/ubuntu/Ubuntu-Regular.ttf',
-    '/modifyUser',
     '/slidepuzzle'
 ];
 function generate_welcome_page( res,req ) {
@@ -364,18 +363,7 @@ app.put('/delete-score',jsonParser,function(req,res){
     });
 })
 
-app.put('/modifyUser',jsonParser,function(req,res){
-    let newUname = req.body.username;
-    let id = req.body.id;
-    db.run(`UPDATE users SET username=? WHERE id=? `,[newUname,id],function(err){
-        if (!err) {
-            res.send( {status : 'updated'} );
-        }
-        else {
-            res.send( {error : err} );
-        }
-    });
-})
+
 //updates score
 app.put('/update-p',jsonParser, function(req, res){
     let oldp = req.body.oldp;
